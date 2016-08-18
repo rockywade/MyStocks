@@ -67,19 +67,13 @@ Ext.onReady(function(){
         	forceFit: true, 
         	scrollOffset: 0
        	},
-        /*tbar:['->',{
-        	text:'修改',
-        	iconCls:'btn-edit',
+        tbar:['->',{
+        	text:'返回',
+        	iconCls:'btn-return',
         	handler: function(){
-        		var record= grid.getSelectionModel().getSelected(); 
-				if(!record){
-                	Ext.Msg.alert('信息提示','请选择要修改的数据');
-				}else{
-	        		roleWindow.show();
-					roleForm.getForm().loadRecord(record);
-				}
+        		window.history.go(-1);
         	}
-        }],*/
+        }],
         
         bbar: new Ext.PagingToolbar({
             pageSize: 15,

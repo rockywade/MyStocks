@@ -556,10 +556,20 @@ Ext.onReady(function(){
 				regex:/^(13\d|15[^4,\D]|17[13678]|18\d)\d{8}|170[^346,\D]\d{7}$/,
 				allowBlank : true
 			},{
-				name:'unit',
+				xtype:'combo',
+				hiddenName:'unit',
 				fieldLabel:'单位(办公)',
-				maxLength :20,
-				allowBlank : true
+				mode: 'local',
+				triggerAction: 'all',
+				valueField :'value',
+				displayField: 'text',
+				allowBlank : false,
+				editable : false,
+				value:'教务处',
+				store : new Ext.data.SimpleStore({
+				    fields: ['value', 'text'],
+				    data : [['教务处','教务处'],['财务','财务']]
+				})
 			},{
 				name:'email',
 				fieldLabel:'邮箱',

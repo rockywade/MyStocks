@@ -78,6 +78,12 @@ Ext.onReady(function(){
 					});
 				}
         	}
+        },'-',{
+        	text:'返回',
+        	iconCls:'btn-return',
+        	handler: function(){
+        		window.history.go(-1);
+        	}
         }],
         
         bbar: new Ext.PagingToolbar({

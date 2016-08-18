@@ -58,6 +58,22 @@ Ext.onReady(function(){
 							}
 						}
 					}]
+				},{
+					width:250,
+					items:[{
+						width:75,
+						xtype:"button",
+						cls :'returnBtn',
+						text:"返回",
+						 listeners : {
+							  click : function (btn) {
+								  window.history.go(-1);
+							}
+				        		
+				        }
+					}]
+				
+				
 				}]
 			}]
 		}]
