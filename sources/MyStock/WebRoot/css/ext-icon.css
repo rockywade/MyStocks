@@ -10,6 +10,9 @@
 .btn-remove {
 	background-image: url(../img/btn/remove.gif) !important;
 }
+.btn-return {
+	background-image: url(../img/btn/arrow_back.ico) !important;
+}
 .btn-save {
 	background-image: url(../img/btn/save.gif) !important;
 }
