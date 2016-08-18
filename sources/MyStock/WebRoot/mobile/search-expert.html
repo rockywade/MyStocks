@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+<meta name="format-detection" content="telephone = no" />
+<title>场地申请</title>
+<link rel="icon" href="img/logo1.png" />
+<link rel="stylesheet" href="css/pullToRefresh.css" />
+<link rel="stylesheet" href="css/public.css" />
+<link rel="stylesheet" href="css/media.css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+<script type="text/javascript">
+			$(document).ready(function(){
+	    		getExpertSsyx();
+	    		getExpertBm();
+			});
+			//园区下拉菜单
+			function getExpertSsyx(){
+				$.post("mobile_findParkComb.do",{},
+						function(data,status){
+							data = eval("("+data+")");
+							initYq(data.root);
+						}
+					);
+			}
+			function initYq(data){
+				$.each(data,function(rowNum,o){
+					$("#ssyq").append('<option value=\''+o.value+'\'>'+o.text+'</option>');
+				});
+			}
+			//部门下拉菜单
+			function getExpertBm(){
+				$.post("mobile_findUnitComb.do",{},
+						function(data,status){
+							data = eval("("+data+")");
+							initBm(data.root);
+						}
+					);
+			}
+			function initBm(data){
+				$.each(data,function(rowNum,o){
+					$("#bm").append('<option value=\''+o.value+'\'>'+o.text+'</option>');
+				});
+			}
+			
+			var start = 0;
+			var limit = 3;
+			function serchExpert(){
+				var yq = $("#ssyq").val();
+				var bm = $("#bm").val();
+				var genre = $("#genre").val();
+				var ename = $("#expertName").val();
+				//alert(yq);
+				//alert(bm);
+				//alert(genre);
+				//alert(ename);
+				$.ajax({
+				type : "post", 
+				async : false,  
+				url:"mobile_expertBespeakList.do",
+				data:{start:start, limit:limit,yx:yq,bm:bm,experttype:genre,ename:ename},
+					success : function(data,status){
+						data = eval("("+data+")");
+						start = data.currentResult;
+						renderExpertDetail(data.root);
+					}
+				});
+			}
+			function renderExpertDetail(data){
+				var s = "";
+				$.each(data,function(rowNum,o){
+			        s+='<li><a href="expert-content.jsp?expertId='+o.id+'">';
+					s+='<div class="placePic">';
+					if(o.expertPhoto){
+						s+='<img width="100%" height="100%" src="'+o.expertPhoto+'" />';
+					}else{
+						s+='<img width="100%" height="100%" src="../img/defaultpic/photo.jpg"/>';
+					}
+					s+='</div>';
+					s+='<div class="placeName expertName">';
+					s+='<p>'+o.expertName+'</p>';
+					s+='<samp>'+o.expertGenre+'</samp>';
+					s+='</div>';
+					s+='</a></li>';
+			    });
+			    if(data.length==0){
+				   $("#expertInfo").html("<br/>暂无数据");
+			    }else{
+				   $("#expertInfo").html(s);
+			    }
+		     }
+		</script>
+</head>
+<body>
+	<section class="wrap1">
+		<div class="query_search">
+			<input id="expertName" type="text" class="searchTxt"
+				placeholder="请输入关键字搜索" />
+		</div>
+		<div class="query_search1">
+			<ul>
+				<li>
+					<p>
+						园<i class="kg2"></i>区
+					</p> <select id="ssyq">
+						<option value=''>全部</option>
+				</select>
+				</li>
+				<li>
+					<p>
+						部<i class="kg2"></i>门
+					</p> <select id="bm">
+						<option value=''>全部</option>
+				</select>
+				</li>
+				<li>
+					<p>咨询类型</p> <select id="genre">
+						<option value='学业指导'>学业指导</option>
+						<option value='心理辅导'>心理辅导</option>
+						<option value='职业规划'>职业规划</option>
+						<option value='出国指导'>出国指导</option>
+						<option value='其他'>其他</option>
+						<option value='' selected="selected">全部</option>
+				</select>
+					<button class="searchBtn" onclick="serchExpert()"></button>
+				</li>
+			</ul>
+		</div>
+	</section>
+
+	<section class="wrap1">
+		<ul class="place_list" id="expertInfo">
+		</ul>
+	</section>
+</body>
+</html>

@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<!--========================================== dao ========================================== -->
+	<bean id="baseDao" class="com.cxstock.dao.impl.BaseDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!--========================================== biz ========================================== -->
+	<!--活动管理 -->
+	<bean id="applyActivityBiz" class="com.cxstock.biz.activity.imp.ApplyActivityBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+	<!-- 去向统计 -->
+	<bean id="whereAboutsBiz" class="com.cxstock.biz.whereabouts.imp.WhereaboutsBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+	<!-- 专家预约 -->
+	<bean id="expertBespeakBiz" class="com.cxstock.biz.expertbespeak.imp.ExpertBespeakBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+
+
+	<!-- 用户管理 -->
+	<bean id="userBiz" class="com.cxstock.biz.power.imp.UserBizImpl">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+	<!-- 角色管理 -->
+	<bean id="roleBiz" class="com.cxstock.biz.power.imp.RoleBizImpl">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+
+
+	<!-- 请假信息管理 -->
+	<bean id="leaveInfoBiz" class="com.cxstock.biz.leaveinfo.imp.LeaveInfoBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<!-- 场地信息管理 -->
+	<bean id="siteInfoBiz" class="com.cxstock.biz.siteinfo.imp.SiteInfoBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<!--学习信息 -->
+	<bean id="datumInfoBiz" class="com.cxstock.biz.datuminfo.imp.DatumInfoBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<!--线下辅学 -->
+	<bean id="offlineFdBiz" class="com.cxstock.biz.pbfx.offlineFd.imp.OfflineFdBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<bean id="leaderShipBiz" class="com.cxstock.biz.leadership.imp.LeaderShipBizImp">
+		<property name="baseDao" ref="baseDao" />
+		<property name="userBiz" ref="userBiz" />
+	</bean>
+
+
+	<bean id="classesBiz" class="com.cxstock.biz.classes.imp.ClassesBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<bean id="studentBiz" class="com.cxstock.biz.student.imp.StudentBizImp">
+		<property name="baseDao" ref="baseDao" />
+		<property name="userBiz" ref="userBiz" />
+		<property name="classesBiz" ref="classesBiz" />
+	</bean>
+
+	<bean id="instructorBiz" class="com.cxstock.biz.instructor.imp.InstructorBizImp">
+		<property name="baseDao" ref="baseDao" />
+		<property name="userBiz" ref="userBiz" />
+		<property name="classesBiz" ref="classesBiz" />
+	</bean>
+
+	<bean id="newFriendsBiz" class="com.cxstock.biz.newfriends.imp.NewFriendsBizImp">
+		<property name="baseDao" ref="baseDao" />
+		<property name="userBiz" ref="userBiz" />
+	</bean>
+
+	<bean id="headMasterBiz" class="com.cxstock.biz.headmaster.imp.HeadMasterBizImp">
+		<property name="baseDao" ref="baseDao" />
+		<property name="userBiz" ref="userBiz" />
+		<property name="classesBiz" ref="classesBiz" />
+	</bean>
+
+	<bean id="expertBiz" class="com.cxstock.biz.expert.imp.ExpertBizImp">
+		<property name="baseDao" ref="baseDao" />
+		<property name="userBiz" ref="userBiz" />
+	</bean>
+
+	<bean id="parkBiz" class="com.cxstock.biz.park.imp.ParkBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<bean id="lyceumBiz" class="com.cxstock.biz.lyceum.imp.LyceumBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+
+	<bean id="orgaBiz" class="com.cxstock.biz.orga.imp.OrgaBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<bean id="groundTypeBiz" class="com.cxstock.biz.groundtype.imp.GroundTypeBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<bean id="onlineQABiz" class="com.cxstock.biz.onlineqa.imp.OnlineQABizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<bean id="onlineQAJudgeBiz" class="com.cxstock.biz.onlineqajudge.imp.OnlineQAJudgeBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<bean id="termBiz" class="com.cxstock.biz.term.imp.TermBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<bean id="specialCareBiz" class="com.cxstock.biz.specialcare.imp.SpecialCareBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<bean id="conversationBiz" class="com.cxstock.biz.conversation.imp.ConversationBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<bean id="secondBookStoreBiz"
+		class="com.cxstock.biz.secondbookstore.imp.SecondBookStoreBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<bean id="secondBookStoreJudgeBiz"
+		class="com.cxstock.biz.secondbookstorejudge.imp.SecondBookStoreJudgeBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<bean id="smsBiz" class="com.cxstock.biz.sms.imp.SmsBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<bean id="unitBiz" class="com.cxstock.biz.unit.imp.UnitBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<bean id="userMenuBiz" class="com.cxstock.biz.usermenu.imp.UserMenuBizImp">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<!--========================================== action ========================================== -->
+	<!-- 跳转登录页面 -->
+	<bean id="loginAction" class="com.cxstock.action.login.GotoLoginAction"></bean>
+	<!--活动管理 -->
+	<bean id="ApplyactivityAction" class="com.cxstock.action.activity.ApplyactivityAction"
+		scope="prototype">
+		<property name="applyActivityBiz" ref="applyActivityBiz" />
+		<property name="studentBiz" ref="studentBiz" />
+	</bean>
+	<!-- 去向统计 -->
+	<bean id="WhereaboutsAction" class="com.cxstock.action.whereabouts.WhereaboutsAction"
+		scope="prototype">
+		<property name="whereAboutsBiz" ref="whereAboutsBiz" />
+	</bean>
+	<!-- 专家预约 -->
+	<bean id="ExpertbespeakAction" class="com.cxstock.action.expertbespeak.ExpertbespeakAction"
+		scope="prototype">
+		<property name="expertBespeakBiz" ref="expertBespeakBiz" />
+		<property name="smsBiz" ref="smsBiz" />
+		<property name="userBiz" ref="userBiz" />
+		<property name="expertBiz" ref="expertBiz" />
+	</bean>
+
+
+	<!-- 用户管理 -->
+	<bean id="userAction" class="com.cxstock.action.power.UserAction"
+		scope="prototype">
+		<property name="userBiz" ref="userBiz" />
+		<property name="smsBiz" ref="smsBiz" />
+	</bean>
+	<!-- 角色管理 -->
+	<bean id="roleAction" class="com.cxstock.action.power.RoleAction"
+		scope="prototype">
+		<property name="roleBiz" ref="roleBiz" />
+	</bean>
+	<!-- 数据库备份 -->
+	<bean id="dataCopyAction" class="com.cxstock.action.power.DataCopyAction"
+		scope="prototype">
+	</bean>
+
+
+	<!-- 请假信息管理 -->
+	<bean id="LeaveInfoAction" class="com.cxstock.action.leaveinfo.LeaveInfoAction"
+		scope="prototype">
+		<property name="leaveInfoBiz" ref="leaveInfoBiz" />
+		<property name="smsBiz" ref="smsBiz" />
+	</bean>
+
+	<!-- 场地信息管理 -->
+	<bean id="SiteInfoAction" class="com.cxstock.action.siteinfo.SiteInfoAction"
+		scope="prototype">
+		<property name="siteInfoBiz" ref="siteInfoBiz" />
+		<property name="datumInfoBiz" ref="datumInfoBiz" />
+		<property name="smsBiz" ref="smsBiz" />
+	</bean>
+
+	<!-- 学习资料信息 -->
+	<bean id="datumInfoAction" class="com.cxstock.action.datuminfo.DatumInfoAction"
+		scope="prototype">
+		<property name="datumInfoBiz" ref="datumInfoBiz" />
+	</bean>
+
+	<!-- 线下辅学信息 -->
+	<bean id="offlineFdAction" class="com.cxstock.action.pbfx.offlineFd.OfflineFdAction"
+		scope="prototype">
+		<property name="offlineFdBiz" ref="offlineFdBiz" />
+		<property name="smsBiz" ref="smsBiz" />
+	</bean>
+
+
+	<bean id="leaderShipAction" class="com.cxstock.action.leadership.LeaderShipAction"
+		scope="prototype">
+		<property name="leaderShipBiz" ref="leaderShipBiz" />
+	</bean>
+
+
+	<bean id="studentAction" class="com.cxstock.action.student.StudentAction"
+		scope="prototype">
+		<property name="studentBiz" ref="studentBiz" />
+		<property name="instructorBiz" ref="instructorBiz" />
+		<property name="headMasterBiz" ref="headMasterBiz" />
+		<property name="classesBiz" ref="classesBiz" />
+		<property name="userBiz" ref="userBiz" />
+	</bean>
+
+	<bean id="classesAction" class="com.cxstock.action.classes.ClassesAction"
+		scope="prototype">
+		<property name="classesBiz" ref="classesBiz" />
+	</bean>
+
+
+	<bean id="instructorAction" class="com.cxstock.action.instructor.InstructorAction"
+		scope="prototype">
+		<property name="instructorBiz" ref="instructorBiz" />
+	</bean>
+
+	<bean id="newFriendsAction" class="com.cxstock.action.newfriends.NewFriendsAction"
+		scope="prototype">
+		<property name="newFriendsBiz" ref="newFriendsBiz" />
+	</bean>
+
+
+
+	<bean id="headMasterAction" class="com.cxstock.action.headmaster.HeadMasterAction"
+		scope="prototype">
+		<property name="headMasterBiz" ref="headMasterBiz" />
+	</bean>
+
+	<bean id="expertAction" class="com.cxstock.action.expert.ExpertAction"
+		scope="prototype">
+		<property name="expertBiz" ref="expertBiz" />
+	</bean>
+
+	<bean id="parkAction" class="com.cxstock.action.park.ParkAction"
+		scope="prototype">
+		<property name="parkBiz" ref="parkBiz" />
+	</bean>
+
+
+	<bean id="lyceumAction" class="com.cxstock.action.lyceum.LyceumAction"
+		scope="prototype">
+		<property name="lyceumBiz" ref="lyceumBiz" />
+	</bean>
+
+	<bean id="orgaAction" class="com.cxstock.action.orga.OrgaAction"
+		scope="prototype">
+		<property name="orgaBiz" ref="orgaBiz" />
+	</bean>
+
+	<bean id="groundTypeAction" class="com.cxstock.action.groundtype.GroundTypeAction"
+		scope="prototype">
+		<property name="groundTypeBiz" ref="groundTypeBiz" />
+	</bean>
+
+	<bean id="onlineQAAction" class="com.cxstock.action.onlineqa.OnlineQAAction"
+		scope="prototype">
+		<property name="onlineQABiz" ref="onlineQABiz" />
+	</bean>
+
+	<bean id="onlineQAJudgeAction" class="com.cxstock.action.onlineqajudge.OnlineQAJudgeAction"
+		scope="prototype">
+		<property name="onlineQAJudgeBiz" ref="onlineQAJudgeBiz" />
+	</bean>
+
+	<bean id="termAction" class="com.cxstock.action.term.TermAction"
+		scope="prototype">
+		<property name="termBiz" ref="termBiz" />
+	</bean>
+
+	<bean id="specialCareAction" class="com.cxstock.action.specialcare.SpecialCareAction"
+		scope="prototype">
+		<property name="specialCareBiz" ref="specialCareBiz" />
+	</bean>
+
+	<bean id="conversationAction" class="com.cxstock.action.conversation.ConversationAction"
+		scope="prototype">
+		<property name="conversationBiz" ref="conversationBiz" />
+	</bean>
+
+	<bean id="secondBookStoreAction"
+		class="com.cxstock.action.secondbookstore.SecondBookStoreAction"
+		scope="prototype">
+		<property name="secondBookStoreBiz" ref="secondBookStoreBiz" />
+	</bean>
+
+	<bean id="secondBookStoreJudgeAction"
+		class="com.cxstock.action.secondbookstorejudge.SecondBookStoreJudgeAction"
+		scope="prototype">
+		<property name="secondBookStoreJudgeBiz" ref="secondBookStoreJudgeBiz" />
+	</bean>
+
+	<bean id="frontAction" class="com.cxstock.action.front.FrontAction"
+		scope="prototype">
+		<property name="onlineQABiz" ref="onlineQABiz" />
+		<property name="onlineQAJudgeBiz" ref="onlineQAJudgeBiz" />
+		<property name="secondBookStoreBiz" ref="secondBookStoreBiz" />
+		<property name="secondBookStoreJudgeBiz" ref="secondBookStoreJudgeBiz" />
+		<property name="siteInfoBiz" ref="siteInfoBiz" />
+		<property name="datumInfoBiz" ref="datumInfoBiz" />
+		<property name="offlineFdBiz" ref="offlineFdBiz" />
+		<property name="applyActivityBiz" ref="applyActivityBiz" />
+		<property name="expertBespeakBiz" ref="expertBespeakBiz" />
+		<property name="expertBiz" ref="expertBiz" />
+	</bean>
+
+	<bean id="smsAction" class="com.cxstock.action.sms.SmsAction"
+		scope="prototype">
+		<property name="smsBiz" ref="smsBiz" />
+	</bean>
+
+	<bean id="unitAction" class="com.cxstock.action.unit.UnitAction"
+		scope="prototype">
+		<property name="unitBiz" ref="unitBiz" />
+	</bean>
+
+	<bean id="userMenuAction" class="com.cxstock.action.usermenu.UserMenuAction"
+		scope="prototype">
+		<property name="userMenuBiz" ref="userMenuBiz" />
+	</bean>
+
+	<bean id="mobileAction" class="com.cxstock.action.mobile.MobileAction"
+		scope="prototype">
+		<property name="onlineQABiz" ref="onlineQABiz" />
+		<property name="onlineQAJudgeBiz" ref="onlineQAJudgeBiz" />
+		<property name="secondBookStoreBiz" ref="secondBookStoreBiz" />
+		<property name="secondBookStoreJudgeBiz" ref="secondBookStoreJudgeBiz" />
+		<property name="siteInfoBiz" ref="siteInfoBiz" />
+		<property name="datumInfoBiz" ref="datumInfoBiz" />
+		<property name="offlineFdBiz" ref="offlineFdBiz" />
+		<property name="applyActivityBiz" ref="applyActivityBiz" />
+		<property name="expertBespeakBiz" ref="expertBespeakBiz" />
+		<property name="expertBiz" ref="expertBiz" />
+		<property name="leaveInfoBiz" ref="leaveInfoBiz" />
+		<property name="smsBiz" ref="smsBiz" />
+		<property name="studentBiz" ref="studentBiz" />
+		<property name="userBiz" ref="userBiz" />
+	</bean>
+</beans>

@@ -1,0 +1,289 @@
+
+/**
+ * 学习资料我的下载
+ */
+Ext.onReady(function(){
+	
+	Ext.QuickTips.init();
+	
+	var date = new Date();
+	date.setMonth(date.getMonth()-12);
+	//查询表单
+	var searchForm = new Ext.FormPanel({
+		region:'north',
+		height: 80,
+		border : false,
+		layout : 'form',
+		padding : '5 20 0 20',
+		items:[{
+			id:"jhdfieldset",
+			xtype:"fieldset",
+			title:"查询设置",
+			padding:'0 20 0 15',
+			items:[{
+				layout:"column",
+				defaults:{
+					xtype:"container",
+					autoEl:"div",
+					labelAlign:'right',
+					layout:"form"
+				},
+				items:[{
+					width:60,
+					style:'padding-top:5',
+					xtype:'tbtext',
+					text:'查询日期:'
+				},{
+					width:150,
+					xtype:"datefield",
+					name:'startdate',
+					id:'startdate',
+					format:'Y-m-d',
+					allowBlank : false,
+					value:date
+					
+				},{
+					width:40,
+					style:'padding:5 0 0 8',
+					xtype:'label',
+					text:'至'
+				},{
+					width:150,
+					xtype:"datefield",
+					name:'enddate',
+					id:'enddate',
+					format:'Y-m-d',
+					allowBlank : false,
+					value:new Date()
+					
+				},{
+					width:150
+				},{
+					width:150,
+					items:[{
+						width:75,
+						xtype:"button",
+						style:'margin-left:50px',
+						text:'查询',
+						handler:function(){
+							var f = searchForm.getForm();
+							
+							if (f.isValid()) {
+								var _params = f.getValues();
+								//添加分页信息
+								Ext.apply(_params,{start:0, limit:15});
+								store.load({params:_params});
+							}
+						}
+					}]
+				},{
+					width:100,
+					items:[{
+						width:75,
+						xtype:"button",
+						cls :'returnBtn',
+						text:'返回',
+						 listeners : {
+							  click : function (btn) {
+						       window.location.href = 'datuminfoStudent.jsp';
+							}
+				        		
+				        }
+					}]
+				}]
+			}]
+		}]
+	});
+	
+	
+	var DatumInfoObj = [
+	            { name:'id', type:'int'},
+	            { name:'datumname', type:'string'},
+	            { name:'datumnumber', type:'string'},
+	            { name:'datumsize', type:'string'},
+	            { name:'datumstyle', type:'string'},
+	            { name:'shareman', type:'string'},
+	            { name:'sharetime', type:'string'},
+	            { name:'sharegrade', type:'int'},
+	            { name:'datumcontent', type:'string'},
+	            { name:'downnum', type:'int'},
+	            { name:'downnumber', type:'string'},
+	            { name:'status', type:'string'},
+	            { name:'toptime', type:'string'},
+	            { name:'transfetag', type:'string'}
+	        ];
+	
+	
+	//获取时间
+	var startdate = Ext.getCmp("startdate").getValue();
+	var enddate = Ext.getCmp("enddate").getValue();
+	
+	var store = new Ext.data.JsonStore({
+		 url: 'datumInfo_findByHqlAndDate1.do',
+		 root: 'root',
+		 totalProperty: 'total',
+		 autoLoad: {params:{start:0, limit:15,startdate:startdate,enddate:enddate}},
+		 fields: DatumInfoObj
+	});
+	
+	//new Ext.grid.RowNumberer(),：序号使用
+	var sm = new Ext.grid.CheckboxSelectionModel({singleSelect: true});//单选
+    var grid = new Ext.grid.GridPanel({
+        store: store,
+        cm: new Ext.grid.ColumnModel({
+			defaults: {	menuDisabled : true},//禁止表头菜单
+			columns:[new Ext.grid.RowNumberer(),
+			    {header: '标示',  width: 100, align:'center', dataIndex: 'id', hidden : true},
+			    {header: '资料名称',  width: 300, align:'center', dataIndex: 'datumname'},
+			    {header: '资料大小',  width: 250, align:'center', dataIndex: 'datumsize'},
+			    {header: '资料格式',  width: 190, align:'center', dataIndex: 'datumstyle'},
+			    {header: '分享时间',  width: 250, align:'center', dataIndex: 'sharetime'},
+	            {header: '资料评分',  width: 180, align:'center', dataIndex: 'sharegrade'},
+	            {xtype: 'actioncolumn',header : '操作', width: 200,align : 'center',
+	            	menuDisabled : true,
+	                items: [ {
+	                    icon: '../../img/btn/delete.png',
+	                    tooltip: '删除',
+	                    getClass: function(value, metaData, record, rowIndex, colIndex, store, view) {      
+	                		/*if('展现中'==record.data.status||'隐藏中'==record.data.status ||'展现中/已置顶'==record.data.status){
+	                              return 'x-hidden'
+	                        }*/
+	                	},
+	                    handler: function(grid, rowIndex, colIndex){
+	                		daleteModle(grid, rowIndex, colIndex);
+	                	}
+	                }]
+	           }
+			]
+        }),
+       // sm:sm,//checkbox
+        stripeRows: true, 	//行分隔符
+        columnLines : true, //列分隔符
+        //autoExpandColumn: 'gysbz', //自动扩展列
+		//loadMask : true,	//加载时的遮罩
+		//frame : true,
+		region:"center",
+        iconCls:'menu-19',
+              
+        bbar: new Ext.PagingToolbar({
+            pageSize: 15,
+            store: store,
+            displayInfo: true
+        }),
+        layout : 'fit',
+        viewConfig:{
+        	forceFit: true, 
+        	scrollOffset: 0
+       	},
+    });
+
+    
+    //上传文件
+    var addForm = new Ext.FormPanel({
+		layout : 'form',
+		url : 'datumInfo_saveDatumInfo.do',
+		fileUpload:true,  
+		frame:true,
+		labelWidth:60,
+		border : false,
+		padding : '15 10 500 10',
+		defaults : {
+			anchor : '100%'
+		},
+		items:[{
+			xtype:'textfield',
+			name:'datumname',
+			fieldLabel:'资料名称',
+			allowBlank : false,
+			height:40,
+			maxLength :32
+		},{
+			xtype:'textfield',
+			name:'upload',
+			fieldLabel:'资料',
+			inputType: 'file',
+			height:40,
+			maxLength :200
+		},{
+			xtype : 'hidden',
+		    name : 'id'
+		},{
+			xtype : 'hidden',
+		    name : 'paper'
+		}]
+	});
+    
+    var addWindow = new Ext.Window({
+    	title:'资料上传',
+		width:620,
+		height:200,
+		closeAction:'hide',
+		modal : true,
+		layout : 'fit',
+		buttonAlign : 'center',
+		items : [addForm],
+		buttons : [{
+			text : '上传',
+			handler : function() {
+			if (addForm.getForm().isValid()) {
+				addForm.getForm().submit({
+				  success : function(form, action) {
+					Ext.Msg.alert('信息提示',action.result.message);
+					addWindow.hide();
+					store.reload();
+				},
+				failure : function(form, action) {
+					if(action.result.errors){
+						Ext.Msg.alert('信息提示',action.result.errors);
+					}else{
+						Ext.Msg.alert('信息提示','连接失败');
+					}
+				},
+				waitTitle : '提交',
+				waitMsg : '正在保存数据，稍后...'
+			});
+			}
+		}
+		},{
+			text : '取消',
+			handler : function() {
+				addWindow.hide();
+			}
+		}]
+	});
+    
+    
+    //取消的方法（删除）
+    var daleteModle = function (grid, rowIndex, colIndex){
+    	var record = grid.getStore().getAt(rowIndex); 
+    	var id = record.data.id;
+    	Ext.MessageBox.confirm('删除提示', '确定要删除该数据吗？', function(c) {
+    	   if(c=='yes'){
+ 		   Ext.Ajax.request({
+	   			url : "datumInfo_deleteDatumInfo.do",
+	   			params:{id : id},
+	   			success : function() {
+	   				store.reload();
+	   			}
+	   		});
+    	     }
+ 		});
+   		
+     }
+  
+     
+    //布局
+    new Ext.Viewport({
+		layout:"fit",
+		items:[{
+			frame:true,
+			title:"我上传资料查询",
+			iconCls:'menu-19',
+			layout:"border",
+			items:[searchForm,grid]
+		}]
+	});
+    
+   
+
+});

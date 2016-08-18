@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+<meta name="format-detection" content="telephone = no" />
+<title>场地申请</title>
+<link rel="icon" href="img/logo1.png" />
+<link rel="stylesheet" href="css/pullToRefresh.css" />
+<link rel="stylesheet" href="css/public.css" />
+<link rel="stylesheet" href="css/media.css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+</head>
+<body>
+	<section class="wrap1">
+		<div class="query_search">
+			<input type="text" class="searchTxt" name="sitename" id="sitename"
+				placeholder="请输入关键字搜索" />
+		</div>
+		<div class="query_search1">
+			<ul>
+				<li id="li1">
+					<p>场地类型</p> <select name="sitetype" id="sitetype">
+
+				</select>
+				</li>
+				<li>
+					<p>使用时间</p> <select>
+						<option>请选择使用时间</option>
+						<option>0.5小时</option>
+						<option>1小时</option>
+						<option>1.5小时</option>
+						<option>2小时</option>
+						<option>2.5小时</option>
+						<option>3小时</option>
+						<option>3.5小时</option>
+						<option>4小时</option>
+				</select>
+				</li>
+				<li id="li2">
+					<p>
+						园<i class="kg2"></i>区
+					</p> <select name="park" id="park">
+						<option value="">全部</option>
+						<option value="白沙">白沙</option>
+						<option value="翠柏">翠柏</option>
+				</select>
+					<button class="searchBtn" onclick="seach()"></button>
+				</li>
+			</ul>
+		</div>
+	</section>
+
+	<section class="wrap1">
+		<ul class="place_list" id="placelist">
+		</ul>
+	</section>
+	<script type="text/javascript">
+		   
+		   $(function () {
+		      groundType();
+		   
+		   });
+		
+		   //场地类型
+		   function  groundType(){
+		         $.ajax({
+					type : "post", 
+					async : false,  
+					url : "mobile_findGroundTypeComb.do",
+					success:function(data,status){
+						data = eval("("+data+")");
+					    var data1 = data.root;
+					     var st;
+					      st+=' <option value="">全部</option>';
+						  $.each(data1,function(rowNum,o){
+						     st+='<option value="'+o.value+'">'+o.text+'</option>';
+						 });
+						 $("#sitetype").html(st);
+					}
+				});
+		   }
+		
+		
+		   //园区
+		   function  parkType(){
+		         $.ajax({
+					type : "post", 
+					async : false,  
+					url : "mobile_findParkComb.do",
+					success:function(data,status){
+						data = eval("("+data+")");
+					    var data1 = data.root;
+					     var pk;
+					      pk+=' <option value="">全部</option>';
+						  $.each(data1,function(rowNum,o){
+						     pk+='<option value="'+o.value+'">'+o.text+'</option>';
+						 });
+						 $("#park").html(pk);
+					}
+				});
+		   }
+		
+		   //查询
+		   function seach(){
+		     //var  startdate  = $("#startdate").val();
+		    // var  enddate  = $("#enddate").val();
+		     var sitetype = $("#sitetype").val();
+		     var park  = $("#park").val();
+		     var sitename = $("#sitename").val();
+		     $.ajax({
+					type : "post", 
+					async : false,  
+					url : "mobile_findListSite.do",
+				    data:{
+				       sitetype:sitetype,
+				       park:park,
+				       sitename:sitename
+				       //startdate:startdate,
+				      // enddate:enddate
+				     },
+					success:function(data,status){
+						data = eval("("+data+")");
+						start = data.currentResult;
+						render(data.root);
+					}
+				});
+		   }
+		
+		
+			function render(data){
+				 var s = "";
+				 $.each(data,function(rowNum,o){
+				      var  sitecondition  = o.sitecondition;
+				        s+='<li>';
+				        s+='<a href="place-content.html?id='+o.id+'">';
+				        s+='<div class="placePic">';
+				        s+='<img src="'+o.photo+'" />';
+					    s+='<div class="placeClass">'+o.sitetype+'</div>';
+					    s+='</div>';
+						s+='<div class="placeName">';
+						s+='<p>'+o.sitename+'</p>';
+						s+='<div class="placeFacility">';
+						if(sitecondition.indexOf('投影仪') !=-1 && sitecondition.indexOf('电脑') !=-1 &&
+		                		  sitecondition.indexOf('话筒') !=-1 && sitecondition.indexOf('空调') !=-1){
+						     s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						     s+= o.sitemodle;
+						}else if (sitecondition.indexOf('投影仪') !=-1 && sitecondition.indexOf('电脑') !=-1 &&
+		                		   sitecondition.indexOf('话筒') !=-1  ){
+						     s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+		                	 s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						     s+= o.sitemodle;  
+		                 }else if (sitecondition.indexOf('投影仪') !=-1 && sitecondition.indexOf('电脑') !=-1 &&
+		                		   sitecondition.indexOf('空调') !=-1 ){
+						     s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                     s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						     s+= o.sitemodle;  
+		                 }else if (sitecondition.indexOf('投影仪') !=-1 && sitecondition.indexOf('话筒') !=-1 &&
+		                		   sitecondition.indexOf('空调') !=-1 ){
+						     s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                	 s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						     s+= o.sitemodle;
+		                 }else if (sitecondition.indexOf('投影仪') !=-1  && sitecondition.indexOf('电脑') !=-1 ){
+		                	 s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						     s+= o.sitemodle;
+		                	   
+		                  }else if (sitecondition.indexOf('投影仪') !=-1  && sitecondition.indexOf('话筒') !=-1 ){
+		                      s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						      s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+		                      s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						      s+= o.sitemodle;
+		                   
+		                   }else if (sitecondition.indexOf('投影仪') !=-1  && sitecondition.indexOf('空调') !=-1 ){
+		                	  s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						      s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                	  s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						      s+= o.sitemodle;
+		                   }else if ( sitecondition.indexOf('电脑') !=-1 && sitecondition.indexOf('话筒') !=-1  &&
+		                		   sitecondition.indexOf('空调') !=-1 ){
+						      s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						      s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+						      s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                	  s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						      s+= o.sitemodle; 
+		                   }else if ( sitecondition.indexOf('电脑') !=-1 && sitecondition.indexOf('空调') !=-1 ){
+		                	   
+						       s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						       s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                	   s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						       s+= o.sitemodle;
+						       
+		                   }else if (sitecondition.indexOf('话筒') !=-1  &&
+		                		   sitecondition.indexOf('空调') !=-1 ){
+		                	  
+						       s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+						       s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                	   s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						       s+= o.sitemodle;
+		                   } else if (sitecondition.indexOf('投影仪') !=-1 ){
+						        s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						        s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						        s+= o.sitemodle;
+		                   }else if (sitecondition.indexOf('电脑') !=-1 ){
+		                	    
+						        s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						        s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						        s+= o.sitemodle;
+		                   }else if (sitecondition.indexOf('话筒') !=-1 ){
+						       s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+						       s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						       s+= o.sitemodle;
+		                   }else{
+						        s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                        s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						        s+= o.sitemodle;
+		                   }
+						s+='</div>';
+						s+='</div>';
+						s+='</a>';
+						s+='</li>';
+				    });
+				    
+				    if(data.length==0){
+					   $("#placelist").html("暂无数据");
+				    }else{
+					   $("#placelist").html(s);
+				    }
+				
+			     }
+		
+		
+		</script>
+</body>
+</html>

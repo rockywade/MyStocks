@@ -1,0 +1,108 @@
+/**/
+.answer_tit {
+	width: 100%;
+	font-size: 22px;
+	line-height: 50px;
+}
+
+.answer_tit h2 {
+	display: inline-block;
+	width: 100%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+#judgeContent {
+	float: left;
+	width: 100%;
+}
+
+#buttonDiv {
+	width: 100px;
+	height: 35px;
+	float: right;
+	padding: 0 15px;
+	margin-top: 20px;
+	border-radius: 5px;
+	font-size: 14px;
+	color: #1a60ac;
+	border: 1px solid #1a60ac;
+	background-color: #fff;
+}
+
+#buttonDiv:hover {
+	color: #fff;
+	background-color: #1a60ac;
+}
+
+.answerB_wrap .reply_com {
+	overflow: hidden;
+	margin: 15px 0;
+}
+
+.answerB_cont {
+	width: 100%;
+	padding: 20px 15px;
+	border-bottom: 1px solid #ccc;
+}
+
+.answerB_cont a {
+	cursor: pointer;
+}
+
+.answerB_cont a:hover {
+	text-decoration: underline;
+}
+
+.answerB_contImg {
+	height: 150px;
+	margin: 10px 0;
+}
+
+.answerB_wrap {
+	width: 900px;
+	margin: 0 100px;
+	margin-top: 20px;
+}
+
+.answerB_cont p {
+	font-size: 15px;
+	line-height: 2;
+}
+
+.answerB_wrap .answer_reply {
+	min-height: 500px;
+	padding-bottom: 100px;
+	position: relative;
+}
+
+.reply_wrap1 p {
+	display: inline-block;
+	width: 100%;
+	line-height: 1.5;
+	padding: 8px 0 0;
+}
+
+.reply_wrap1 p img {
+	max-height: 300px;
+}
+
+.reply_wrap1 .reply_name {
+	width: 100%;
+	padding-top: 5px;
+}
+
+.reply_wrap1 .reply_name i {
+	margin: 0 10px;
+	color: #ccc;
+}
+
+.reply_wrap1 .reply_name span {
+	font-size: 13px;
+	color: #999;
+}
+
+.answerB_wrap .reply_com input[type^=text] {
+	width: 700px;
+}

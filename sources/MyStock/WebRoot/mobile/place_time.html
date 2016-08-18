@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+<meta name="format-detection" content="telephone = no" />
+<title>选择时间</title>
+<link rel="icon" href="img/logo1.png" />
+<link rel="stylesheet" href="css/pullToRefresh.css" />
+<link rel="stylesheet" href="css/public.css" />
+<link rel="stylesheet" href="css/media.css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+</head>
+<body>
+	<section class="wrap1 time_top_wrap">
+		<div class="time_top">
+			<ul class="time_topUl1">
+				<li><button class="time_topWeek time_topCur">本周</button></li>
+				<li><button class="time_topWeek">下周</button></li>
+			</ul>
+			<ul class="time_topUl2">
+				<li><samp class="tDisable"></samp>
+					<p>不开放</p></li>
+				<li><samp class="booked"></samp>
+					<p>已预约</p></li>
+				<li><samp class="empty"></samp>
+					<p>待审核</p></li>
+				<li><samp class="meeting"></samp>
+					<p>一周会议</p></li>
+			</ul>
+		</div>
+	</section>
+	<section class="wrap1 time_table_wrap">
+		<table class="time_table" cellpadding="0" cellspacing="0">
+			<tr>
+				<td class="tdDay" id="t1">
+					<p>1/22</p> <samp>Mon</samp>
+				</td>
+				<td class="tdTime">
+					<ul>
+						<li class="timeCan">8:00-9:00</li>
+						<li class="booked">9:00-10:00</li>
+						<li class="empty">10:00-11:00</li>
+						<li class="timeCan">11:00-12:00</li>
+						<li class="tDisable">12:00-13:00</li>
+						<li class="tDisable">13:00-14:00</li>
+						<li class="timeCan">14:00-15:00</li>
+						<li class="meeting">15:00-16:00</li>
+						<li class="timeCan">16:00-17:00</li>
+						<li class="timeCan">17:00-18:00</li>
+						<li class="timeCan">18:00-19:00</li>
+						<li class="timeCan">19:00-20:00</li>
+						<li class="timeCan">20:00-21:00</li>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td class="tdDay" id="t2">
+					<p>1/23</p> <samp>Tue</samp>
+				</td>
+				<td class="tdTime">
+					<ul>
+						<li class="timeCan">8:00-9:00</li>
+						<li class="booked">9:00-10:00</li>
+						<li class="empty">10:00-11:00</li>
+						<li class="timeCan">11:00-12:00</li>
+						<li class="tDisable">12:00-13:00</li>
+						<li class="tDisable">13:00-14:00</li>
+						<li class="timeCan">14:00-15:00</li>
+						<li class="meeting">15:00-16:00</li>
+						<li class="timeCan">16:00-17:00</li>
+						<li class="timeCan">17:00-18:00</li>
+						<li class="timeCan">18:00-19:00</li>
+						<li class="timeCan">19:00-20:00</li>
+						<li class="timeCan">20:00-21:00</li>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td class="tdDay" id="t3">
+					<p>1/24</p> <samp>Wed</samp>
+				</td>
+				<td class="tdTime">
+					<ul>
+						<li class="timeCan">8:00-9:00</li>
+						<li class="booked">9:00-10:00</li>
+						<li class="empty">10:00-11:00</li>
+						<li class="timeCan">11:00-12:00</li>
+						<li class="tDisable">12:00-13:00</li>
+						<li class="tDisable">13:00-14:00</li>
+						<li class="timeCan">14:00-15:00</li>
+						<li class="meeting">15:00-16:00</li>
+						<li class="timeCan">16:00-17:00</li>
+						<li class="timeCan">17:00-18:00</li>
+						<li class="timeCan">18:00-19:00</li>
+						<li class="timeCan">19:00-20:00</li>
+						<li class="timeCan">20:00-21:00</li>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td class="tdDay" id="t4">
+					<p>1/25</p> <samp>Thu</samp>
+				</td>
+				<td class="tdTime">
+					<ul>
+						<li class="timeCan">8:00-9:00</li>
+						<li class="booked">9:00-10:00</li>
+						<li class="empty">10:00-11:00</li>
+						<li class="timeCan">11:00-12:00</li>
+						<li class="tDisable">12:00-13:00</li>
+						<li class="tDisable">13:00-14:00</li>
+						<li class="timeCan">14:00-15:00</li>
+						<li class="meeting">15:00-16:00</li>
+						<li class="timeCan">16:00-17:00</li>
+						<li class="timeCan">17:00-18:00</li>
+						<li class="timeCan">18:00-19:00</li>
+						<li class="timeCan">19:00-20:00</li>
+						<li class="timeCan">20:00-21:00</li>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td class="tdDay" id="t5">
+					<p>1/26</p> <samp>Fri</samp>
+				</td>
+				<td class="tdTime">
+					<ul>
+						<li class="timeCan">8:00-9:00</li>
+						<li class="booked">9:00-10:00</li>
+						<li class="empty">10:00-11:00</li>
+						<li class="timeCan">11:00-12:00</li>
+						<li class="tDisable">12:00-13:00</li>
+						<li class="tDisable">13:00-14:00</li>
+						<li class="timeCan">14:00-15:00</li>
+						<li class="meeting">15:00-16:00</li>
+						<li class="timeCan">16:00-17:00</li>
+						<li class="timeCan">17:00-18:00</li>
+						<li class="timeCan">18:00-19:00</li>
+						<li class="timeCan">19:00-20:00</li>
+						<li class="timeCan">20:00-21:00</li>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td class="tdDay" id="t3">
+					<p>1/27</p> <samp>Sat</samp>
+				</td>
+				<td class="tdTime">
+					<ul>
+						<li class="tDisable">8:00-9:00</li>
+						<li class="tDisable">9:00-10:00</li>
+						<li class="tDisable">10:00-11:00</li>
+						<li class="tDisable">11:00-12:00</li>
+						<li class="tDisable">12:00-13:00</li>
+						<li class="tDisable">13:00-14:00</li>
+						<li class="tDisable">14:00-15:00</li>
+						<li class="tDisable">15:00-16:00</li>
+						<li class="tDisable">16:00-17:00</li>
+						<li class="tDisable">17:00-18:00</li>
+						<li class="tDisable">18:00-19:00</li>
+						<li class="tDisable">19:00-20:00</li>
+						<li class="tDisable">20:00-21:00</li>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td class="tdDay">
+					<p>1/28</p> <samp>Sun</samp>
+				</td>
+				<td class="tdTime">
+					<ul>
+						<li class="tDisable">8:00-9:00</li>
+						<li class="tDisable">9:00-10:00</li>
+						<li class="tDisable">10:00-11:00</li>
+						<li class="tDisable">11:00-12:00</li>
+						<li class="tDisable">12:00-13:00</li>
+						<li class="tDisable">13:00-14:00</li>
+						<li class="tDisable">14:00-15:00</li>
+						<li class="tDisable">15:00-16:00</li>
+						<li class="tDisable">16:00-17:00</li>
+						<li class="tDisable">17:00-18:00</li>
+						<li class="tDisable">18:00-19:00</li>
+						<li class="tDisable">19:00-20:00</li>
+						<li class="tDisable">20:00-21:00</li>
+					</ul>
+				</td>
+			</tr>
+		</table>
+		<div class="place_nextBtn place_nextBtn1ed">
+			<a href="javascript:void(0);" onclick="nextOne()">下一步</a>
+		</div>
+	</section>
+	<script type="text/javascript">
+		    $(function () {
+		       tset();
+		     });
+		     var id;
+		     function tset(){
+		        var s=location.search.substring(1);//这个就是页面?后面的内容，自己处理一下
+                 id =  s.split("=")[1];
+                
+		     }
+		     
+		     function nextOne(){
+		         var  time = $(".timeCanCur").html();
+		         var  date = $(".timeCanCur").parent().parent().siblings(".tdDay").children("p").html();
+		         var t1 =$("#t1").text();
+		         
+		         
+		         alert(date+time+t1);
+		         window.location.href = "place_applyForForm.html?id="+id; 
+		          
+		     }
+		     
+		 </script>
+
+</body>
+</html>

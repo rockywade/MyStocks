@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+<meta name="format-detection" content="telephone = no" />
+<title>线下辅导</title>
+<link rel="icon" href="img/logo1.png" />
+<link rel="stylesheet" href="css/pullToRefresh.css" />
+<link rel="stylesheet" href="css/public.css" />
+<link rel="stylesheet" href="css/media.css" />
+</head>
+<body>
+	<section class="title">
+		<ul class="tutoring_ul wrap1">
+			<li class="cur"><a href="javascript:;"
+				onclick="myProject('allpro')">全部项目</a></li>
+			<li><a href="javascript:;" onclick="myProject('join')">我参与的项目</a></li>
+			<li><a href="javascript:;" onclick="myProject('takecare')">我关注的项目</a></li>
+		</ul>
+	</section>
+	<section class="tutoring_wrap wrap2" id="wrapper">
+		<ul class="tutoring_list" id="tutoringlist">
+		</ul>
+	</section>
+
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/iscroll.js"></script>
+	<script type="text/javascript" src="js/pullToRefresh.js"></script>
+	<script type="text/javascript" src="js/public.js"></script>
+	<script>
+		  $(function () {
+		      getData();
+		   })
+		   
+		    var start = 0;
+	    	var limit = 4;//保证页面中limit的初始值一致
+	    	var loadFlg = false;
+		    function getData(){
+		    	var s;
+				$.ajax({
+					type : "post", 
+					async : false,  
+					url : "mobile_findPageOfflineFd.do",
+				    data:{start:start, limit:limit},
+					success:function(data,status){
+						data = eval("("+data+")");
+						//start = data.currentResult;
+						if(!loadFlg){
+							render(data.root);
+						}else{
+							s = render(data.root);
+						}
+						
+					}
+				});
+				return s;
+			}
+			
+			//我参与的项目
+			function myJoin(){
+				//alert(1);
+				var s;
+				$.ajax({
+					type : "post", 
+					async : false,  
+					url : "mobile_findPageCy.do",
+				    data:{start:start, limit:limit},
+					success:function(data,status){
+						data = eval("("+data+")");
+						//start = data.currentResult;
+						if(!loadFlg){
+							render(data.root);
+						}else{
+							s = render(data.root);
+						}
+						
+					}
+				});
+				return s;
+			}
+			
+			//我关注的项目
+			function myTake(){
+		    	var s;
+				$.ajax({
+					type : "post", 
+					async : false,  
+					url : "mobile_findPageTb.do",
+				    data:{start:start, limit:limit},
+					success:function(data,status){
+						data = eval("("+data+")");
+						if(!loadFlg){
+							render(data.root);
+						}else{
+							s = render(data.root);
+						}
+						
+					}
+				});
+				return s;
+			}
+			var projectName;
+			function myProject(proName){
+				start = 0;
+				limit = 4;
+				projectName = proName;
+				if(proName=='allpro'){
+					window.location.href = "tutoring.html";
+				}else if(proName=='join'){
+					myJoin();
+				}else if(proName=='takecare'){
+					myTake();
+				}
+			}
+			
+			
+			function render(data){
+				var s = "";
+				$.each(data,function(rowNum,o){
+					    s+='<li>';
+				        s+=' <a href="tutoring-content.jsp?xmid='+o.xmid+'&bmstatus='+o.bmstatus+'">';
+				        if(o.fxxm){
+				         s+='<samp class="tutoring_num1">1</samp><p class="tutoring_tit">'+o.fxxm+'</p>';
+				        }else{
+				          s+='<samp class="tutoring_num1">1</samp><p class="tutoring_tit">'+o.xmmc+'</p>';
+				        }
+				        s+=' <samp class="tutoring_num2">'+o.bmnumber+'/'+o.xmzise+'</samp>';
+				        s+='<samp class="tutoring_state">'+o.bmstatus+'</samp>';
+				        s+='</a>';
+				        s+='</li>';
+				    });
+				    if(!loadFlg){
+				    	if(data.length==0){
+						   $("#tutoringlist").html("暂无数据");
+					    }else{
+						   $("#tutoringlist").html(s);
+					    }
+				    }else{
+						return s;				    
+				    }
+			     }
+			     
+			   //取消
+			  function deleteDetail(id){
+			      var r = window.confirm("是否确定取消该请假吗?");
+		          if(r){
+		          $.ajax({
+		          type : "POST",
+   			      url : "mobile_deleteLeaveInfo.do",
+   			      data:{
+				     id:id
+			        },
+   			      async: false,
+   			      success : function(data) {
+				    window.location.reload();
+   			    }
+   		     });
+   		     }
+			}
+		   
+		   
+		
+		
+			refresher.init({
+				id: "wrapper", //<---------------- 上拉下拉 --------------------------------------------------------------------┐
+				pullDownAction: Refresh,
+				pullUpAction: Load
+			});
+
+			function Refresh() {
+				setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
+					var el, li, i;
+					el = document.querySelector("#wrapper .tutoring_list");
+					//这里写你的刷新代码				
+					document.getElementById("wrapper").querySelector(".pullDownIcon").style.display = "none";
+					document.getElementById("wrapper").querySelector(".pullDownLabel").innerHTML = "<img src='img/ok.png'/>刷新成功";
+					setTimeout(function() {
+						
+					   //下拉刷新
+					  wrapper.refresh();
+						
+						window.location.href = "tutoring.html"
+						
+					}, 500); //模拟qq下拉刷新显示成功效果
+					/****remember to refresh after  action completed！ ---yourId.refresh(); ----| ****/
+				}, 500);
+			}
+
+			function Load() {
+				setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
+					var el, li, i;
+					el = document.querySelector("#wrapper .tutoring_list");
+					loadFlg = true;
+					start+=limit;
+					var str;
+					if(projectName=='allpro'){
+						str= getData();
+					}else if(projectName=='join'){
+						str = myJoin();
+					}else if(projectName=='takecare'){
+						str = myTake();
+					}
+					li = document.createElement('li');
+					if(str){
+						li.innerHTML = str;//刷新内容
+					}
+					el.appendChild(li, el.childNodes[0]);
+					loadFlg = false;
+					wrapper.refresh(); /****remember to refresh after action completed！！！   ---id.refresh(); --- ****/
+				}, 1000);
+			}
+		</script>
+</body>
+</html>

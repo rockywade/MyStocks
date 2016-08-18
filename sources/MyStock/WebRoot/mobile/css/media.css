@@ -1,0 +1,323 @@
+@media only screen and (min-width: 359px){
+	/* 选择时间 */
+	.tdTime ul li{
+		width: 90px;
+	}
+	
+	.place_wrap .scroller{
+		padding: 80px 0 0 0;
+	}
+}
+@media only screen and (min-width: 400px){
+	/* 选择时间 */
+	.tdTime ul li{
+		width: 95px;
+		font-size: 13px;
+		margin: 5px 7px;
+	}
+	.tdDay p,.tdDay samp{
+		font-size: 13px;
+	}
+	
+	
+}
+@media only screen and (min-width: 479px) {
+	/*登录页 */
+	.login_from input{
+		font-size: 17px;
+		padding: 15px 0;
+	}
+	.login_btn{
+		margin-top: 20%;
+	}
+	
+	/* 选择时间 */
+	.tdDay{
+		width: 15%;
+	}
+	.place_wrap .scroller{
+		padding: 90px 0 0 0;
+	}
+}
+@media only screen and (min-width: 539px) {
+	/*登录页 */
+	.login_from input{
+		font-size: 18px;
+		padding: 18px 0;
+	}
+	/*服务大厅*/
+	.hall_name p{
+		line-height: 60px;
+		font-size: 18px;
+	}
+	.hall_list ul li a{
+		padding: 35px 0;
+	}
+	.hall_list ul li a p{
+		font-size: 18px;
+	}
+	
+	/*活动报名*/
+	.sign_wrap .scroller{
+		padding: 83px 0 0;
+	}
+	.sign_ul li a{
+		font-size: 17px;
+		padding: 7px 0;
+	}
+	.sign_list li a samp,.sign_list li a p{
+		font-size: 17px;
+	}
+	.sign_list li a samp.sign_num1{
+		width: 40px;
+		padding-left: 5px;
+		margin-right: 5px;
+	}
+	.sign_list li a samp.sign_num2{
+		width: 80px;
+		float: right;
+	}
+	.sign_list li a p.signCon_tit{
+		width: -webkit-calc(100% - 140px);
+		width: -moz-calc(100% - 140px);
+		width: calc(100% - 140px);
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+	
+	/*活动详情*/
+	.content_tit{
+		font-size: 17px;
+		margin: 40px 0;
+	}
+	.table_form tr td,.table_form tr td i,.table_form tr td b{
+		font-size: 16px;
+	}
+	.table_form tr td.td1{
+		width: 95px;
+	}
+	.content_BtnWrap{
+		bottom: 20px;
+	}
+	.content_BtnWrap .content_Btn{
+		font-size: 16px;
+		padding: 10px 25px;
+	}
+	.content_ok p{
+		width: 66% !important;
+		 margin-top: 40px;
+	}
+	
+	/*场地申请*/
+	.title_ul li a{
+		padding: 11px 0;
+		font-size: 17px;
+	}
+	.query_search{
+    	padding: 8px 0 7px;
+	}
+	.query_search input{
+		font-size: 15px;
+	}
+	.place_list{
+		padding: 10px 1% 15px;
+	}
+	.place_list li{
+		padding: 13px;
+	}
+	.place_list li a{
+		box-shadow: 0 0 7px #999;
+		-moz-box-shadow: 0 0 7px #999;
+		-webkit-box-shadow: 0 0 7px #999;
+	}
+	.place_list li a .placeClass{
+		font-size: 15px;
+	}
+	.place_list li a .placeName  p{
+		font-size: 15px;
+	}
+	.place_list li a .placeFacility samp{
+		width: 16px;
+	}
+	
+	/* 场地详情 */
+	.place_info{
+		padding: 7px 0;
+	}
+	.place_info ul li{
+		padding: 5px 0;
+		font-size: 15px;
+	}
+	.place_info ul li .placeFacility samp{
+		margin: 0 2px;
+	}
+	.place_con h3{
+		font-size: 17px;
+		padding-bottom: 15px;
+	}
+	.place_con p{
+		font-size: 15px;
+		line-height: 1.8;
+	}
+	.place_agree{
+		margin-top: 15px;
+	}
+	.place_nextBtn a{
+		padding: 7px 25px;
+		font-size: 15px;
+	}
+	 
+	 
+	/*选择时间*/
+	.time_topUl1 li .time_topWeek{
+		padding: 7px 30px;
+	}
+	.time_topUl1{
+		margin-top: 25px;
+	}
+	.time_topUl2{
+		padding: 25px 0 20px;
+	}
+	.tdTime ul li{
+		width: 100px;
+		font-size: 14px;
+		margin: 5px;
+	}
+	.time_table_wrap{
+		margin-top: 125px;
+	}
+	
+	
+	/*项目详情  */
+	.icon-star{
+		width: 30px;
+		height: 30px;
+		margin-top: 35px;
+	}
+}
+@media only screen and (min-width: 600px) {
+	/*登录页 */
+	.login_from input{
+		font-size: 19px;
+		padding: 20px 0;
+	}
+	
+	/*场地详情*/
+	.place_list{
+		padding: 10px 0.8% 15px;
+	}
+	.place_list li{
+		padding: 15px;
+	}
+	.place_list li a .placeName{
+		padding:12px 5px;
+	}
+	.place_list li a .placeClass{
+		font-size: 16px;
+	}
+	.place_list li a .placeName  p{
+		font-size: 16px;
+	}
+	.place_list li a .placeFacility samp{
+		width: 17px;
+	}
+	
+	/* 选择时间 */
+	.tdDay{
+		width: 13%;
+	}
+	
+}
+@media only screen and (min-width: 700px) {
+	/*登录页 */
+	.login_from input{
+		font-size: 22px;
+		padding: 24px 0;
+	}
+	
+}
+@media only screen and (max-width: 321px) {
+	/*登录页 */
+	.login_from input{
+		font-size: 14px;
+		padding: 10px 0;
+	}
+	/*服务大厅*/
+	.hall_list ul li a{
+		padding: 21px 0;
+	}
+	.hall_list ul li a p{
+		font-size: 14px;
+		padding: 2px 0 0;
+	}
+	
+	/*活动详情*/
+	.content_tit{
+		font-size: 13px;
+		margin: 25px 0;
+	}
+	.table_form tr td,.table_form tr td i,.table_form tr td b{
+		font-size: 13px;
+	}
+	.table_form tr td.td1{
+		width: 75px;
+	}
+	.content_ok p{
+		width: 77% !important;
+	}
+	.content_ok img{
+		margin-right: 10px !important;
+	}
+	
+	/*活动申报*/
+	.applyFor_popup p{
+		margin-top: 30px;
+	}
+	
+	/*场地详情*/
+	.place_wrap .scroller{
+		padding: 80px 0 0 0;
+	}
+	.place_list li a .placeClass{
+		font-size: 13px;
+	}
+	.place_list li a .placeName p{
+		font-size: 13px;
+	}
+	.expertName samp{
+		font-size: 13px;
+	}
+	.place_list li a .placeFacility samp{
+		width: 11px;
+	}
+	
+	/* 选择时间 */
+	.tdTime ul li{
+		width: 80px;
+		font-size: 12px;
+		margin: 3px;
+	}
+	
+	/* 申请表 */
+	.confirm_wrap .table_form tr td{
+		font-size: 13px;
+	}
+	.confirm_wrap .table_form tr .td1{
+		width: 60px;
+	}
+	
+	/*项目详情  */
+	.icon-star{
+		width: 20px;
+		height: 20px;
+		margin-top: 23px;
+	}
+	.tutoring_cancel .popup_con p{
+		width: 65% !important;
+	}
+	
+	
+	
+	
+
+}

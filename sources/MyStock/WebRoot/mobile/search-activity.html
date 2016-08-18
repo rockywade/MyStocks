@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+<meta name="format-detection" content="telephone = no" />
+<title>活动搜索</title>
+<link rel="icon" href="img/logo.png" />
+<link rel="stylesheet" href="css/pullToRefresh.css" />
+<link rel="stylesheet" href="css/mobiscroll.css">
+<link rel="stylesheet" href="css/public.css" />
+<link rel="stylesheet" href="css/media.css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+			//搜索
+			function serchActivity(){
+				getAttendActivity();
+				//alert($("#activityname").val());
+			}
+			//后台访问
+			var start = 0;
+			var limit = 30;
+			function getAttendActivity(){
+				//alert($("#xkjz").text());
+				$.ajax({
+					type : "post", 
+					async : false,  
+					url:"mobile_couldJoinActivity.do",
+					data:{start:start, limit:limit,activityname:$("#activityname").val()},
+					success : function(data,status){
+						data = eval("("+data+")");
+						start = data.currentResult;
+						renderAttendActivity(data.root);
+					}
+				});
+			}
+			
+			function renderAttendActivity(data){
+			var s = "";
+			$.each(data,function(rowNum,o){
+			        s+=' <li><a href="activity-content.jsp?activityid='+o.activityid+'">';
+					s+='<samp class="sign_num1">'+(rowNum+1)+'</samp><p class="signCon_tit">'+o.activityname+'</p><samp class="sign_num2">'+o.attendnum+'/'+o.capacity+'</samp>';
+					s+='</a></li>';
+			    });
+			    
+			    if(data.length==0){
+				   $("#attendActivity").html("暂无数据");
+			    }else{
+				   $("#attendActivity").html(s);
+			    }
+			
+		     }
+			
+		</script>
+
+</head>
+<body>
+	<section class="wrap1">
+		<div class="query_search">
+			<input id="activityname" type="text" class="searchTxt" /><input
+				type="button" class="searchBtn" value="" onclick="serchActivity()" />
+		</div>
+	</section>
+	<section class="wrap2">
+		<ul class="sign_list search_act" id="attendActivity">
+		</ul>
+	</section>
+</body>
+</html>

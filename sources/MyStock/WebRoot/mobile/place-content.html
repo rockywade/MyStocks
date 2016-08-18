@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+<meta name="format-detection" content="telephone = no" />
+<title>场地详情</title>
+<link rel="icon" href="img/logo1.png" />
+<link rel="stylesheet" href="css/pullToRefresh.css" />
+<link rel="stylesheet" href="css/public.css" />
+<link rel="stylesheet" href="css/media.css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+</head>
+<body>
+	<section class="wrap1">
+		<div id="placeinfo"></div>
+		<div class="place_con">
+			<h3>求是学院活动场地申请协议</h3>
+			<p>1.2016-2017学年秋学期开始，求是学院师生可以通过网络办理活动场地借用手续。</p>
+			<p>2.活动场地借用范围仅限于学生班会；学生组织例会；党、团组织培训；非盈利性学术、知识性讲座‘非盈利性各类辩论赛等。</p>
+			<p>3.活动场地使用请遵照宿舍管理相关规定。</p>
+			<p>4.用实名申请活动场地借用，以“浙大通行证”用户名和密码登录。所填手机号码和电子信箱务必正确无误，否则无法获得短信与邮件提示。系统管理人员在24小时内对申请进行处理，请及时查看审批结果。</p>
+			<p>5.“借用事由”必须详细、真实。如果发现申请用途与实际不符、或者违规使用活动场地，申请人将受到严肃处理。</p>
+			<p>6.每天可供借用的活动场地数量有限定。如系统提示当天可供借用场地已用完，请调整活动时间。</p>
+			<p>7.寒暑假期间不能借用活动场地。</p>
+		</div>
+		<div class="place_next">
+			<p class="place_agree place_conAgree">
+				<i class="place_Chk"></i>
+				<samp>我同意以上协议</samp>
+			</p>
+			<!-- class="place_nextBtn place_nextBtn1"  -->
+			<div class=" place_nextBtn place_nextBtn1">
+				<a href="javascript:void(0);" onclick="nextDo()">下一步</a>
+			</div>
+		</div>
+	</section>
+
+	<script type="text/javascript">
+		    $(function () {
+		       details();
+		    });
+		    
+		    var  id;
+		   function details(){
+		        var s=location.search.substring(1);//这个就是页面?后面的内容，自己处理一下
+                 id =  s.split("=")[1];
+                var dateAll = null;
+		         $.ajax({
+		          type : "POST",
+   			      url : "mobile_findSing.do",
+   			      data:{
+				      id:id
+			        },
+   			      async: false,
+   			      success : function(o) {
+				      dateAll = eval("("+o+")");
+				       
+   			      }
+   		      });
+                
+                var sitecondition = dateAll.data.sitecondition;
+                var s ='<div class="place_conPic">';
+                 s += '<img src="'+dateAll.data.photo+'" />';
+                 s += '</div>';
+                 s += '<div class="place_info">';
+                 s += '<ul>';
+                 s += '<li>'+dateAll.data.sitename+'</li>';
+                 s += '<li>会议室</li>';
+                 s += '<li>';
+                 s += '<div class="placeFacility">';
+                 if(sitecondition.indexOf('投影仪') !=-1 && sitecondition.indexOf('电脑') !=-1 &&
+		                		  sitecondition.indexOf('话筒') !=-1 && sitecondition.indexOf('空调') !=-1){
+						     s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						     s+= dateAll.data.sitemodle;
+						}else if (sitecondition.indexOf('投影仪') !=-1 && sitecondition.indexOf('电脑') !=-1 &&
+		                		   sitecondition.indexOf('话筒') !=-1  ){
+						     s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+		                	 s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						     s+= dateAll.data.sitemodle;  
+		                 }else if (sitecondition.indexOf('投影仪') !=-1 && sitecondition.indexOf('电脑') !=-1 &&
+		                		   sitecondition.indexOf('空调') !=-1 ){
+						     s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                     s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						     s+=  dateAll.data.sitemodle;    
+		                 }else if (sitecondition.indexOf('投影仪') !=-1 && sitecondition.indexOf('话筒') !=-1 &&
+		                		   sitecondition.indexOf('空调') !=-1 ){
+						     s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                	 s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						     s+=  dateAll.data.sitemodle;  
+		                 }else if (sitecondition.indexOf('投影仪') !=-1  && sitecondition.indexOf('电脑') !=-1 ){
+		                	 s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						     s+=  dateAll.data.sitemodle;  
+		                	   
+		                  }else if (sitecondition.indexOf('投影仪') !=-1  && sitecondition.indexOf('话筒') !=-1 ){
+		                      s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						      s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+		                      s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						      s+=  dateAll.data.sitemodle;  
+		                   
+		                   }else if (sitecondition.indexOf('投影仪') !=-1  && sitecondition.indexOf('空调') !=-1 ){
+		                	  s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						      s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                	  s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						      s+=  dateAll.data.sitemodle;  
+		                   }else if ( sitecondition.indexOf('电脑') !=-1 && sitecondition.indexOf('话筒') !=-1  &&
+		                		   sitecondition.indexOf('空调') !=-1 ){
+						      s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						      s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+						      s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                	  s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						      s+=  dateAll.data.sitemodle;   
+		                   }else if ( sitecondition.indexOf('电脑') !=-1 && sitecondition.indexOf('空调') !=-1 ){
+		                	   
+						       s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						       s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                	   s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						       s+=  dateAll.data.sitemodle;  
+						       
+		                   }else if (sitecondition.indexOf('话筒') !=-1  &&
+		                		   sitecondition.indexOf('空调') !=-1 ){
+		                	  
+						       s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+						       s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                	   s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						       s+=  dateAll.data.sitemodle;  
+		                   } else if (sitecondition.indexOf('投影仪') !=-1 ){
+						        s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						        s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						        s+=  dateAll.data.sitemodle;  
+		                   }else if (sitecondition.indexOf('电脑') !=-1 ){
+		                	    
+						        s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						        s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						        s+=  dateAll.data.sitemodle;  
+		                   }else if (sitecondition.indexOf('话筒') !=-1 ){
+						       s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+						       s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						       s+=  dateAll.data.sitemodle;  
+		                   }else{
+						        s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                        s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						        s+=  dateAll.data.sitemodle;  
+		                   }
+						  s += ' </div>';
+						  s += ' </li>';
+					
+						  s += '<li>'+dateAll.data.counsellor+'老师</li>';
+						  s += ' </ul>';
+						  s += ' </div>';
+                  $("#placeinfo").html(s);
+		      }
+		      
+		      
+		      function nextDo(){
+		           window.location.href = "place_time.html?id="+id;   
+		      }
+		      
+		</script>
+
+</body>
+</html>

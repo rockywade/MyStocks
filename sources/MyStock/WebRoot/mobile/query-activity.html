@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+<meta name="format-detection" content="telephone = no" />
+<title>申报查询</title>
+<link rel="icon" href="img/logo.png" />
+<link rel="stylesheet" href="css/pullToRefresh.css" />
+<link rel="stylesheet" href="css/public.css" />
+<link rel="stylesheet" href="css/media.css" />
+</head>
+<body>
+	<section class="title wrap1">
+		<ul class="title_ul">
+			<li><a href="activity-applyFor.html">活动申报</a></li>
+			<li class="thisCur"><a href="query-activity.html">申报查询</a></li>
+		</ul>
+		<div class="query_search">
+			<input id="activityname" type="text" class="searchTxt"
+				placeholder="请输入关键字搜索" /><input type="button"
+				style="cursor: pointer;" class="searchBtn" value=""
+				onclick="getSerchForApply()" />
+		</div>
+	</section>
+	<section class="content query_wrap" id="wrapper">
+
+		<ul class="query_list" id="myApplyList">
+		</ul>
+	</section>
+	<!-- 确认弹窗 -->
+	<section class="popup popup_Ask">
+		<div class="popup_wrap">
+			<div class="popup_con">
+				<p>您确定取消此次活动申报吗?</p>
+			</div>
+			<div class="popup_btn" id="cancelPop">
+				<button class="popupBtn_cancel">取消</button>
+				<button class="popupBtn2 expert_agree" onclick="cencal()">确定</button>
+			</div>
+		</div>
+	</section>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/iscroll.js"></script>
+	<script type="text/javascript" src="js/pullToRefresh.js"></script>
+	<script type="text/javascript" src="js/public.js"></script>
+	<script>
+			$(document).ready(function(){
+	    		getSerchForApply();
+			});
+			var loadFlg = false;
+			var start = 0;
+			var limit = 8;
+			function getSerchForApply(){
+				var s;
+				$.ajax({
+					type : "post", 
+					async : false,  
+					url:"mobile_listMyActivity.do",
+					data:{start:start, limit:limit,activityname:$("#activityname").val()},
+					success : function(data,status){
+						data = eval("("+data+")");
+						if(!loadFlg){
+							renderMyApply(data.root);
+						}else{
+							s = renderMyApply(data.root);
+						}
+					}
+				});
+				return s;
+			}
+
+			function renderMyApply(data){
+			var s = "";
+			$.each(data,function(rowNum,o){
+			        s+=' <li>';
+					s+='<div class="queryTit1"><p>活动名称</p><samp>'+o.activityname+'</samp></div>';
+					s+='<div class="queryTit1"><p>类<i></i>别</p><samp>'+o.activitygenre+'</samp></div>';
+					s+='<div class="queryTit2"><p>所在学期</p><samp>'+o.inschoolterm+'</samp></div>';
+					s+='<div class="queryTit3"><p>时间</p><samp>'+o.activitytime+'</samp></div>';
+					s+='<div class="queryTit1"><p>活动地点</p><samp>'+o.activityplace+'</samp></div>';
+					s+='<div class="queryTit2"><p>活动评分</p><samp>'+o.score+'</samp></div>';
+					if(o.applystyle=="已取消"){
+						s+='<div class="queryTit2 acSstate acSstate4"><samp>'+o.applystyle+'</samp></div>';
+					}else if(o.applystyle=="已通过"){
+						s+='<div class="queryTit2 acSstate acSstate3"><samp>'+o.applystyle+'</samp></div>';
+					}else if(o.applystyle=="不通过"){
+						s+='<div class="queryTit2 acSstate acSstate2"><samp>'+o.applystyle+'</samp></div>';
+					}else if(o.applystyle=="待审核"){
+						s+='<div class="queryTit2 acSstate acSstate1"><samp>'+o.applystyle+'</samp></div>';
+					}
+					if(o.applystyle=="待审核"){
+						s+='<div class="queryTit1"><button class="cancelBtn-a queryBtn-act" onclick=getcancelId("'+o.activityid+'")>取消</button></div>';
+					}
+					s+='</li>';
+			    });
+			    if(!loadFlg){
+				    if(data.length==0){
+					   $("#myApplyList").html("<br/>暂无数据");
+				    }else{
+				    	$("#myApplyList").html(s);
+				    }
+				}else{
+				   return s;
+				}
+		     }
+		     
+		     var id;
+		     function getcancelId(cancelId){
+		     	id = cancelId;
+		     	showEnter();
+		     }
+		     function showEnter(){
+		     	$(".popup").show().animate({opacity:'1'},300);
+		     }
+		     function cencal(){
+		     	$.ajax({
+					type : "post", 
+					async : false,  
+					url:"mobile_applyActivity.do",
+					data:{activityid:id, checkkey:'1'},
+					success: function(data,status){
+						data = eval("("+data+")");
+						if(data.message=="取消成功!"){
+							window.location.href = "query-activity.html";
+						}
+					}
+				});
+		     }
+		
+			refresher.init({
+				id: "wrapper", //<---------------- 上拉下拉 --------------------------------------------------------------------┐
+				pullDownAction: Refresh,
+				pullUpAction: Load
+			});
+
+			function Refresh() {
+				setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
+					var el, li, i;
+					el = document.querySelector("#wrapper .query_list");
+					//这里写你的刷新代码				
+					document.getElementById("wrapper").querySelector(".pullDownIcon").style.display = "none";
+					document.getElementById("wrapper").querySelector(".pullDownLabel").innerHTML = "<img src='img/ok.png'/>刷新成功";
+					setTimeout(function() {
+						//下拉刷新
+						wrapper.refresh();
+						window.location.href = "query-activity.html";
+					}, 500); //模拟qq下拉刷新显示成功效果
+					/****remember to refresh after  action completed！ ---yourId.refresh(); ----| ****/
+				}, 500);
+			}
+			
+			
+			function Load() {
+				setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
+					var el, li, i;
+					el = document.querySelector("#wrapper .query_list");
+					start+=limit;
+					loadFlg = true;
+					var str = getSerchForApply();
+					//alert(str);
+					li = document.createElement('ul');
+					if(str){
+						li.innerHTML = str;//刷新内容
+					}
+					el.appendChild(li, el.childNodes[0]);
+					wrapper.refresh(); /****remember to refresh after action completed！！！   ---id.refresh(); --- ****/
+				}, 1000);
+			}
+		</script>
+</body>
+</html>

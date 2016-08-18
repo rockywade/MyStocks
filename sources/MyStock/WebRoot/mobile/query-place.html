@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+<meta name="format-detection" content="telephone = no" />
+<title>申请查询</title>
+<link rel="icon" href="img/logo.png" />
+<link rel="stylesheet" href="css/pullToRefresh.css" />
+<link rel="stylesheet" href="css/mobiscroll.css">
+<link rel="stylesheet" href="css/public.css" />
+<link rel="stylesheet" href="css/media.css" />
+</head>
+<body>
+	<section class="title wrap1">
+		<ul class="title_ul">
+			<li><a href="place-applyFor.html">场地申请</a></li>
+			<li class="thisCur"><a href="query-place.html">申请查询</a></li>
+		</ul>
+		<div class="query_search1">
+			<ul>
+				<li>
+					<p>选择开始日期</p>
+					<input type="text" class="iconDate" id="startdate" />
+				</li>
+				<li>
+					<p>选择截止日期</p>
+					<input type="text" class="iconDate" id="enddate" />
+				</li>
+			</ul>
+			<div class="searchBtnWrap">
+				<input type="button" class="searchBtn" value="" onclick="seach()" />
+			</div>
+		</div>
+	</section>
+
+	<section class="content query_wrap3" id="wrapper">
+		<ul class="query_list" id="querylist">
+		</ul>
+	</section>
+
+
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/iscroll.js"></script>
+	<script type="text/javascript" src="js/pullToRefresh.js"></script>
+	<script type="text/javascript" src="js/mobiscroll_002.js"></script>
+	<script type="text/javascript" src="js/mobiscroll.js"></script>
+	<script type="text/javascript" src="js/public.js"></script>
+	<script>
+		
+		   $(function () {
+		   
+		      var currYear = (new Date()).getFullYear();	
+				var opt={};
+				opt.date = {preset : 'date'};
+				opt.datetime = {preset : 'datetime'};
+				opt.time = {preset : 'time'};
+				opt.default = {
+					theme: 'android-ics light', //皮肤样式
+			        display: 'modal', //显示方式 
+			        mode: 'scroller', //日期选择模式
+					dateFormat: 'yyyy-mm-dd',
+					lang: 'zh',
+					showNow: true,
+					nowText: "今天",
+			        startYear: currYear - 10, //开始年份
+			        endYear: currYear + 10 //结束年份
+				};
+	
+			    $("#startdate").mobiscroll($.extend(opt['date'], opt['default']));
+			    $("#enddate").mobiscroll($.extend(opt['date'], opt['default']));
+		   
+		   
+		      getData();
+		   
+		   });
+		    var start = 0;
+	    	var limit = 4;
+	    	var loadFlg = false;
+		    function getData(){
+		    	var s;
+				$.ajax({
+					type : "post", 
+					async : false,  
+					url : "mobile_findPageSiteInfoLog.do",
+				    data:{start:start, limit:limit},
+					success:function(data,status){
+						data = eval("("+data+")");
+						if(!loadFlg){
+							render(data.root);
+						}else{
+							s = render(data.root);
+						}
+						
+					}
+				});
+				return s;
+			}
+			
+			
+			function render(data){
+				var s = "";
+				$.each(data,function(rowNum,o){
+				       var  activitydate1 =  o.activitydate;
+				       var activitydate =  activitydate1.split(" ")[0];
+				       //alert(o.logId);
+				        s+=' <li>';
+				        s+=' <a href="placeApply-conent.html?logId='+o.logId+'">';
+						s+='<div class="queryTit1"><p>'+o.sitename+'</p></div>';
+						s+='<div class="queryTit1"><p>活动名称</p><samp>'+o.activityname+'</samp></div>';
+						s+='<div class="queryTit1"><p>使用时间</p><samp>'+activitydate+" "+o.activitytime+'</samp></div>';
+						s+='<div class="queryTit1 acSstate acSstate3"><p>状<i class="kg2"></i>态</p><samp>'+o.status+'</samp></div>';
+						s+='</a>';
+						s+='</li>';
+				    });
+				    if(!loadFlg){
+				    	if(data.length==0){
+						   $("#querylist").html("暂无数据");
+					    }else{
+						   $("#querylist").html(s);
+					    }
+				    }else{
+				    	return s;
+				    }
+			     }
+			     
+		//查询
+		function seach(){
+		     var  startdate  = $("#startdate").val();
+		     var  enddate  = $("#enddate").val();
+		     alert(startdate+":"+enddate);
+		      $.ajax({
+					type : "post", 
+					async : false,  
+					url : "mobile_findPageSiteInfoLog.do",
+				    data:{
+				       start:start,
+				       limit:limit,
+				       startdate:startdate,
+				       enddate:enddate
+				     },
+					success:function(data,status){
+						data = eval("("+data+")");
+						start = data.currentResult;
+						render(data.root);
+					}
+				});
+		}
+		
+		
+		
+		
+			refresher.init({
+				id: "wrapper", //<---------------- 上拉下拉 --------------------------------------------------------------------┐
+				pullDownAction: Refresh,
+				pullUpAction: Load
+			});
+
+
+
+			function Refresh() {
+				setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
+					var el, li, i;
+					el = document.querySelector("#wrapper .query_list");
+					//这里写你的刷新代码				
+					document.getElementById("wrapper").querySelector(".pullDownIcon").style.display = "none";
+					document.getElementById("wrapper").querySelector(".pullDownLabel").innerHTML = "<img src='img/ok.png'/>刷新成功";
+					setTimeout(function() {
+						
+					//下拉刷新
+				    wrapper.refresh();
+					window.location.href = "query-place.html"
+						
+					}, 500); //模拟qq下拉刷新显示成功效果
+					/****remember to refresh after  action completed！ ---yourId.refresh(); ----| ****/
+				}, 500);
+			}
+
+			function Load() {
+				setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
+					var el, li, i;
+					el = document.querySelector("#wrapper .query_list");
+				   	loadFlg = true;
+				   	start += limit;
+				   	var str = getData();
+				    li = document.createElement('ul');
+				    if(str){
+				    	li.innerHTML = str;//刷新内容
+				    }
+					el.appendChild(li, el.childNodes[0]);
+					wrapper.refresh(); /****remember to refresh after action completed！！！   ---id.refresh(); --- ****/
+				}, 1000);
+			}
+		</script>
+</body>
+</html>

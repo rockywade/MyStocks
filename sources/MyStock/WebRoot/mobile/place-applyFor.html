@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+<meta name="format-detection" content="telephone = no" />
+<title>场地申请</title>
+<link rel="icon" href="img/logo1.png" />
+<link rel="stylesheet" href="css/pullToRefresh.css" />
+<link rel="stylesheet" href="css/public.css" />
+<link rel="stylesheet" href="css/media.css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+</head>
+<body>
+	<section class="title wrap1">
+		<ul class="title_ul">
+			<li class="thisCur"><a href="place-applyFor.html">场地申请</a></li>
+			<li><a href="query-place.html">申请查询</a></li>
+		</ul>
+		<a href="search-place.html" class="query_search"> <input
+			type="text" class="searchTxt" placeholder="请输入关键字搜索" /> <input
+			type="button" class="searchBtn" />
+		</a>
+	</section>
+	<section class="wrap1">
+		<ul class="place_list" id="placelist">
+
+		</ul>
+	</section>
+
+	<script>
+		   $(function () {
+		      getData();
+		   
+		   })
+		   
+		    function getData(){
+				$.ajax({
+					type : "post", 
+					async : false,  
+					url : "mobile_findListSite.do",
+					success:function(data,status){
+						data = eval("("+data+")");
+						start = data.currentResult;
+						render(data.root);
+					}
+				});
+			}
+			
+			
+			function render(data){
+				 var s = "";
+				 $.each(data,function(rowNum,o){
+				    
+				      var  sitecondition  = o.sitecondition;
+				        s+='<li>';
+				        s+='<a href="place-content.html?id='+o.id+'">';
+				        s+='<div class="placePic">';
+				        s+='<img src="'+o.photo+'" />';
+					    s+='<div class="placeClass">'+o.sitename+'</div>';
+					    s+='</div>';
+						s+='<div class="placeName">';
+						s+='<p>'+o.sitetype+'</p>';
+						s+='<div class="placeFacility">';
+						if(sitecondition.indexOf('投影仪') !=-1 && sitecondition.indexOf('电脑') !=-1 &&
+		                		  sitecondition.indexOf('话筒') !=-1 && sitecondition.indexOf('空调') !=-1){
+						     s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						     s+= o.sitemodle;
+						}else if (sitecondition.indexOf('投影仪') !=-1 && sitecondition.indexOf('电脑') !=-1 &&
+		                		   sitecondition.indexOf('话筒') !=-1  ){
+						     s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+		                	 s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						     s+= o.sitemodle;  
+		                 }else if (sitecondition.indexOf('投影仪') !=-1 && sitecondition.indexOf('电脑') !=-1 &&
+		                		   sitecondition.indexOf('空调') !=-1 ){
+						     s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                     s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						     s+= o.sitemodle;  
+		                 }else if (sitecondition.indexOf('投影仪') !=-1 && sitecondition.indexOf('话筒') !=-1 &&
+		                		   sitecondition.indexOf('空调') !=-1 ){
+						     s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                	 s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						     s+= o.sitemodle;
+		                 }else if (sitecondition.indexOf('投影仪') !=-1  && sitecondition.indexOf('电脑') !=-1 ){
+		                	 s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						     s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						     s+= o.sitemodle;
+		                	   
+		                  }else if (sitecondition.indexOf('投影仪') !=-1  && sitecondition.indexOf('话筒') !=-1 ){
+		                      s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						      s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+		                      s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						      s+= o.sitemodle;
+		                   
+		                   }else if (sitecondition.indexOf('投影仪') !=-1  && sitecondition.indexOf('空调') !=-1 ){
+		                	  s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						      s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                	  s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						      s+= o.sitemodle;
+		                   }else if ( sitecondition.indexOf('电脑') !=-1 && sitecondition.indexOf('话筒') !=-1  &&
+		                		   sitecondition.indexOf('空调') !=-1 ){
+						      s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						      s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+						      s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                	  s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						      s+= o.sitemodle; 
+		                   }else if ( sitecondition.indexOf('电脑') !=-1 && sitecondition.indexOf('空调') !=-1 ){
+		                	   
+						       s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						       s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                	   s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						       s+= o.sitemodle;
+						       
+		                   }else if (sitecondition.indexOf('话筒') !=-1  &&
+		                		   sitecondition.indexOf('空调') !=-1 ){
+		                	  
+						       s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+						       s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                	   s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						       s+= o.sitemodle;
+		                   } else if (sitecondition.indexOf('投影仪') !=-1 ){
+						        s+='<samp class="placeShow"><img src="img/icon_place4.png"/></samp>';
+						        s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						        s+= o.sitemodle;
+		                   }else if (sitecondition.indexOf('电脑') !=-1 ){
+		                	    
+						        s+='<samp class="placeShow"><img src="img/icon_place1.png"/></samp>';
+						        s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						        s+= o.sitemodle;
+		                   }else if (sitecondition.indexOf('话筒') !=-1 ){
+						       s+='<samp class="placeShow"><img src="img/icon_place2.png"/></samp>';
+						       s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						       s+= o.sitemodle;
+		                   }else{
+						        s+='<samp class="placeShow"><img src="img/icon_place3.png"/></samp>';
+		                        s+='<samp class="placeShow"><img src="img/size.png"/></samp>';
+						        s+= o.sitemodle;
+		                   }
+						
+						s+='</div>';
+						s+='</div>';
+						s+='</a>';
+						s+='</li>';
+				    });
+				    
+				    if(data.length==0){
+					   $("#placelist").html("暂无数据");
+				    }else{
+					   $("#placelist").html(s);
+				    }
+				
+			     }
+			     
+			   //取消
+			  function deleteDetail(id){
+			      var r = window.confirm("是否确定取消该请假吗?");
+		          if(r){
+		          $.ajax({
+		          type : "POST",
+   			      url : "mobile_deleteLeaveInfo.do",
+   			      data:{
+				     id:id
+			        },
+   			      async: false,
+   			      success : function(data) {
+				    window.location.reload();
+   			    }
+   		       });
+   		     }
+			}
+		   
+		</script>
+
+</body>
+</html>

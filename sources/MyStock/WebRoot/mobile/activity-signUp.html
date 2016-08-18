@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+<meta name="format-detection" content="telephone = no" />
+<title>活动报名</title>
+<link rel="icon" href="img/logo1.png" />
+<link rel="stylesheet" href="css/pullToRefresh.css" />
+<link rel="stylesheet" href="css/public.css" />
+<link rel="stylesheet" href="css/media.css" />
+
+</head>
+<body>
+	<section class="title">
+		<ul class="sign_ul">
+			<li class="cur"><a href="javascript:;"
+				onclick="getAllActivity()">全<i></i>部
+			</a></li>
+			<li><a href="javascript:;" onclick="getGenre('学科讲座')">学科讲座</a></li>
+			<li><a href="javascript:;" onclick="getGenre('生涯规划')">生涯规划</a></li>
+			<li><a href="javascript:;" onclick="getGenre('心理健康')">心理健康</a></li>
+			<li><a href="javascript:;" onclick="getGenre('党团建设')">党团建设</a></li>
+			<li><a href="javascript:;" onclick="getGenre('问题活动')">文体活动</a></li>
+			<li><a href="javascript:;" onclick="getGenre('其他')">其<i></i>他
+			</a></li>
+			<li><a href="search-activity.html"><img
+					src="img/icon_search.png" class="signSearchBtn" /></a></li>
+		</ul>
+	</section>
+	<section class="sign_wrap" id="wrapper">
+		<ul class="sign_list" id="attendActivity">
+		</ul>
+	</section>
+
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/iscroll.js"></script>
+	<script type="text/javascript" src="js/pullToRefresh.js"></script>
+	<script type="text/javascript" src="js/public.js"></script>
+	<script>
+			$(document).ready(function(){
+	    		getAttendActivity();
+			});
+			var rownum = 0;
+			var start = 0;
+			var limit = 8;
+			var loadFlg = false;
+			function getAttendActivity(){
+				var s;
+				$.ajax({
+					type : "post", 
+					async : false,  
+					url:"mobile_couldJoinActivity.do",
+					data:{start:start, limit:limit},
+					success : function(data,status){
+						data = eval("("+data+")");
+						//start = data.currentResult;
+						if(!loadFlg){
+							renderAttendActivity(data.root);
+						}else{
+							s = renderAttendActivity(data.root);
+						}
+						
+					}
+				});
+				return s;
+			}
+			
+			//活动类别检索数据
+			function getAllActivity(){//全部
+				window.location.href = "activity-signUp.html";
+			}
+			function getGenre(g){//各个类别
+				start = 0;
+				limit = 8;
+				rownum = 0;
+				getGenreActivity(g);
+			}
+			
+			var genreFlg = false;
+			var genre;
+			function getGenreActivity(g){
+				genre = g;
+				genreFlg = true;
+				var s;
+				$.ajax({
+					type : "post", 
+					async : false,  
+					url:"mobile_couldJoinActivity.do",
+					data:{start:start, limit:limit,activitygenre:g},
+					success : function(data,status){
+						data = eval("("+data+")");
+						start = data.currentResult;
+						if(!loadFlg){
+							renderAttendActivity(data.root);
+						}else{
+							s = renderAttendActivity(data.root);
+						}
+					}
+				});
+				return s;
+			}
+			
+			function renderAttendActivity(data){
+			var s = "";
+			$.each(data,function(rowNum,o){
+					rownum = rownum+1;
+			        s+=' <li><a href="activity-content.jsp?activityid='+o.activityid+'">';
+					s+='<samp class="sign_num1">'+(rownum)+'</samp><p class="signCon_tit">'+o.activityname+'</p><samp class="sign_num2">'+o.attendnum+'/'+o.capacity+'</samp>';
+					s+='</a></li>';
+			    });
+			    if(!loadFlg){
+			    	if(data.length==0){
+				  		 $("#attendActivity").html("暂无数据");
+			    	}else{
+			    		$("#attendActivity").html(s);
+			   		}
+			    }else{
+			    	return s;
+			    }
+		     }
+		     
+			refresher.init({
+				id: "wrapper", //<---------------- 上拉下拉 --------------------------------------------------------------------┐
+				pullDownAction: Refresh,
+				pullUpAction: Load
+			});
+
+			function Refresh() {
+				setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
+					var el, li, i;
+					el = document.querySelector("#wrapper .sign_list");
+					//这里写你的刷新代码				
+					document.getElementById("wrapper").querySelector(".pullDownIcon").style.display = "none";
+					document.getElementById("wrapper").querySelector(".pullDownLabel").innerHTML = "<img src='img/ok.png'/>刷新成功";
+					setTimeout(function() {
+						
+						//下拉刷新
+						wrapper.refresh();
+						
+						window.location.href = "activity-signUp.html"
+						
+					}, 500); //模拟qq下拉刷新显示成功效果
+					/****remember to refresh after  action completed！ ---yourId.refresh(); ----| ****/
+				}, 500);
+			}
+
+			function Load() {
+				setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
+					var el, li, i;
+					el = document.querySelector("#wrapper .sign_list");
+					start += limit;
+					loadFlg = true;
+					var str;
+					if(!genreFlg){
+						str = getAttendActivity();
+					}else{
+						//alert(genre);
+						str = getGenreActivity(genre);
+					}
+					li = document.createElement('ul');
+					if(str){
+						li.innerHTML = str;//刷新内容
+					}
+					el.appendChild(li, el.childNodes[0]);
+					loadFlg = false;
+					wrapper.refresh(); /****remember to refresh after action completed！！！   ---id.refresh(); --- ****/
+				}, 1000);
+			}
+		</script>
+</body>
+</html>

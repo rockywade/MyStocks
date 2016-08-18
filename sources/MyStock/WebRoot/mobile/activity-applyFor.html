@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+<meta name="format-detection" content="telephone = no" />
+<title>活动申报</title>
+<link rel="icon" href="img/logo1.png" />
+<link rel="stylesheet" href="css/public.css" />
+<link href="css/mobiscroll.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+			$(document).ready(function(){
+	    		getOrga();//所在组织
+	    		getSzxq();//所在学期
+			});
+			function getOrga(){
+				$.post("mobile_findOrgaComb.do",{},
+						function(data,status){
+							data = eval("("+data+")");
+							initOrga(data.root);
+						}
+					);
+			}
+			function initOrga(data){
+				$.each(data,function(rowNum,o){
+					$("#organizename").append('<option value=\''+o.value+'\'>'+o.text+'</option>');
+				});
+			}
+			
+			function getSzxq(){
+				$.post("mobile_findSzxqComb.do",{},
+						function(data,status){
+							data = eval("("+data+")");
+							initSzxq(data.root);
+						}
+				);
+			}
+			function initSzxq(data){
+				$.each(data,function(rowNum,o){
+					$("#inschoolterm").append('<option value=\''+o.value+'\'>'+o.text+'</option>');
+				});
+			}
+			
+			
+			function subApply(){
+				$.ajax({
+					type : "post", 
+					async : false,  
+					url:"mobile_applyActivity.do",
+					data:{activityname:$("#activityname").val() , organizename:$("#organizename").val(), teacher:$("#teacher").val(), 
+						 	phonenum:$("#phonenum").val(), activitygenre:$("#activitygenre").val(), activitytime:$("#strDateTime").val(), 
+							inschoolterm:$("#inschoolterm").val(), faceobj:$("#faceobj").val(), capacity:$("#capacity").val(), 
+							activityplace:$("#activityplace").val(),timeofduration:$("#timeofduration").val(), 
+							activitycontent:$("#activitycontent").val(), signupendtime:$("#endDateTime").val(), score:$("#score").val()
+					},
+					success : function(data,status){
+						data = eval("("+data+")");
+						if(data.message.substring(0,4)=="保存成功"){
+							window.location.href="query-activity.html"; 
+						}
+					}
+				});
+			}
+			
+			//表单非空验证
+			function checkEmperty(){
+				if($("#activityname").val()!=null && $("#activityname").val()!=""){
+					if($("#teacher").val()!=null && $("#teacher").val()!=""){
+						if($("#phonenum").val()!=null && $("#phonenum").val()!=""){
+							if($("#capacity").val()!=null && $("#capacity").val()!=""){
+								if($("#activityplace").val()!=null && $("#activityplace").val()!=""){
+									if($("#strDateTime").val()!=null && $("#strDateTime").val()!=""){
+										if($("#score").val()!=null && $("#score").val()!=""){
+											if($("#endDateTime").val()!=null && $("#endDateTime").val()!=""){
+												if($("#activitycontent").val()!=null && $("#activitycontent").val()!=""){
+													showSubmit();
+												}else{
+													alert("请简要说明一下活动内容");
+												}
+											}else{
+												alert("请设置活动报名截止时间!");
+											}
+										}else{
+											alert("考评分不能为空!");
+										}
+									}else{
+										alert("请填写活动时间!");
+									}
+								}else{
+									alert("活动地点必须填写!");
+								}
+							}else{
+								alert("容量不能为空!");
+							}
+						}else{
+							alert("指导老师的手机号不能为空!");
+						}
+					}else{
+						alert("必须填写指导老师");
+					}
+				}else{
+					alert("活动名不能为空!");
+				}
+			}
+			
+			function showSubmit(){
+				$(".popup").show().animate({opacity:'1'},300);
+			}
+			
+			//手机号码验证
+			function phoneNumCheck(){
+				var reg = /^(13\d|15[^4,\D]|17[13678]|18\d)\d{8}|170[^346,\D]\d{7}$/;
+				var jjp = $("#phonenum").val();
+				if(jjp!=null && jjp!="" && !reg.test(jjp)){
+					alert("请输入有效的手机号码!");
+					$("#phonenum").val("");
+				}
+			}
+		</script>
+</head>
+<body>
+	<section class="title wrap1">
+		<ul class="title_ul">
+			<li class="thisCur"><a href="activity-applyFor.html">活动申报</a></li>
+			<li><a href="query-activity.html">申报查询</a></li>
+		</ul>
+	</section>
+	<section class="wrap2">
+		<form>
+			<ul class="form_list">
+				<li>
+					<p>活动名称</p>
+					<input type="text" class="formTxt" id="activityname" />
+				</li>
+				<li>
+					<p>组织名称</p>
+					<select class="formSec" id="organizename" /> </select>
+				</li>
+				<li>
+					<p>指导老师</p>
+					<input type="text" class="formTxt" id="teacher" />
+				</li>
+				<li>
+					<p>老师电话</p>
+					<input type="text" class="formTxt" id="phonenum"
+					onblur="phoneNumCheck()"
+					onkeyup='this.value=this.value.replace(/\D/g,"")' />
+				</li>
+				<li>
+					<p>所在学期</p>
+					<select class="formSec" id="inschoolterm" /> </select>
+				</li>
+				<li>
+					<p>
+						类<i></i>别
+					</p>
+					<select class="formSec" id="activitygenre" />
+					<option value='学科讲座'>学科讲座</option>
+					<option value='心理健康'>心理健康</option>
+					<option value='生涯规划'>生涯规划</option>
+					<option value='党团建设'>党团建设</option>
+					<option value='文体活动'>文体活动</option>
+					<option value='其他'>其他</option> </select>
+				</li>
+				<li>
+					<p>面向对象</p>
+					<select class="formSec" id="faceobj" />
+					<option value='人文社科类'>人文社科类</option>
+					<option value='理科大类'>理科大类</option>
+					<option value='工科大类'>工科大类</option>
+					<option value='信息大类'>信息大类</option>
+					<option value='医药大类'>医药大类</option>
+					<option value='农学大类'>农学大类</option> </select>
+				</li>
+				<li>
+					<p>
+						容<i></i>量
+					</p> <input type="text" class="formTxt" id="capacity"
+					onkeyup='this.value=this.value.replace(/\D/g,"")' /> <samp
+						class="capacity">人</samp>
+				</li>
+				<li>
+					<p>活动地点</p>
+					<input type="text" class="formTxt" id="activityplace" />
+				</li>
+				<li>
+					<p>活动时间</p>
+					<input type="text" class="formTxt iconDate " id="strDateTime"
+					name="activitytime" />
+				</li>
+				<li>
+					<p>
+						时<i></i>长
+					</p>
+					<select class="formSec" id="timeofduration" />
+					<option>0.5小时</option>
+					<option>1小时</option>
+					<option>1.5小时</option>
+					<option>2小时</option>
+					<option>2.5小时</option>
+					<option>3小时</option>
+					<option>3.5小时</option>
+					<option>4小时</option> </select>
+				</li>
+				<li>
+					<p>活动考评分</p>
+					<input type="text" class="formTxt" id="score"
+					onkeyup='this.value=this.value.replace(/\D/g,"")' />
+				</li>
+				<li>
+					<p>报名截止</p>
+					<input type="text" class="formTxt iconDate  " id="endDateTime"
+					name="signupendtime" />
+				</li>
+				<li>
+					<p>活动内容</p>
+					<textarea class="formTxt" rows="5" style="resize: none;"
+						id="activitycontent"></textarea>
+				</li>
+			</ul>
+
+		</form>
+
+	</section>
+
+	<div class="formBtn">
+		<input type="button" value="确认提交" onclick="checkEmperty()" />
+	</div>
+
+	<!-- 确认弹窗  -->
+	<section class="popup">
+		<div class="popup_wrap popup-Confirm">
+			<div class="popup_con applyFor_popup">
+				<p>请确保申报的信息内容合法且不与校规违背，否则一切后果自行承担</p>
+			</div>
+			<div class="popup_btn">
+				<button class="popupBtn_cancel">取消</button>
+				<button class="popupBtn_agree" onclick="subApply()">同意</button>
+			</div>
+		</div>
+		<div class="popup_wrap popup-agree">
+			<div class="popup_con">
+				<img src="img/icon_ok1.png">
+				<p>
+					您申报的活动已提交成功<br />请耐心等待管理员审核！
+				</p>
+			</div>
+			<div class="popup_btn">
+				<button class="popupBtn_ok">好</button>
+			</div>
+		</div>
+	</section>
+
+	<!-- 日期  -->
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script src="js/mobiscroll_002.js" type="text/javascript"></script>
+	<script src="js/mobiscroll.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/public.js"></script>
+	<script type="text/javascript">
+	        $(function () {
+				var currYear = (new Date()).getFullYear();	
+				var opt={};
+				opt.date = {preset : 'date'};
+				opt.datetime = {preset : 'datetime'};
+				opt.time = {preset : 'time'};
+				opt.default = {
+					theme: 'android-ics light', //皮肤样式
+			        display: 'modal', //显示方式 
+			        mode: 'scroller', //日期选择模式
+					dateFormat: 'yyyy-mm-dd',
+					lang: 'zh',
+					showNow: true,
+					nowText: "今天",
+			        startYear: currYear - 10, //开始年份
+			        endYear: currYear + 10 //结束年份
+				};
+	
+			  	var optDateTime = $.extend(opt['datetime'], opt['default']);
+			    $("#strDateTime").mobiscroll(optDateTime).datetime(optDateTime);
+			    $("#endDateTime").mobiscroll(optDateTime).datetime(optDateTime);
+	        });
+	    </script>
+</body>
+</html>

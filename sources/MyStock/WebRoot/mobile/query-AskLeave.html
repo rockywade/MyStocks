@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+<meta name="format-detection" content="telephone = no" />
+<title>申请查询</title>
+<link rel="icon" href="img/logo.png" />
+<link rel="stylesheet" href="css/pullToRefresh.css" />
+<link rel="stylesheet" href="css/mobiscroll.css">
+<link rel="stylesheet" href="css/public.css" />
+<link rel="stylesheet" href="css/media.css" />
+</head>
+<body>
+	<section class="title wrap1">
+		<ul class="title_ul">
+			<li><a href="AskLeave-applyFor.html">请假申请</a></li>
+			<li class="thisCur"><a href="query-AskLeave.html">申请查询</a></li>
+		</ul>
+		<!--<div class="query_search1">
+				<ul>
+					<li>
+						<p>选择开始日期</p><input type="text" class="iconDate" id="strDateTime" />
+					</li>
+					<li>
+						<p>选择截止日期</p><input type="text" class="iconDate" id="endDateTime" />
+					</li>
+				</ul>
+				<div class="searchBtnWrap">
+					<input type="button" class="searchBtn" value="" />
+				</div>
+			</div>
+		-->
+	</section>
+	<section class="content query_wrap2" id="wrapper">
+
+		<ul class="query_list AskLeave_list" id="datalist">
+		</ul>
+	</section>
+
+	<!-- 确认弹窗 -->
+	<section class="popup popup_Ask">
+		<div class="popup_wrap">
+			<div class="popup_con">
+				<p>您确定撤回此次请假申请?</p>
+			</div>
+			<div class="popup_btn">
+				<button class="popupBtn_cancel">取消</button>
+				<button class="popupBtn2 AskLeave_agree">确定</button>
+			</div>
+		</div>
+	</section>
+
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/iscroll.js"></script>
+	<script type="text/javascript" src="js/pullToRefresh.js"></script>
+	<script type="text/javascript" src="js/mobiscroll_002.js"></script>
+	<script type="text/javascript" src="js/mobiscroll.js"></script>
+	<script type="text/javascript" src="js/public.js"></script>
+	<script type="text/javascript">
+	        $(function () {
+				var currYear = (new Date()).getFullYear();	
+				var opt={};
+				opt.date = {preset : 'date'};
+				opt.datetime = {preset : 'datetime'};
+				opt.time = {preset : 'time'};
+				opt.default = {
+					theme: 'android-ics light', //皮肤样式
+			        display: 'modal', //显示方式 
+			        mode: 'scroller', //日期选择模式
+					dateFormat: 'yyyy-mm-dd',
+					lang: 'zh',
+					showNow: true,
+					nowText: "今天",
+			        startYear: currYear - 10, //开始年份
+			        endYear: currYear + 10 //结束年份
+				};
+	
+			    $("#strDateTime").mobiscroll($.extend(opt['date'], opt['default']));
+			    $("#endDateTime").mobiscroll($.extend(opt['date'], opt['default']));
+		      
+	        });
+	        
+	    </script>
+
+
+	<script>
+		   $(function () {
+		      getData();
+		   
+		   })
+		    var start = 0;
+	    	var limit = 4;
+	    	var loadFlg = false;
+		    function getData(){
+		    	var s;
+				$.ajax({
+					type : "post", 
+					async : false,  
+					url : "mobile_findListLeaveInfo.do",
+				    data:{start:start, limit:limit},
+					success:function(data,status){
+						data = eval("("+data+")");
+						if(!loadFlg){
+							render(data.root);
+						}else{
+							s = render(data.root);
+						}
+					}
+				});
+				return s;
+			}
+			
+			
+			function render(data){
+				var s = "";
+				$.each(data,function(rowNum,o){
+				        s+=' <li>';
+					    s+='<div class="queryTit1"><p>请假事由</p><samp>'+o.leavereason+'</samp></div>';
+						s+='<div class="queryTit1"><p>请假时间</p><samp>'+o.leavetime+'</samp></div>';
+						s+='<div class="queryTit1"><p>返校时间</p><samp>'+o.backsctime+'</samp></div>';
+						s+='<div class="queryTit2"><p>父母知情</p><samp>'+o.parentsinfo+'</samp></div>';
+						if(o.daysum < 30){
+						if("待审核"==o.tutorstatus){
+					      s+='<div class="queryTit4 acSstate acSstate1"><p>辅导员意见</p><samp>'+o.tutorstatus+'</samp></div>';
+						  s+='<div class="queryTit1"><button class="cancelBtn-a queryBtn-ask" onclick="deleteDetail(\''+o.id+'\');" >取消</button></div>';
+						  // s+='<div class="queryTit1"><a href="javascript:void(0)" onclick="viewDetail(\''+o.id+'\');" class="cancelBtn-a queryBtn-ask">取消</a></div>';
+					 	 }else{
+						  s+='<div class="queryTit4 acSstate acSstate1"><p>辅导员意见</p><samp>'+o.tutorstatus+'</samp></div>';
+						 }
+						}else{
+						   if("待审核"==o.schoolstatus){
+					       s+='<div class="queryTit4 acSstate acSstate1"><p>院领导意见</p><samp>'+o.schoolstatus+'</samp></div>';
+						   s+='<div class="queryTit1"><button class="cancelBtn-a queryBtn-ask" id="bnt" >取消</button></div>';
+					 	 }else{
+						   s+='<div class="queryTit4 acSstate acSstate1"><p>院领导意见</p><samp>'+o.schoolstatus+'</samp></div>';
+						 }
+						}
+						//s+='<td><a href="javascript:void(0)" onclick="viewDetail(\''+o.xmid+'\');" class="contentBtn">查看详情</a></td>';
+						s+='</li>';
+				    });
+				    if(!loadFlg){
+				    	if(data.length==0){
+						   $("#datalist").html("暂无数据");
+					    }else{
+						   $("#datalist").html(s);
+					    }
+				    }else{
+				    	return s;
+				    }
+			     }
+			     
+			   //取消
+			  function deleteDetail(id){
+			      var r = window.confirm("是否确定取消该请假吗?");
+		          if(r){
+		          $.ajax({
+		          type : "POST",
+   			      url : "mobile_deleteLeaveInfo.do",
+   			      data:{
+				     id:id
+			        },
+   			      async: false,
+   			      success : function(data) {
+				    window.location.reload();
+   			    }
+   		     });
+   		     }
+			}
+		   
+		   
+		   
+		
+			refresher.init({
+				id: "wrapper", //<---------------- 上拉下拉 --------------------------------------------------------------------┐
+				pullDownAction: Refresh,
+				pullUpAction: Load
+			});
+
+			function Refresh() {
+				setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
+					var el, li, i;
+					el = document.querySelector("#wrapper .query_list");
+					
+					document.getElementById("wrapper").querySelector(".pullDownIcon").style.display = "none";
+					document.getElementById("wrapper").querySelector(".pullDownLabel").innerHTML = "<img src='img/ok.png'/>刷新成功";
+					setTimeout(function() {
+				    //下拉刷新
+					wrapper.refresh();
+					window.location.href = "query-AskLeave.html"
+						
+					}, 500); //模拟qq下拉刷新显示成功效果
+					/****remember to refresh after  action completed！ ---yourId.refresh(); ----| ****/
+				}, 500);
+			}
+            
+			function Load() {
+				 setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
+					var el, li, i;
+					el = document.querySelector("#wrapper .query_list");
+					loadFlg = true;
+					start += limit;
+					var str = getData();
+				    li = document.createElement('ul');
+				    if(str){
+				    	li.innerHTML = str;//刷新内容
+				    }
+					el.appendChild(li, el.childNodes[0]);
+					
+					wrapper.refresh(); /****remember to refresh after action completed！！！   ---id.refresh(); --- ****/
+				}, 1000);
+			}
+			
+			
+			
+		</script>
+</body>
+</html>

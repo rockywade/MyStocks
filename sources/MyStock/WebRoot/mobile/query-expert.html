@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+<meta name="format-detection" content="telephone = no" />
+<title>申请查询</title>
+<link rel="icon" href="img/logo.png" />
+<link rel="stylesheet" href="css/pullToRefresh.css" />
+<link rel="stylesheet" href="css/mobiscroll.css">
+<link rel="stylesheet" href="css/public.css" />
+<link rel="stylesheet" href="css/media.css" />
+
+</head>
+<body>
+	<section class="title wrap1">
+		<ul class="title_ul">
+			<li><a href="expert.html">专家预约</a></li>
+			<li class="thisCur"><a href="query-expert.html">预约查询</a></li>
+		</ul>
+	</section>
+	<section class="content query_wrap2" id="wrapper">
+		<ul class="query_list" id="myBespeak">
+		</ul>
+	</section>
+
+	<!-- 确认弹窗 -->
+	<section class="popup popup_Ask">
+		<div class="popup_wrap">
+			<div class="popup_con">
+				<p>您确定取消此次预约吗?</p>
+			</div>
+			<div class="popup_btn" id="cancelPop">
+				<button class="popupBtn_cancel">取消</button>
+				<button class="popupBtn2 expert_agree" onclick="cancel()">确定</button>
+			</div>
+		</div>
+	</section>
+
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/iscroll.js"></script>
+	<script type="text/javascript" src="js/pullToRefresh.js"></script>
+	<script type="text/javascript" src="js/mobiscroll_002.js"></script>
+	<script type="text/javascript" src="js/mobiscroll.js"></script>
+	<script type="text/javascript" src="js/public.js"></script>
+	<script type="text/javascript">
+	        $(function () {
+				var currYear = (new Date()).getFullYear();	
+				var opt={};
+				opt.date = {preset : 'date'};
+				opt.datetime = {preset : 'datetime'};
+				opt.time = {preset : 'time'};
+				opt.default = {
+					theme: 'android-ics light', //皮肤样式
+			        display: 'modal', //显示方式 
+			        mode: 'scroller', //日期选择模式
+					dateFormat: 'yyyy-mm-dd',
+					lang: 'zh',
+					showNow: true,
+					nowText: "今天",
+			        startYear: currYear - 10, //开始年份
+			        endYear: currYear + 10 //结束年份
+				};
+	
+			    $("#strDateTime").mobiscroll($.extend(opt['date'], opt['default']));
+			    $("#endDateTime").mobiscroll($.extend(opt['date'], opt['default']));
+	        });
+	    </script>
+	<script>
+			$(document).ready(function(){
+	    		getMyBespeak();
+			});
+			
+			var start = 0;
+			var limit = 2;
+			var loadFlg = false;
+			function getMyBespeak(){
+				var s;
+				$.ajax({
+					type : "post", 
+					async : false,  
+					url:"mobile_myBespeak.do",
+					data:{start:start, limit:limit},
+					success : function(data,status){
+						data = eval("("+data+")");
+						//start = data.currentResult;
+						if(!loadFlg){
+							renderMyBespeak(data.root);
+						}else{
+							s = renderMyBespeak(data.root);
+						}
+						
+					}
+				});
+				return s;
+			}
+			function renderMyBespeak(data){
+				var s = "";
+				$.each(data,function(rowNum,o){
+			        s+='<li>';
+					s+='<div class="queryTit1"><p>'+o.expertName+'</p></div>';
+					s+='<div class="queryTit1"><p>预约内容</p><samp>'+o.detailinfo+'</samp></div>';
+					if(o.bespeakstate=="已取消"){
+						s+='<div class="queryTit1 acSstate acSstate1"><p>状<i class="kg2"></i>态</p><samp style="color: red">'+o.bespeakstate+'</samp></div>';
+					}else{
+						s+='<div class="queryTit1 acSstate acSstate1"><p>状<i class="kg2"></i>态</p><samp>'+o.bespeakstate+'</samp></div>';
+					}
+					if(o.bespeakstate=="待接受"){
+						s+='<div class="queryTit1"><button class="cancelBtn-a queryBtn-exp" onclick=cancelPop('+o.stid+')>取消</button></div>';
+					}
+					s+='</li>';
+			    });
+			    if(!loadFlg){
+			    	if(data.length==0){
+					   $("#myBespeak").html("<br/>暂无数据");
+				    }else{
+					   $("#myBespeak").html(s);
+				    }
+			    }else{
+			    	return s;
+			    }
+		     }
+		     
+		     var stid;
+		     function cancelPop(id){
+		     	stid = id;
+		     	showEnter();
+		     }
+		     function showEnter(){
+		     	//alert(1);
+		     	$(".popup").show().animate({opacity:'1'},300);
+		     }
+			function cancel(){
+				//alert(stid);
+				$.ajax({
+					type : "post", 
+					async : false,  
+					url:"mobile_cancel.do",
+					data:{stid:stid},
+					success : function(data,status){
+						window.location.href="query-expert.html";
+					}
+				});
+			}
+		
+			refresher.init({
+				id: "wrapper", //<---------------- 上拉下拉 --------------------------------------------------------------------┐
+				pullDownAction: Refresh,
+				pullUpAction: Load
+			});
+
+			function Refresh() {
+				setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
+					var el, li, i;
+					el = document.querySelector("#wrapper .query_list");
+					//这里写你的刷新代码				
+					document.getElementById("wrapper").querySelector(".pullDownIcon").style.display = "none";
+					document.getElementById("wrapper").querySelector(".pullDownLabel").innerHTML = "<img src='img/ok.png'/>刷新成功";
+					setTimeout(function() {
+						
+						//下拉刷新
+						wrapper.refresh();
+						
+						window.location.href = "query-expert.html"
+						
+					}, 500); //模拟qq下拉刷新显示成功效果
+					/****remember to refresh after  action completed！ ---yourId.refresh(); ----| ****/
+				}, 500);
+			}
+
+			function Load() {
+				setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
+					var el, li, i;
+					el = document.querySelector("#wrapper .query_list");
+					loadFlg = true;
+					start+=limit;
+					var str = getMyBespeak();
+					li = document.createElement('ul');
+					if(str){
+						li.innerHTML = str;//刷新内容
+					}
+					el.appendChild(li, el.childNodes[0]);
+				
+					wrapper.refresh(); /****remember to refresh after action completed！！！   ---id.refresh(); --- ****/
+				}, 1000);
+			}
+		</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="admin/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+	function show(){
+		var t = $("#tshow").val();
+		var s = $("#sshow").val();
+		var r =$("#rshow").val();
+		var c = $("#cshow").val();
+		$("a").css("color","red");
+		alert(t);
+		alert(s);
+		alert(r);
+		alert(c);
+	}
+</script>
+</head>
+<body>
+	<input id="tshow" style="color: red" type="text" value="hello world">
+	<select id="sshow">
+		<option>aaaaa</option>
+	</select> 男
+	<input id="rshow" type="radio" name="sex" value="男" /> 女
+	<input id="rshow" type="radio" name="sex" value="女" />
+	<input id="cshow" type="checkbox">
+	<a href="#">hello world!</a>
+	<a href="#">hello world!</a>
+	<a href="#">hello world!</a>
+	<input type="button" value="show" onclick="show()">
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+<meta name="format-detection" content="telephone = no" />
+<title>专家预约</title>
+<link rel="icon" href="img/logo1.png" />
+<link rel="stylesheet" href="css/pullToRefresh.css" />
+<link rel="stylesheet" href="css/public.css" />
+<link rel="stylesheet" href="css/media.css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/iscroll.js"></script>
+<script type="text/javascript" src="js/pullToRefresh.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+<script type="text/javascript">
+			$(document).ready(function(){
+	    		getExpertInfo();
+	    		
+	    		var expertPhotoW = $(".placePic").width();
+				$(".placePic").css({"height":expertPhotoW});
+	    		
+			});
+			var start = 0;
+			var limit = 2;
+			var loadFlg = false;
+			function getExpertInfo(){
+				var s;
+				$.ajax({
+					type : "post", 
+					async : false,  
+					url:"mobile_expertBespeakList.do",
+					data:{start:start, limit:limit},
+					success : function(data,status){
+						data = eval("("+data+")");
+						if(!loadFlg){
+							renderExpertDetail(data.root);
+						}else{
+							s = renderExpertDetail(data.root);
+							var expertPhotoW = $(".placePic").width();
+							$(".placePic").css({"height":expertPhotoW});//设置图片大小
+						}
+						
+					}
+				});
+				return s;
+			}
+			
+			function renderExpertDetail(data){
+				var s = "";
+				$.each(data,function(rowNum,o){
+			        s+='<li><a href="expert-content.jsp?expertId='+o.id+'">';
+					s+='<div class="placePic">';
+					if(o.expertPhoto){
+						s+='<img width="100%" height="100%" src="'+o.expertPhoto+'" />';
+					}else{
+						s+='<img width="100%" height="100%" src="../img/defaultpic/photo.jpg"/>';
+					}
+					s+='</div>';
+					s+='<div class="placeName expertName">';
+					s+='<p>'+o.expertName+'</p>';
+					s+='<samp>'+o.expertGenre+'</samp>';
+					s+='</div>';
+					s+='</a></li>';
+			    });
+			    if(!loadFlg){
+			    	if(data.length==0){
+					   $("#expertInfo").html("<br/>暂无数据");
+				    }else{
+					   $("#expertInfo").html(s);
+				    }
+			    }else{
+			    	return s;
+			    }
+				    
+		     }
+		</script>
+</head>
+<body>
+	<section class="title wrap1">
+		<ul class="title_ul">
+			<li class="thisCur"><a href="expert.html">专家预约</a></li>
+			<li><a href="query-expert.html">预约查询</a></li>
+		</ul>
+		<a href="search-expert.html" class="query_search"> <input
+			type="text" class="searchTxt" placeholder="请输入关键字搜索" /><input
+			type="button" class="searchBtn" value="" />
+		</a>
+	</section>
+	<section class="wrap1 place_wrap" id="wrapper">
+		<ul class="place_list" id="expertInfo">
+		</ul>
+	</section>
+
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/iscroll.js"></script>
+	<script type="text/javascript" src="js/pullToRefresh.js"></script>
+	<script type="text/javascript" src="js/public.js"></script>
+	<script>
+			refresher.init({
+				id: "wrapper", //<---------------- 上拉下拉 --------------------------------------------------------------------┐
+				pullDownAction: Refresh,
+				pullUpAction: Load
+			});
+
+			function Refresh() {
+				setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
+					var el, li, i;
+					el = document.querySelector("#wrapper .place_list");
+					//这里写你的刷新代码				
+					document.getElementById("wrapper").querySelector(".pullDownIcon").style.display = "none";
+					document.getElementById("wrapper").querySelector(".pullDownLabel").innerHTML = "<img src='img/ok.png'/>刷新成功";
+					setTimeout(function() {
+						
+						//下拉刷新
+						wrapper.refresh();
+						
+						window.location.href = "expert.html";
+						
+					}, 500); //模拟qq下拉刷新显示成功效果
+					/****remember to refresh after  action completed！ ---yourId.refresh(); ----| ****/
+				}, 500);
+			}
+			
+			function Load() {
+				setTimeout(function() { // <-- Simulate network congestion, remove setTimeout from production!
+					var el, li, i;
+					el = document.querySelector("#wrapper .place_list");
+					start += limit;
+					loadFlg = true;
+					var str = getExpertInfo();
+					li = document.createElement('ul');
+					if(str){
+						li.innerHTML = str;//刷新内容
+					}
+					el.appendChild(li, el.childNodes[0]);
+					loadFlg = false;
+					wrapper.refresh(); /****remember to refresh after action completed！！！   ---id.refresh(); --- ****/
+				}, 1000);
+			}
+		</script>
+</body>
+</html>
