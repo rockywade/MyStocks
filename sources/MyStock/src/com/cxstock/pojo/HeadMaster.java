@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="tbl_headmaster")//班主任
@@ -27,9 +28,13 @@ public class HeadMaster implements Serializable {
 	//教师手机号码
 	private String phone;
 	
+	//所属学园
 	private String ssyq;
 	//班主任
 	private Set<Classes> hclass;
+	
+	@Transient
+	private String headClass;
 	
 	public HeadMaster(){
 	}
@@ -104,5 +109,14 @@ public class HeadMaster implements Serializable {
 	}
 	public void setHclass(Set<Classes> hclass) {
 		this.hclass = hclass;
+	}
+
+	@Transient
+	public String getHeadClass() {
+		return headClass;
+	}
+
+	public void setHeadClass(String headClass) {
+		this.headClass = headClass;
 	}
 }

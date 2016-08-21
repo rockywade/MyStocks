@@ -737,7 +737,8 @@ public class FrontAction extends BaseAction{
 			Date d = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String toDayDate = sf.format(d);
-			applyActivityBiz.findPageActivityPassed(page, null, applystyle, toDayDate,null);
+			//applyActivityBiz.findPageActivityPassed(page, null, applystyle, toDayDate,null);
+			applyActivityBiz.findPageActivityInfo(page, null);
 			this.outPageString(page);
 		} catch (Exception e) {
 			e.printStackTrace();

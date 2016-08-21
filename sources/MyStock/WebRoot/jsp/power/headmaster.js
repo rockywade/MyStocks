@@ -141,6 +141,12 @@ Ext.onReady(function(){
         	scrollOffset: 0
        	},
         tbar:['->',{
+        	text:'导入班主任',
+        	iconCls:'menu-11',
+        	handler: function(){
+        		importWindow.show();
+        	}
+        },'-',{
         	text:'增加',
         	iconCls:'btn-add',
         	handler: function(){
@@ -189,6 +195,60 @@ Ext.onReady(function(){
         })
     });
     
+    var importForm = new Ext.FormPanel({
+		layout : 'form',
+		fileUpload:true,
+		frame:true,
+		url :'headMaster_importExcel.do',
+		labelWidth:60,
+		border : false,
+		padding : '5 10 10 8',
+		defaults : {
+			anchor : '100%'
+		},
+		items:[{
+			id:'control_id',
+			xtype: 'textfield',  
+            fieldLabel: '导入名单',  
+            name: 'excel',  
+            inputType: 'file'
+		}]
+	});
+    
+    //文件导入窗口
+    var importWindow = new Ext.Window({
+		title : '导入班主任',
+		width:280,
+		height:120,
+		closeAction:'hide',
+		modal : true,
+		layout : 'fit',
+		buttonAlign : 'center',
+		items : [importForm],
+		buttons : [{
+			text : '确认导入',
+			handler : function() {
+				if (importForm.getForm().isValid()) {
+					importForm.getForm().submit({
+						success : function(form, action) {
+							Ext.Msg.alert('信息提示',action.result.message);
+							importWindow.hide();
+							store.reload();
+						},
+						failure : function(form, action) {
+							if(action.result.errors){
+								Ext.Msg.alert('信息提示',action.result.errors);
+							}else{
+								Ext.Msg.alert('信息提示','连接失败');
+							}
+						},
+						waitTitle : '提交',
+						waitMsg : '正在保存数据，稍后...'
+					});
+				}
+			}
+		}]
+	});
     
     var classesStore = new Ext.data.JsonStore({
 	    url: 'classes_findClassesBySsyq.do',

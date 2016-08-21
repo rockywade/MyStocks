@@ -21,5 +21,5 @@ public interface HeadMasterBiz {
 	 */
 	public void deleteHeadMaster(Integer id);
 	
-
+	public HeadMaster headMasterExist(HeadMaster headMaster);
 }

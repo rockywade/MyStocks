@@ -141,7 +141,7 @@
 						<option value="翠柏">翠柏</option>
 						<option value="青溪">青溪</option>
 						<option value="紫云">紫云</option>
-						<option value="壁峰">壁峰</option>
+						<option value="碧峰">碧峰</option>
 						<option value="蓝田">蓝田</option>
 				</select>
 				</li>

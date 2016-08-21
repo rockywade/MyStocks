@@ -133,4 +133,16 @@ public class HeadMasterBizImp implements HeadMasterBiz {
 		baseDao.excuteBySql(sql);
 		baseDao.deleteById(Instructor.class, id);
 	}
+
+
+	@Override
+	public HeadMaster headMasterExist(HeadMaster headMaster) {
+		String hql = "from HeadMaster where zgh='"+headMaster.getZgh()+"'";
+		List<HeadMaster> studentList = baseDao.findByHql(hql);
+		if(studentList.size()==0){
+			return null;
+		}else{
+			return studentList.get(0);
+		}
+	}
 }

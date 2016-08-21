@@ -7,6 +7,6 @@
 			<li>报名成功后，请关注活动的时间地点等信息，按时参加。</li>
 			<li>报名后不能参加的活动请及时取消报名，报名未参加将扣去1分记实考评。</li>
 		</ol>
-		<a href="javascript:void(0)" class="actB_update">《求是学院记实考评工作实施办法》</a>
+		<!-- <a href="javascript:void(0)" class="actB_update">《求是学院记实考评工作实施办法》</a> -->
 	</div>
 </div>

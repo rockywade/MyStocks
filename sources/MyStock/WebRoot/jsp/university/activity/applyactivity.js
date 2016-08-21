@@ -86,8 +86,9 @@ Ext.onReady(function(){
 						xtype:"button",
 						text:'申请活动',
 						handler:function(){
-							addWindow.show();
-							addForm.getForm().reset();
+							/*addWindow.show();
+							addForm.getForm().reset();*/
+							makeModle(grid);
 						}
 					}]
 				},{
@@ -114,6 +115,97 @@ Ext.onReady(function(){
 		}]
 	});
 	
+    //预约方法
+    var  makeModle = function (grid){
+     	//var record = grid.getStore().getAt(rowIndex); 
+         //Ext.getCmp("id").setValue(record.data.id);
+         //Ext.getCmp("sitename").setValue(record.data.sitename);
+     	 //Ext.getCmp("sitecondition").setValue(record.data.sitecondition);
+     	 //隐藏传行号rowIndex
+         //Ext.getCmp("rowIndex1").setValue(rowIndex);
+         
+         //viewWindow.hide();   
+     	agreementWindow.show();
+    }
+	
+    
+	 //拼接协议
+    var talk = '';
+        talk +='活动申报流程及申报责任说明\r\n';
+        talk +='一、活动申报流程\r\n';
+        talk +='1、申报举办的活动须在纪实考评加分范围内（学业指导、专业讲座、职业规划等相关活动），并至少提前一周在网站上进行申报。申报时如实填写信息，包括活动主题、时间、地点、性质、规模以及活动要求的记实考评加分额度（具体加分额度请参考《记实考评工作细则》）等。在系统里完成申报后，打印好申报表，经指导老师签字与指导单位盖章后，至少提前5天上交至申报人所在学园的纪实考评办公室（蓝田学园：蓝田六舍209室，蒋少佳，88206718；丹青学园：青一131室，王老师，22806841；云峰学园：碧峰连廊131室，田老师，88206505）。\r\n';
+        talk +='2、学生可在网上进行预报名，活动方可将预名单导出作为参考，最后参加活动的人员公示名单以活动方现场签到表为准。\r\n';
+        talk +='3、活动结束后，请在3天内上传活动新闻稿和签到名单，根据导入系统的签到情况，记实考评加分结果将反馈至参加学生处，同时进行网上公示，为期一周。公示通过后，参与活动的同学即可获得记实考评加分。\r\n';
+        talk +='二、求是学院活动申报责任说明   \r\n';
+        talk +='1. 确保所申报的活动信息内容合法且不与校规相违背。\r\n';
+        talk +='2. 活动安全由主办或承办单位负责，请严格遵循“安全第一、预防为主”的方针。\r\n';
+        talk +='3. 活动申报成功后请勿私下改动活动形式或内容等。\r\n';
+        talk +='4. 活动开展不得影响学校正常的教学、科研、学习和生活秩序。\r\n';
+    
+      //阅读协议
+        var agreementForm = new Ext.FormPanel({
+    		layout : 'form',
+    		frame:true,
+    		labelWidth:60,
+    		border : false,
+    		padding : '10 10 0 8',
+    		defaults : {
+    			anchor : '100%'
+    		},
+    		items:[{
+    			xtype:'textarea',
+    			id:'agreementto',
+    			readOnly:true,
+    			anchor: '97.5%',
+    			value:talk,
+    			style:'border:0', 
+    			height:200
+    		},{
+                xtype: "checkbox",
+                id:'agreement',
+                name: "agreement",
+                boxLabel: "我同意以上协议",
+                checked:true,	
+    			allowBlank : false
+    		},{
+    			xtype : 'hidden',
+    		    name : 'id',
+    		    id:'id'
+    		    
+    		},{
+    			xtype : 'hidden',
+    		    name : 'rowIndex1',
+    		    id : "rowIndex1"
+    		}]
+    	});    
+        
+    var agreementWindow = new Ext.Window({
+    	title:'阅读协议',
+		width:650,
+		height:370,
+		closeAction:'hide',
+		modal : true,
+		layout : 'fit',
+		buttonAlign : 'center',
+		items : [agreementForm],
+		buttons : [{
+			text : '下一步',
+			handler : function() { 
+		       if(false == agreement){
+		    	   alert("请先阅读场地使用协议！");
+		    	   return false
+		    	}
+		       
+		       addWindow.show();
+		       addForm.getForm().reset();
+				 agreementWindow.hide();
+				 //时间选择
+				 //updateStatusHandler2();
+					 
+					
+			}
+		}]
+	});
 	//fields类声明
 	var Activity = [
 	        		{ name:'activityid', type:'string'},

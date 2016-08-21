@@ -493,26 +493,27 @@ public class ApplyActivityBizImp implements ApplyActivityBiz {
 	@SuppressWarnings("unchecked")
 	public void findPageActivityInfo(Page page, Object object) {
 		List listAllActivity = new ArrayList();
-		String[] agenre= {"学科讲座","生涯规划","心理健康","党团建设","文体活动","其他"};
-		for(int i=0;i<agenre.length;i++){
-			String hql = "from Activity as model where model.activitygenre='"+agenre[i]+"' and model.applystyle='已通过'";
-			String[] orderName = {"activitytime"};
-			String[] orderType = {"DESC"};
-			
-			List<Activity> list = baseDao.findPageAndOrder(hql, orderName, orderType, page.getStart(), page.getLimit());
-			if(list!=null && list.size()>0){
-				for(Activity ac:list){
-					ActivityDTO aDto = new ActivityDTO();
-					aDto.setAid(ac.getActivityid());
-					aDto.setAname(ac.getActivityname());
-					aDto.setAgenre(ac.getActivitygenre());
-					aDto.setAttendnum(ac.getAttendnum());
-					aDto.setCapacity(ac.getCapacity());
-					listAllActivity.add(aDto);
-				}
+		int total = 0;
+		String hql = "from Activity as model where model.applystyle='已通过'";
+		String[] orderName = {"activitytime"};
+		String[] orderType = {"DESC"};
+		String chql = "select count(*) "+hql;
+		
+		List<Activity> list = baseDao.findPageAndOrder(hql, orderName, orderType, page.getStart(), page.getLimit());
+		total += baseDao.countQuery(chql);
+		if(list!=null && list.size()>0){
+			for(Activity ac:list){
+				ActivityDTO aDto = new ActivityDTO();
+				aDto.setAid(ac.getActivityid());
+				aDto.setAname(ac.getActivityname());
+				aDto.setAgenre(ac.getActivitygenre());
+				aDto.setAttendnum(ac.getAttendnum());
+				aDto.setCapacity(ac.getCapacity());
+				listAllActivity.add(aDto);
 			}
 		}
-		page.setRoot(listAllActivity);
+		page.setRoot(list);
+		page.setTotal(total);
 	}
 
 	/**

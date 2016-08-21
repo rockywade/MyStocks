@@ -19,6 +19,7 @@ import org.apache.struts2.ServletActionContext;
 
 import com.cxstock.action.BaseAction;
 import com.cxstock.action.common.ActivitySmsQuartz;
+import com.cxstock.action.student.vo.StudentExcel;
 import com.cxstock.biz.activity.ApplyActivityBiz;
 import com.cxstock.biz.power.dto.UserDTO;
 import com.cxstock.biz.sms.SmsBiz;
@@ -504,7 +505,24 @@ public class ApplyactivityAction extends BaseAction {
 			activity.setActivityid(activityid);
 			activity.setNewscheckstyle("no");
 			applyActivityBiz.saveApplyActivity(activity);
-			this.outString("{success:true,message:'保存成功!  请将纸质版申报表交至......'}");
+			StudentExcel studentExcel = new StudentExcel();
+			studentExcel.setXh(studentnum);
+			Student student = studentBiz.studentExist(studentExcel);
+			if(student.getSsyq() != null && !student.getSsyq().equals("")) {
+				if(student.getSsyq().contains("蓝田")) {
+					this.outString("{success:true,message:'申报成功！请将纸质版报名表递交至蓝田六舍209室，蒋老师,88206718'}");
+				} else if(student.getSsyq().contains("丹青")) {
+					this.outString("{success:true,message:'申报成功！请将纸质版报名表递交至青溪一舍131室，王老师，22806841'}");
+				} else if(student.getSsyq().contains("云峰")){
+					this.outString("{success:true,message:'申报成功！请将纸质版报名表递交至碧峰连廊131室，田老师，88206505'}");
+				} else {
+					this.outString("{success:true,message:'申报成功!  请将纸质版申报表交至......'}");
+				}
+			} else {
+				this.outString("{success:true,message:'申报成功!  请将纸质版申报表交至......'}");
+			}
+			
+				
 		}else{												
 			activity.setActivityid(activityid);
 			if(checkkey.equals("1")){										//取消申请
