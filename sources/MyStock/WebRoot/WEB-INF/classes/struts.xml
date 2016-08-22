@@ -5,135 +5,131 @@
 
 <struts>
 	<constant name="struts.action.extension" value="do" />
-	<constant name="struts.multipart.maxSize" value="10485760" />
+	<constant name="struts.multipart.maxSize" value="10485760"/> 
 	<!-- 设置Web应用的默认编码集为UTF-8 -->
-	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.i18n.encoding" value="UTF-8"/>
 	<!-- 设置Struts2默认的ObjectFactory为spring -->
 	<constant name="struts.objectFactory" value="spring" />
 	<!-- 设置Struts2应用是否处于开发模式，通常在开发调试阶段设为true,正式上线后可设为false -->
 	<constant name="struts.devMode" value="true" />
 	<!-- 设置Struts2的默认主题为simple -->
 	<constant name="struts.ui.theme" value="simple" />
-
+	
 	<!-- 定义一个名为 cxstock 的包，继承 Struts 2 的默认包 -->
-	<package name="cxstock" extends="struts-default">
+    <package name="cxstock" extends="struts-default">
 		<!-- 配置自定义拦截器LoginedCheckInterceptor拦截未登录状态，跳至登录页面 -->
 		<interceptors>
-			<interceptor name="loginedCheck"
-				class="com.cxstock.utils.filter.LoginedCheckInterceptor" />
-		</interceptors>
-
+			<interceptor name="loginedCheck" class="com.cxstock.utils.filter.LoginedCheckInterceptor"/>
+		</interceptors>	    
+    
 		<!-- 定义全局result -->
 		<global-results>
 			<!-- 定义名为exception的全局result -->
-			<result name="exception">/exception.jsp</result>
-			<result name="tologin">/jsp/main/tologin.htm</result>
+		    <result name="exception">/exception.jsp</result>
+		    <result name="tologin">/jsp/main/tologin.htm</result>
 		</global-results>
 
 		<!-- 定义全局异常映射 -->
 		<global-exception-mappings>
 			<!-- 捕捉到Exception异常(所有异常)时跳转到exception所命名的视图上 -->
-			<exception-mapping exception="java.lang.Exception"
-				result="exception" />
-		</global-exception-mappings>
-	</package>
-
-	<package name="main" extends="cxstock" namespace="/">
-		<action name="download" class="com.cxstock.action.test.DownloadAction">
-			<result type="stream">
-				<param name="contentType">${mimeType}</param>
-				<param name="inputName">inStream</param>
-				<param name="contentDisposition">attachment;filename="${filename}"</param>
-			</result>
+			<exception-mapping exception="java.lang.Exception" result="exception"/>
+		</global-exception-mappings>	
+    </package>
+    
+    <package name="main" extends="cxstock" namespace="/">
+    	<action name="download" class="com.cxstock.action.test.DownloadAction">
+			 <result type="stream">  
+		        <param name="contentType">${mimeType}</param>  
+		        <param name="inputName">inStream</param>  
+		        <param name="contentDisposition">attachment;filename="${filename}"</param>  
+		    </result>  
 		</action>
-
-		<!-- 参加活动名单文件导出 -->
+		
+		<!-- 参加活动名单文件导出  -->
 		<action name="exportExcel" class="com.cxstock.action.activity.ApplyactivityAction">
-			<result type="stream">
-				<param name="contentType">${mimeType}</param>
-				<param name="inputName">inStream</param>
-				<param name="contentDisposition">attachment;filename="${filename}"</param>
-			</result>
+			 <result type="stream">  
+		        <param name="contentType">${mimeType}</param>  
+		        <param name="inputName">inStream</param>  
+		        <param name="contentDisposition">attachment;filename="${filename}"</param>  
+		    </result>  
 		</action>
-
-		<!--去向统计详情文件导出 -->
+		
+		<!--去向统计详情文件导出-->
 		<action name="wheresExcel" class="com.cxstock.action.whereabouts.WhereaboutsAction">
-			<result type="stream">
-				<param name="contentType">${mimeType}</param>
-				<param name="inputName">inStream</param>
-				<param name="contentDisposition">attachment;filename="${filename}"</param>
-			</result>
+			 <result type="stream">  
+		        <param name="contentType">${mimeType}</param>  
+		        <param name="inputName">inStream</param>  
+		        <param name="contentDisposition">attachment;filename="${filename}"</param>  
+		    </result>
 		</action>
-
-		<!--活动报名信息文件下载 -->
+		
+		<!--活动报名信息文件下载-->
 		<action name="fileDownload" class="com.cxstock.action.activity.ApplyactivityAction">
-			<result type="stream">
-				<param name="contentType">${mimeType}</param>
-				<param name="inputName">inStream</param>
-				<param name="contentDisposition">attachment;filename="${filename}"</param>
-			</result>
+			 <result type="stream">  
+		        <param name="contentType">${mimeType}</param>  
+		        <param name="inputName">inStream</param>  
+		        <param name="contentDisposition">attachment;filename="${filename}"</param>  
+		    </result>
 		</action>
-
-		<!-- 特别关心名单导出 -->
+		
+		<!-- 特别关心名单导出  -->
 		<action name="specialcareExportExcel" class="com.cxstock.action.specialcare.SpecialCareAction">
-			<result type="stream">
-				<param name="contentType">${mimeType}</param>
-				<param name="inputName">inStream</param>
-				<param name="contentDisposition">attachment;filename="${filename}"</param>
-			</result>
+			 <result type="stream">  
+		        <param name="contentType">${mimeType}</param>  
+		        <param name="inputName">inStream</param>  
+		        <param name="contentDisposition">attachment;filename="${filename}"</param>  
+		    </result>  
 		</action>
-
-		<!-- 特别关心名单导出 -->
+		
+		<!-- 特别关心名单导出  -->
 		<action name="specialcareExportExcel" class="com.cxstock.action.specialcare.SpecialCareAction">
-			<result type="stream">
-				<param name="contentType">${mimeType}</param>
-				<param name="inputName">inStream</param>
-				<param name="contentDisposition">attachment;filename="${filename}"</param>
-			</result>
+			 <result type="stream">  
+		        <param name="contentType">${mimeType}</param>  
+		        <param name="inputName">inStream</param>  
+		        <param name="contentDisposition">attachment;filename="${filename}"</param>  
+		    </result>  
 		</action>
 
-		<!--学习资料的下载 -->
+		<!--学习资料的下载  -->
 		<action name="DatumInfodownload" class="com.cxstock.action.datuminfo.DatumInfoAction">
-			<result type="stream">
-				<param name="contentType">${mimeType}</param>
-				<param name="inputName">inStream</param>
-				<param name="contentDisposition">attachment;filename="${filename}"</param>
-			</result>
+			 <result type="stream">  
+		        <param name="contentType">${mimeType}</param>  
+		        <param name="inputName">inStream</param>  
+		        <param name="contentDisposition">attachment;filename="${filename}"</param>  
+		    </result>  
 		</action>
-
-		<!--线下辅导学生报名项目导出 -->
-		<action name="exportStudent"
-			class="com.cxstock.action.pbfx.offlineFd.OfflineFdAction">
-			<result type="stream">
-				<param name="contentType">${mimeType}</param>
-				<param name="inputName">inStream</param>
-				<param name="contentDisposition">attachment;filename="${filename}"</param>
-			</result>
+		
+		<!--线下辅导学生报名项目导出  -->
+		<action name="exportStudent" class="com.cxstock.action.pbfx.offlineFd.OfflineFdAction">
+			 <result type="stream">  
+		        <param name="contentType">${mimeType}</param>  
+		        <param name="inputName">inStream</param>  
+		        <param name="contentDisposition">attachment;filename="${filename}"</param>  
+		    </result>  
 		</action>
-
-
-
-
-
-
+		
+		
+		
+		
+    
+    
 		<action name="*_*" class="{1}Action" method="{2}">
-			<!--游客状态点击登录跳转至登录页面 -->
+		<!--游客状态点击登录跳转至登录页面-->
 			<result name="login">/login.jsp</result>
-			<!--登录跳转 -->
+		<!--登录跳转 -->
 			<result name="success" type="redirect">/jsp/main/index.jsp</result>
 			<result name="gotophoneindex" type="redirect">/mobile/index.html</result>
 			<result name="loginerror" type="redirect">/mobile/login.jsp</result>
-			<!-- 我的活动列表页面跳转 -->
+		<!-- 我的活动列表页面跳转 -->
 			<result name="input">/index.jsp</result>
 			<result name="viewOnlineQA">/jsp/onlineqa/viewOnlineQA.jsp</result>
 			<!--创建场地图片预览 -->
 			<result name="viewImg">/jsp/siteinfo/viewImg.jsp</result>
-			<result name="viewSecondBookStore">/jsp/secondbookstore/viewSecondBookStore.jsp
-			</result>
+			<result name="viewSecondBookStore">/jsp/secondbookstore/viewSecondBookStore.jsp</result>
 			<result name="viewConversation">/jsp/specialcare/viewConversation.jsp</result>
-			<interceptor-ref name="loginedCheck" />
-			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="loginedCheck"/>
+			<interceptor-ref name="defaultStack"/>
 		</action>
-
+		
 	</package>
 </struts>

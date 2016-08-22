@@ -13,7 +13,7 @@
 </head>
 
 <body>
-	<div class="answer_wrap answerB_wrap">
+	<div class="answer_wrap answerB_wrap" style="width: 360px;">
 		<div class="answer_tit">
 			<h2>
 				【

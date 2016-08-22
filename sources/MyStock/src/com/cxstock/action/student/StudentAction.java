@@ -236,8 +236,8 @@ public class StudentAction extends BaseAction {
 			Page page = new Page();
 			page.setStart(this.getStart());
 			page.setLimit(this.getLimit());
-			String[] property = {"xh","xm"};
-			Object[] value = {this.xh,this.xm};
+			String[] property = {"xh","xm","ssyq"};
+			Object[] value = {this.xh,this.xm,getUserDTO().getSsyq()};
 			studentBiz.findPageStudent(page,property,value);
 			this.outPageString(page);
 		} catch (Exception e) {

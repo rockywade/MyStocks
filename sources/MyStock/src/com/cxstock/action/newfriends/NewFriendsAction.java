@@ -97,8 +97,8 @@ public class NewFriendsAction extends BaseAction {
 			Page page = new Page();
 			page.setStart(this.getStart());
 			page.setLimit(this.getLimit());
-			String[] property = {"zgh","xm"};
-			Object[] value = {this.zgh,this.xm};
+			String[] property = {"zgh","xm","ssyq"};
+			Object[] value = {this.zgh,this.xm,getUserDTO().getSsyq()};
 			newFriendsBiz.findPageNewFriends(page,property,value);
 			this.outPageString(page);
 		} catch (Exception e) {
