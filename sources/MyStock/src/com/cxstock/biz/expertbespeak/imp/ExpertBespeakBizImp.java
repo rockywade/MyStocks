@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.cxstock.biz.expertbespeak.ExpertBespeakBiz;
 import com.cxstock.biz.expertbespeak.dto.StartExpertInfoDTO;
 import com.cxstock.biz.expertbespeak.dto.StudentbespeakDTO;
@@ -167,7 +169,7 @@ public class ExpertBespeakBizImp implements ExpertBespeakBiz {
 		String ehql = "from Expert as ex where 1=1 ";
 		for(int i = 0;i<property.length;i++){
 			if(values[i]!=null && !values[i].equals("") && i<property.length-1){
-				ehql += " and ex."+property[i]+" = '"+values[i]+"'";
+				ehql += " and ex."+property[i]+" like '%"+values[i]+"%'";
 			}else if(values[i]!=null && !values[i].equals("")){
 				ehql +=" and ex."+property[i]+" like '%"+values[i]+"%'";
 			}
@@ -436,7 +438,20 @@ public class ExpertBespeakBizImp implements ExpertBespeakBiz {
 	 */
 	@SuppressWarnings("unchecked")
 	public void findSBStudent(Page page, String experttype, String xm) {
-		String hql = "from Studentbespeak as model where model.haveornotexpert = '未分配' and model.applygenre = '"+experttype+"'";
+		
+		String types = "";
+		if(StringUtils.isNotBlank(experttype)) {
+			String[] expertTypes = experttype.split(",");
+			for(int i = 0; i < expertTypes.length -1; i++) {
+				if(i == 0) {
+					types += "'" + expertTypes[i] +"'";
+				} else {
+					types += ",'" + expertTypes[i] +"'";
+				}
+			}
+		}
+		
+		String hql = "from Studentbespeak as model where model.haveornotexpert = '未分配' and model.applygenre in ("+types+")";
 		//模糊查询
 		if(xm!=null && !xm.equals("")){
 			String stdhql = "from Student as model where model.xm like '%"+xm+"%'";

@@ -38,12 +38,11 @@ Ext.onReady(function(){
 					layout:"form"
 				},
 				items:[{
-					width:360,
+					columnWidth:.3,
 					items:[{
-								width:180,
-								labelWidth:200,
 								id:'bjCombo',
 								xtype:'combo',
+								width : 120,
 								hiddenName:'classes',
 								fieldLabel:'班级',
 								mode: 'local',
@@ -60,30 +59,45 @@ Ext.onReady(function(){
 								}
 							}]
 						},{
-							width:260,
+							columnWidth:.3,
 							items:[{
-								width : 150,
-								labelWidth:200,
+								width : 120,
 								xtype:"textfield",
 								name:'teacher',
 								fieldLabel:"班主任",
 							}]
 						},{
-					width:260,
-					items:[{
-						width:75,
-						xtype:"button",
-						//iconCls:"btn-list",
-						text:"查询",
-						handler:function(){
-							var f = searchForm.getForm();
-							if (f.isValid()) {
-								var _params = f.getValues();
-								//searchForm.getForm().reset();
-								store.load({params:_params});
+							columnWidth:.3,
+							items:[{
+								width : 120,
+								xtype:"textfield",
+								name:'counsellor',
+								fieldLabel:"辅导员",
+							}]
+						},{
+							columnWidth:.7,
+							items:[{
+								width : 120,
+								xtype:"textfield",
+								name:'wheresfact',
+								fieldLabel:"去向",
+							}]
+						},{
+							width:100,
+							items:[{
+								width:90,
+								xtype:"button",
+								//iconCls:"btn-list",
+								text:"查询",
+								handler:function(){
+									var f = searchForm.getForm();
+									if (f.isValid()) {
+										var _params = f.getValues();
+										//searchForm.getForm().reset();
+										store.load({params:_params});
+								}
 							}
-						}
-					}]
+						}]
 				},{
 					width:100,
 					items:[{
@@ -150,8 +164,9 @@ Ext.onReady(function(){
 			    {header: '姓名', width: 100,align:'center', dataIndex: 'censususername'},
 			    {header: '学号', width: 100,align:'center', dataIndex: 'censususernum'},
 			    {header: '班级', width: 150,align:'center', dataIndex: 'classes'},
-			    {header: '班主任', width: 100,align:'center', dataIndex: 'teacher'},
-			    {header: '去向', width: 100,align:'center', dataIndex: 'wheresfact'},
+			    {header: '班主任', width: 80,align:'center', dataIndex: 'teacher'},
+			    {header: '辅导员', width: 80,align:'center', dataIndex: 'counsellor'},
+			    {header: '去向', width: 80,align:'center', dataIndex: 'wheresfact'},
 			    {header: '目的地', width: 100,align:'center', dataIndex: 'termini'},
 	            {header: '父母是否知情', width: 100,align:'center', dataIndex: 'parentsknows'},
 			    {header: '父母联系电话', width: 150,align:'center', dataIndex: 'parentsphone'},

@@ -142,11 +142,11 @@ Ext.onReady(function(){
 		        		
 		            	var returnStr = "";
 		            	if(todaytime>censusendtime || "已撤销"==record.data.launchstyle){
-		            		returnStr = "<a href='#' onclick='count("+rowIndex+")'>统计数据</a>";
+		            		returnStr = "<a href='#' onclick='count("+rowIndex+")' style='color:blue;font-weight:bold;text-decoration:none;'>统计数据</a>";
 		            	}else{
-		            		returnStr = "<a href='#' onclick='cancel("+rowIndex+")'>撤销</a>" +
+		            		returnStr = "<a href='#' onclick='cancel("+rowIndex+")' style='color:blue;font-weight:bold;text-decoration:none;'>撤销</a>" +
             				"&nbsp;&nbsp;" +
-            				"<a href='#' onclick='count("+rowIndex+")'>数据统计</a>";
+            				"<a href='#' onclick='count("+rowIndex+")' style='color:blue;font-weight:bold;text-decoration:none;'>数据统计</a>";
 		            	}
 		                return returnStr;
 	              }

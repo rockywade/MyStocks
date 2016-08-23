@@ -101,9 +101,15 @@ public class InstructorAction extends BaseAction {
 			Page page = new Page();
 			page.setStart(this.getStart());
 			page.setLimit(this.getLimit());
-			String[] property = {"zgh","xm","ssyq"};
-			Object[] value = {this.zgh,this.xm,getUserDTO().getSsyq()};
-			instructorBiz.findPageInstructor(page,property,value);
+			if(getUserDTO().getLogincode().equals("admin")) {
+				String[] property = {"zgh","xm"};
+				Object[] value = {this.zgh,this.xm};
+				instructorBiz.findPageInstructor(page,property,value);
+			} else {
+				String[] property = {"zgh","xm","ssyq"};
+				Object[] value = {this.zgh,this.xm,getUserDTO().getSsyq()};
+				instructorBiz.findPageInstructor(page,property,value);
+			}
 			this.outPageString(page);
 		} catch (Exception e) {
 			e.printStackTrace();

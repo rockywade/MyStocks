@@ -33,6 +33,11 @@ public class ExpertAction extends BaseAction {
 	private File upload;
 	private String uploadFileName;
 	
+	//文件上传
+	private File image;
+	//fileName 前面必須和uplaod一致,不然找不到文件
+	private String imageFileName; 
+	
 	private ExpertBiz expertBiz;
 	
 	public Integer getId() {
@@ -179,6 +184,18 @@ public class ExpertAction extends BaseAction {
 	
 	public String saveOrUpdateExpertByAdmin() {
 		try {
+			Date d = new Date();
+			//图片保存路径
+			if(null!=this.image){
+				String path = ServletActionContext.getServletContext().getRealPath("upload")
+				+ File.separator + d.getTime() + Tools.getFileExp(this.imageFileName);
+				//获取图片绝对路径
+				photo = this.getRequest().getContextPath() + "/upload" + "/"
+									+ d.getTime() + Tools.getFileExp(this.imageFileName); 
+				File toFile = new File(path);
+				Tools.writeFile(this.image,toFile);
+			}
+			
 			Expert expert = new Expert(id,zgh,xm,xb,phone,photo,
 					unit,email,expertType,introduce);
 			expert.setSsyq(ssyq);
@@ -284,6 +301,22 @@ public class ExpertAction extends BaseAction {
 			this.outError();
 		}
 		return null;
+	}
+
+	public File getImage() {
+		return image;
+	}
+
+	public void setImage(File image) {
+		this.image = image;
+	}
+
+	public String getImageFileName() {
+		return imageFileName;
+	}
+
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
 	}
 
 }

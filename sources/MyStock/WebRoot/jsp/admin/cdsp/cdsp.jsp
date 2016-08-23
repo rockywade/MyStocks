@@ -18,7 +18,6 @@ style type ="text/css">.x-grid3-row td, .x-grid3-summary-row td {
 	控制GRID单元格高度
 }
 </style>
-</style>
 </head>
 <body>
 </body>

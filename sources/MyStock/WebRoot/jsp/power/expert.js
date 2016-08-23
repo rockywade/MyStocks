@@ -517,6 +517,7 @@ Ext.onReady(function(){
 		layout : 'form',
 		baseCls:'x-plain',
 		labelWidth:60,
+		fileUpload:true,
 		border : false,
 		padding : '15 10 0 8',
 		defaults : {
@@ -556,6 +557,29 @@ Ext.onReady(function(){
 				regex:/^(13\d|15[^4,\D]|17[13678]|18\d)\d{8}|170[^346,\D]\d{7}$/,
 				allowBlank : true
 			},{
+				xtype:'textfield',
+				name:'image',
+				fieldLabel:'头像',
+				inputType: 'file',
+				height:40,
+				validator: function(value){
+					if(''==value){
+						return '请上传图像';
+					}
+					var extension=new String(value.substring(value.lastIndexOf(".")+1,value.length));
+					extension = extension.toLowerCase();   
+					if(extension=="png"||extension=="jpg"||extension=="gif"||extension=="jpeg"||extension=="bmp")
+		            {
+		            	return true; 
+		            }
+		            else
+		            {
+		            	return '只允许上传png|jpg|gif|bmp';
+		            }
+					
+				},
+				maxLength :200
+			},{
 				xtype:'combo',
 				hiddenName:'unit',
 				fieldLabel:'单位(办公)',
@@ -591,7 +615,7 @@ Ext.onReady(function(){
 				    data : [['丹青','丹青'],['云峰','云峰'],['蓝田','蓝田']]
 				})
 		},{
-				xtype:'combo',
+				xtype:'lovcombo',
 				hiddenName:'expertType',
 				fieldLabel:'专家类型',
 				mode: 'local',
@@ -600,7 +624,7 @@ Ext.onReady(function(){
 				displayField: 'text',
 				allowBlank : false,
 				editable : false,
-				value:'学业指导',
+				value:'请选择',
 				store : new Ext.data.SimpleStore({
 				    fields: ['value', 'text'],
 				    data : [['学业指导','学业指导'],['心理辅导','心理辅导'],['职业规划','职业规划'],['出国指导','出国指导'],['其他','其他']]
@@ -619,7 +643,7 @@ Ext.onReady(function(){
     var uWindow = new Ext.Window({
 		title : '专家',
 		width:400,
-		height:400,
+		height:450,
 		closeAction:'hide',
 		modal : true,
 		layout : 'fit',

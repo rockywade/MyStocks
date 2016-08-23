@@ -544,8 +544,8 @@ public class WhereaboutsAction extends BaseAction {
 			Page page = new Page();
 			page.setStart(this.getStart());
 			page.setLimit(this.getLimit());
-			String[] porperty = {"classes","teacher"};
-			String[] values = {this.classes,this.teacher};
+			String[] porperty = {"classes","teacher","counsellor","wheresfact"};
+			String[] values = {this.classes,this.teacher,this.counsellor, this.wheresfact};
 			whereAboutsBiz.findPageCensusById(page, porperty, values,launchid);
 			this.outPageString(page);
 		} catch (Exception e) {
