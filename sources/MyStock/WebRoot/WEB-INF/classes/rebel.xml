@@ -6,4 +6,11 @@
 		</dir>
 	</classpath>
 
+	<web>
+		<link target="/">
+			<dir name="E:/project/浙大项目/MyStocks/sources/MyStock/WebRoot">
+			</dir>
+		</link>
+	</web>
+
 </application>

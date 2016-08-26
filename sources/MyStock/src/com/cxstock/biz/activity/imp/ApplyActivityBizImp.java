@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.cxstock.biz.activity.ApplyActivityBiz;
 import com.cxstock.biz.activity.dto.ActivityDTO;
 import com.cxstock.biz.student.dto.StudentDTO;
@@ -622,6 +624,39 @@ public class ApplyActivityBizImp implements ApplyActivityBiz {
 	public Attend findAttendByIds(String usernum, String activityid) {
 		String hql = "from Attend as model where model.usernum = '"+usernum+"' and model.activityid = '"+activityid+"'";
 		return (Attend) baseDao.loadObject(hql);
+	}
+
+
+
+	@Override
+	public void deleteActivity(String activityid) {
+		if(activityid!=null && !activityid.equals("") ){
+			String hql = "from Attend as model where model.activityid = '"+activityid+"'";
+			
+			List<Attend> list = baseDao.findByHql(hql);
+			if(list != null && list.size() >0) {
+				String attendids = "";
+				for(int i = 0; i < list.size(); i++) {
+					if(StringUtils.isEmpty(attendids)) {
+						attendids += "'" + list.get(i).getId() + "'";
+					} else {
+						attendids += ",'" + list.get(i).getId() + "'";
+					}
+				}
+				if(StringUtils.isNotBlank(attendids)) {
+					String sql = "delete from student_attend where attendid in (" + attendids+")";
+					baseDao.excuteBySql(sql);
+				}
+			}
+			String sql = "delete from tbl_attend where activityid = '"+activityid+"'";
+			baseDao.excuteBySql(sql);
+			String delActivity = "delete from tbl_activity where activityid = '"+activityid+"'";
+			baseDao.excuteBySql(delActivity);
+			/*if(n>0){
+				baseDao.deleteById(Activity.class, activityid);
+			}*/
+		}
+		
 	}
 
 }

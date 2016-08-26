@@ -21,6 +21,26 @@ public class News implements Serializable {
 	private String totop;
 	private String activityid;
 	
+	public News() {
+		
+	}
+	
+	public News(String newsid, String newstitle, String website, String writer,
+			String newsdate, String property, String content,
+			String newscheckstyle, String highlight, String totop,
+			String activityid) {
+		this.newsid = newsid;
+		this.newstitle = newstitle;
+		this.website = website;
+		this.writer = writer;
+		this.newsdate = newsdate;
+		this.property = property;
+		this.content = content;
+		this.newscheckstyle = newscheckstyle;
+		this.highlight = highlight;
+		this.totop = totop;
+		this.activityid = activityid;
+	}
 	@Id
 	public String getNewsid() {
 		return newsid;

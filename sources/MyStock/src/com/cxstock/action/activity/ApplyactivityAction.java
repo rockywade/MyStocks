@@ -29,8 +29,10 @@ import com.cxstock.pojo.Activity;
 import com.cxstock.pojo.Attend;
 import com.cxstock.pojo.ChangToUser;
 import com.cxstock.pojo.Classes;
+import com.cxstock.pojo.Expert;
 import com.cxstock.pojo.HeadMaster;
 import com.cxstock.pojo.Instructor;
+import com.cxstock.pojo.LeaderShip;
 import com.cxstock.pojo.NewFriends;
 import com.cxstock.pojo.News;
 import com.cxstock.pojo.Sms;
@@ -616,6 +618,11 @@ public class ApplyactivityAction extends BaseAction {
 				user.setUserSex(nf.getXb());
 				user.setUserPhone(nf.getPhone());
 			}
+			if(userInfo.getLogincode().contains("admin")) {
+				user.setUserNum(userInfo.getLogincode());
+				user.setUserName(userInfo.getLogincode());
+				user.setUserPhone("");
+			}
 			this.outObjectString(user,null);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -997,15 +1004,18 @@ public class ApplyactivityAction extends BaseAction {
 			if(fileDownKey.equals("AttendFileDeatil")){
 				filename = "求是学院记实考评工作实施办法.docx";
 			}else{
+				Activity activity = applyActivityBiz.findActivityInfoById(activityid);
+				String fileName = activity.getActivityname() + new Date().getTime();
+				
 				List<Attend> attendList = null;
 				attendList = applyActivityBiz.findAttendById(activityid);
 		        String[] titles = new String[]{"姓名", "学号", "签到"};
 		        String[] fieldNames = new String[]{"username", "usernum", "state"};
 		        String path = ServletActionContext.getServletContext().getRealPath("file")+ File.separator;
-		        File exportFile = new File(path+activityname+".xls");
+		        File exportFile = new File(path+fileName+".xls");
 		        ExcelHelper exh = JxlExcelHelper.getInstance(exportFile);
 		        exh.writeExcel(Attend.class, attendList, fieldNames, titles);
-		        filename = activityname + ".xls";
+		        filename = fileName + ".xls";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1221,6 +1231,95 @@ public class ApplyactivityAction extends BaseAction {
 				 e.printStackTrace();
 				 this.outError();
 			   }
+		return null;
+	}
+	
+	/**
+	 * 保存活动 活动状态为已通过
+	 **/
+	public String saveActivity(){
+		Activity activity = new Activity(activityname, applyuser, 
+				studentnum, studentphonenum, organizename, teacher, 
+				phonenum, activitygenre, activitytime, 
+				inschoolterm, faceobj, capacity, activityplace, 
+				timeofduration, activitycontent, signupendtime, score);
+		activity.setApplystyle("已通过");
+		if(activityid==null || activityid.equals("")){						//新增
+			activityid = Tools.getUid();
+			activity.setActivityid(activityid);
+			activity.setNewscheckstyle("no");
+			applyActivityBiz.saveApplyActivity(activity);
+			UserDTO user = getUserDTO();
+			Page page = new Page();
+			page.setStart(this.getStart());
+			page.setLimit(this.getLimit());
+			
+			HeadMaster headMaster = user.getHeadMaster();
+			Instructor instructor = user.getInstructor();
+			LeaderShip leaderShip = user.getLeaderShip();
+			NewFriends newFriends = user.getNewFriends();
+			Expert expert = user.getExpert();
+			String ssyq ="";
+			
+			if(null!=headMaster){
+				ssyq = headMaster.getSsyq();
+			}
+			if(null!=leaderShip){
+				ssyq = leaderShip.getSsyq();
+			}
+			if(null!=newFriends){
+				ssyq = newFriends.getSsyq();
+			}
+			if(null!=expert){
+				ssyq = expert.getSsyq();
+			}
+			if(null!=instructor){
+				ssyq = instructor.getSsyq();
+			}
+			if(ssyq != null && !ssyq.equals("")) {
+				if(ssyq.contains("蓝田")) {
+					this.outString("{success:true,message:'申报成功！请将纸质版报名表递交至蓝田六舍209室，蒋老师,88206718'}");
+				} else if(ssyq.contains("丹青")) {
+					this.outString("{success:true,message:'申报成功！请将纸质版报名表递交至青溪一舍131室，王老师，22806841'}");
+				} else if(ssyq.contains("云峰")){
+					this.outString("{success:true,message:'申报成功！请将纸质版报名表递交至碧峰连廊131室，田老师，88206505'}");
+				} else {
+					this.outString("{success:true,message:'申报成功!  请将纸质版申报表交至......'}");
+				}
+			} else {
+				this.outString("{success:true,message:'申报成功!  请将纸质版申报表交至......'}");
+			}
+			
+				
+		}else{												
+			activity.setActivityid(activityid);
+			if(checkkey.equals("1")){										//取消申请
+				String clazz = "Activity";
+				String setproperty = "applystyle";
+				String byid = "activityid";
+				applystyle="已取消";
+				applyActivityBiz.updateClassById(clazz,setproperty,applystyle,byid,activityid);
+				this.outString("{success:true,message:'取消成功!'}");
+			}else{															//更新
+					applyActivityBiz.updateActivityById(activity);
+					this.outString("{success:true,message:'修改成功!'}");
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * 删除活动
+	 * @return
+	 */
+	public String deleteActivity() {
+		try {
+			applyActivityBiz.deleteActivity(activityid);;
+			this.outString("{success:true,message:'删除成功!'}");
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.outString("{success:true,message:'删除失败!'}");
+		}
 		return null;
 	}
 }

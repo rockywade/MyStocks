@@ -10,7 +10,7 @@ Ext.onReady(function(){
 		id:'newsButton',
 		width:90,
 		labelWidth:30,
-		text:'提交新闻',
+		text:'<b>提交新闻</b>',
 		handler:function(){
 			addWindow.show();
 		}
@@ -22,7 +22,7 @@ Ext.onReady(function(){
 		width:90,
 		labelWidth:30,
 		hidden:true,
-		text:'参与公示',
+		text:'<b>参与公示</b>',
 		handler:function(){
 			var activityid = Ext.getCmp("activityid").getValue();
 			Ext.MessageBox.confirm('参与公示提示', '确定参与公示吗？', function(ok) {
@@ -155,6 +155,18 @@ Ext.onReady(function(){
 								fieldLabel:'容量(人)',
 								readOnly:true
 							}]
+						},{
+							width:100,
+							items:[{
+								cls :'returnBtn',
+								width:75,
+								xtype:"button",
+								//style:'margin-top:25px',
+								text:"返<i class='ikg2'></i>回",
+								handler:function(){
+									window.location.href="applyactivity.jsp";
+								}
+							}]
 						}]
 				}]
 			},{
@@ -218,7 +230,7 @@ Ext.onReady(function(){
         iconCls:'menu-51',
         
         tbar:['->',{
-        	text:'导出名单',
+        	text:'<b>导出名单</b>',
         	//iconCls:'btn-add',
         	handler:function(){
 				var activityid = Ext.getCmp("activityid").getValue();
@@ -230,19 +242,13 @@ Ext.onReady(function(){
 				});
 			}
         },'-',{
-        	text:'导入名单',
+        	text:'<b>导入名单</b>',
         	//iconCls:'btn-edit',
         	handler:function(){
         		importWindow.show();
 			}
         },'-',publishButton		//提交新闻按钮
-		,newsButton,{
-        	text:'返回活动页',
-        	//iconCls:'btn-edit',
-        	handler:function(){
-        		window.location.href="applyactivity.jsp";
-			}
-        }],
+		,newsButton],
         
         bbar: new Ext.PagingToolbar({
             pageSize: 15,

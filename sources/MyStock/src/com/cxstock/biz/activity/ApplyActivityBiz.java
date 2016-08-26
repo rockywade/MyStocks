@@ -203,4 +203,5 @@ public interface ApplyActivityBiz {
 	Attend findAttendByIds(String usernum, String activityid);
 
 
+	void deleteActivity(String activityid);
 }
