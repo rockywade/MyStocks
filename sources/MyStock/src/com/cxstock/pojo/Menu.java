@@ -26,6 +26,7 @@ public class Menu implements java.io.Serializable {
 	private Integer menutype;
 	private Integer ordernum;
 	private String icon;
+	private String labername;
 
 	// Constructors
 
@@ -120,6 +121,14 @@ public class Menu implements java.io.Serializable {
 
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+
+	public String getLabername() {
+		return labername;
+	}
+
+	public void setLabername(String labername) {
+		this.labername = labername;
 	}
 
 }
