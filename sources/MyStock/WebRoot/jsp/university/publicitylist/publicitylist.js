@@ -181,6 +181,8 @@ Ext.onReady(function(){
     var grid = new Ext.grid.GridPanel({
         store: store,
         height:610,
+        id : 'grid',
+        autoScroll:true,
         cm: new Ext.grid.ColumnModel({
 			defaults: {	menuDisabled : true},//禁止表头菜单
 			columns:[rownumber,
@@ -441,6 +443,7 @@ Ext.onReady(function(){
 			},*/{
 				//frame:true,
 				//title:'活动公示',
+				id : 'west',
 				region:'west',
 				width:'76.5%',
 				iconCls:'menu-18',
@@ -464,3 +467,8 @@ Ext.onReady(function(){
 	});
 
 });
+
+Ext.onReady(function(){
+	 var westHeight = Ext.getCmp("west").getHeight();
+	 Ext.getCmp("grid").setHeight(westHeight - 85);
+});	

@@ -15,6 +15,7 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 
 import com.cxstock.action.BaseAction;
@@ -894,6 +895,7 @@ public class ApplyactivityAction extends BaseAction {
 				news.setWebsite(website);
 			}
 			news.setNewsdate(newsdate);
+			writer = getUserDTO().getLogincode();
 			news.setWriter(writer);
 			news.setProperty(property);
 			news.setContent(content);
@@ -947,6 +949,36 @@ public class ApplyactivityAction extends BaseAction {
 			String idValue = activityid;
 			news = applyActivityBiz.findClazzById(clazz,findproperty,idValue);
 			if(news.getNewsid()!=null && !news.getNewsid().equals("")){
+				UserDTO user = getUserDTO();
+				HeadMaster headMaster = user.getHeadMaster();
+				Instructor instructor = user.getInstructor();
+				LeaderShip leaderShip = user.getLeaderShip();
+				NewFriends newFriends = user.getNewFriends();
+				Expert expert = user.getExpert();
+				String name ="";
+				
+				if(null!=headMaster){
+					name = headMaster.getXm();
+				}
+				if(null!=leaderShip){
+					name = leaderShip.getXm();
+				}
+				if(null!=newFriends){
+					name = newFriends.getXm();
+				}
+				if(null!=expert){
+					name = expert.getXm();
+				}
+				if(null!=instructor){
+					name = instructor.getXm();
+				}
+				if(user.getLogincode().contains("admin")) {
+					name = user.getLogincode();
+				}
+				if(StringUtils.isNotBlank(name)) {
+					news.setWriter(name);
+				}
+				
 				this.outObjectString(news,null);
 			}
 		} catch (Exception e) {

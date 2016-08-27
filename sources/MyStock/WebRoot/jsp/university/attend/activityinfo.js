@@ -373,7 +373,9 @@ Ext.onReady(function(){
     var rownumber = new Ext.grid.RowNumberer();//行号
     var grid = new Ext.grid.GridPanel({
         store: store,
-        height:610,
+        height:500,
+        id : 'grid',
+        autoScroll:true,
         cm: new Ext.grid.ColumnModel({
 			defaults: {	menuDisabled : true},//禁止表头菜单
 			columns:[rownumber,
@@ -907,6 +909,7 @@ Ext.onReady(function(){
 			items:[{
 				//frame:true,
 				//title:'公示',
+				id:"west",
 				region:'west',
 				width:'73%',
 				//iconCls:'menu-18',
@@ -925,6 +928,11 @@ Ext.onReady(function(){
 		    		//addWindow.show();
 				}
 			}
-		}]
+		}]  
 	});
 });
+
+Ext.onReady(function(){
+	 var westHeight = Ext.getCmp("west").getHeight();
+	 Ext.getCmp("grid").setHeight(westHeight - 105);
+});	

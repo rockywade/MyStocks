@@ -119,6 +119,8 @@ Ext.onReady(function(){
     var grid = new Ext.grid.GridPanel({
         store: store,
         height:'610',
+        id : 'grid',
+        autoScroll:true,
         cm: new Ext.grid.ColumnModel({
 			defaults: {	menuDisabled : true},//禁止表头菜单
 			columns:[new Ext.grid.RowNumberer(),
@@ -323,6 +325,7 @@ Ext.onReady(function(){
  			frame:true,
 			layout:'border',
 			items:[{
+				id : 'west',
 				frame:true,
 				region:'west',
 				width:'82%',
@@ -343,3 +346,8 @@ Ext.onReady(function(){
 	});
 
 });
+
+Ext.onReady(function(){
+	 var westHeight = Ext.getCmp("west").getHeight();
+	 Ext.getCmp("grid").setHeight(westHeight - 85);
+});	

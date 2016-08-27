@@ -150,6 +150,10 @@
 		<property name="baseDao" ref="baseDao"/>
 	</bean>
 	
+	<bean id="newsBiz" class="com.cxstock.biz.news.impl.NewBizImpl">
+		<property name="baseDao" ref="baseDao"/>
+	</bean>
+	
 	<!--==========================================  action  ==========================================-->
 	<!-- 跳转登录页面 -->
 	<bean id="loginAction" class="com.cxstock.action.login.GotoLoginAction"></bean>
@@ -331,5 +335,9 @@
 	    <property name="smsBiz" ref="smsBiz"/>
 	    <property name="studentBiz" ref="studentBiz"/>
 	    <property name="userBiz" ref="userBiz"/>
+	</bean>
+	
+	<bean id="newsAction" class="com.cxstock.action.news.NewsAction" scope="prototype">
+		<property name="newsBiz" ref="newsBiz"/>
 	</bean>
 </beans>
