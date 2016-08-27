@@ -58,3 +58,5 @@ INSERT INTO `menu` VALUES ('230', 'icon13.png', '系统设置', '0', '../menu/sy
 INSERT INTO `menu` VALUES ('240', 'icon14.png', '个人信息', '0', '../personinfo/alterInfo.jsp', '23', '-1', '个人信息');
 INSERT INTO `menu` VALUES ('250', 'icon10.png', '活动创建', '0', '../admin/activity/activity.jsp', '24', '-1', '活动创建');
 INSERT INTO `menu` VALUES ('260', 'icon10.png', '新闻发布', '0', '../admin/news/newsPublish.jsp', '25', '-1', '新闻发布');
+
+DELETE FROM `rolemenu` WHERE `menuid` IN ('130', '140' );
