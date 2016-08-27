@@ -108,6 +108,7 @@ public class RoleBizImpl implements RoleBiz {
 			}else{
 				treeNodeChecked.setChecked(false);
 			}
+			treeNodeChecked.setLaber(menu.getLabername());
 			treeNodeChecked.setChildren(getTreeNode(menu.getMenuid(),listFunc,listRoleFunc));//递归
 			resultList.add(treeNodeChecked);
 		}

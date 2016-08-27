@@ -1,10 +1,13 @@
 package com.cxstock.action.power;
 
 
+import java.util.List;
+
 import com.cxstock.action.BaseAction;
 import com.cxstock.biz.power.RoleBiz;
 import com.cxstock.biz.power.dto.RoleDTO;
 import com.cxstock.utils.pubutil.Page;
+import com.cxstock.utils.pubutil.TreeNodeChecked;
 
 @SuppressWarnings("serial")
 public class RoleAction extends BaseAction  {
@@ -87,7 +90,13 @@ public class RoleAction extends BaseAction  {
 	 */
 	public String findRoleMenu() {
 		try {
-			this.outTreeJsonList(roleBiz.findRoleMenu(roleid));
+			List resultList = roleBiz.findRoleMenu(roleid);
+			for(int i = 0; i < resultList.size(); i++) {
+				TreeNodeChecked node = (TreeNodeChecked) resultList.get(i);
+				node.setText(node.getLaber());
+			}
+			
+			this.outTreeJsonList(resultList);
 		} catch (Exception e) {
 			 e.printStackTrace();
 			 this.outError();

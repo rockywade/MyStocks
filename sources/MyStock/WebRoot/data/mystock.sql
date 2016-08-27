@@ -211,6 +211,7 @@ CREATE TABLE `menu` (
   `menutype` int(11) NOT NULL,
   `ordernum` int(11) default NULL,
   `icon` varchar(20) default NULL,
+   `labername` varchar(255) DEFAULT NULL,
   PRIMARY KEY  (`menuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单目录';
 

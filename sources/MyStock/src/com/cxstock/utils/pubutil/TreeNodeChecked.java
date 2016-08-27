@@ -18,6 +18,22 @@ public class TreeNodeChecked {
 	private Boolean expanded = false; // 是否展开
 
 	private boolean checked; //是否选中
+	
+	private String laber;
+
+	public TreeNodeChecked(String id, String text, Boolean leaf,
+			String iconCls, List children, Boolean expanded, boolean checked,
+			String laber) {
+		super();
+		this.id = id;
+		this.text = text;
+		this.leaf = leaf;
+		this.iconCls = iconCls;
+		this.children = children;
+		this.expanded = expanded;
+		this.checked = checked;
+		this.laber = laber;
+	}
 
 	public TreeNodeChecked() {
 		super();
@@ -89,6 +105,14 @@ public class TreeNodeChecked {
 
 	public void setChecked(boolean checked) {
 		this.checked = checked;
+	}
+
+	public String getLaber() {
+		return laber;
+	}
+
+	public void setLaber(String laber) {
+		this.laber = laber;
 	}
 	
 	
