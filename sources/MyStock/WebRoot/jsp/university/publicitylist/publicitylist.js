@@ -389,6 +389,8 @@ Ext.onReady(function(){
     var newsGrid = new Ext.grid.GridPanel({
         store: newsStore,
         height:610,
+        id : 'newsGrid',
+        autoScroll:true,
         cm: new Ext.grid.ColumnModel({
 			defaults: {	menuDisabled : true},//禁止表头菜单
 			columns:[rownumber,
@@ -449,6 +451,7 @@ Ext.onReady(function(){
 				iconCls:'menu-18',
 				items:[searchForm,grid]
 			},{
+				id : 'center',
 				region:'center',
 				padding:'80 0 0 5',
 				//layout:'fit',
@@ -471,4 +474,5 @@ Ext.onReady(function(){
 Ext.onReady(function(){
 	 var westHeight = Ext.getCmp("west").getHeight();
 	 Ext.getCmp("grid").setHeight(westHeight - 85);
+	 Ext.getCmp("newsGrid").setHeight(westHeight - 85);
 });	

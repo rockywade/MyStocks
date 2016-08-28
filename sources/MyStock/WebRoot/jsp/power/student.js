@@ -203,6 +203,16 @@ Ext.onReady(function(){
 					});
 				}
         	}
+        },'-',{
+        	text:'模板下载',
+        	iconCls:'menu-12',
+        	handler: function(){
+            	Ext.MessageBox.confirm('信息提示',"确定下载《学生导入模板》?",function(btn){
+            		if(btn=="yes"){
+            			window.location.href="fileDownload.do?fileDownKey=StudentTemplate";
+            		}
+            	});
+        	}
         }],
         
         bbar: new Ext.PagingToolbar({

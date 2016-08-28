@@ -113,7 +113,7 @@
 			  page_string : '当前第{current_page}页,共{max_page}页',
 			  paged : function(page) {
 				  startAllAppoint = (page-1)*limitAllAppoint;
-			  	  getActivityInfoByGenre();
+				  getDataActivityInfo();
 			  }
 			});
 		}

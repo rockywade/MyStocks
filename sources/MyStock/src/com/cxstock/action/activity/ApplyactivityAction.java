@@ -1035,6 +1035,10 @@ public class ApplyactivityAction extends BaseAction {
 		try {
 			if(fileDownKey.equals("AttendFileDeatil")){
 				filename = "求是学院记实考评工作实施办法.docx";
+			}else if(fileDownKey.equals("StudentTemplate")){
+				filename = "学生导入模板.xls";
+			}else if(fileDownKey.equals("HeadMasterTemplate")){
+				filename = "班主任导入模板.xls";
 			}else{
 				Activity activity = applyActivityBiz.findActivityInfoById(activityid);
 				String fileName = activity.getActivityname() + new Date().getTime();

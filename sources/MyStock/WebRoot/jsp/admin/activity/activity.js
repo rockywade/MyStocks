@@ -1017,7 +1017,7 @@ Ext.onReady(function(){
 				if (addForm.getForm().isValid()) {
 					var config = {
 			            	//class:
-			                title: "求是学院活动申报责任说明",
+			                title: "确定提交",
 			                msg: "1 、确保所申报的活动信息内容合法且不与校规相违背。<br/>" +
 			                	 "2、活动安全由主办或承办单位负责，请严格遵循“安全第一、预防为主”的方针。<br/>" +
 			                	 "3、活动申报成功后请勿私下改动活动形式或内容等。<br/>" +
