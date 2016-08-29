@@ -332,14 +332,17 @@ Ext.onReady(function(){
     
     var viewDetail = function(grid, rowIndex, colIndex){
     	var record = grid.getStore().getAt(rowIndex); 
-    	var html = '<iframe src="secondBookStore_viewSecondBookStore.do?id='+record.data.id+'"  width="100%" frameborder="0" height="100%"></iframe>';
+    	
+    	location.href='secondBookStore_viewSecondBookStore.do?id='+record.data.id; 
+    	
+    	/*var html = '<iframe src="secondBookStore_viewSecondBookStore.do?id='+record.data.id+'"  width="100%" frameborder="0" height="100%"></iframe>';
 		if(Ext.getCmp('viewPanel').body){
 			Ext.getCmp('viewPanel').body.update(html);
 		}else{
 			Ext.getCmp('viewPanel').html = html;
 		}
 		
-		addWindow.show();
+		addWindow.show();*/
     };
     
     var viewPanel = new Ext.Panel({

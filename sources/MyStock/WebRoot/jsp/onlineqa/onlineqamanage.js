@@ -346,14 +346,16 @@ Ext.onReady(function(){
     
     var viewDetail = function(grid, rowIndex, colIndex){
     	var record = grid.getStore().getAt(rowIndex); 
-    	var html = '<iframe src="onlineQA_viewOnlineQA.do?id='+record.data.id+'" frameborder="0" width="100%"  height="100%"></iframe>';
+    	
+    	location.href='onlineQA_viewOnlineQA.do?id='+record.data.id; 
+    	/*var html = '<iframe src="onlineQA_viewOnlineQA.do?id='+record.data.id+'" frameborder="0" width="100%"  height="100%"></iframe>';
 		if(Ext.getCmp('viewPanel').body){
 			Ext.getCmp('viewPanel').body.update(html);
 		}else{
 			Ext.getCmp('viewPanel').html = html;
 		}
 		
-		addWindow.show();
+		addWindow.show();*/
     };
     
     var viewPanel = new Ext.Panel({
