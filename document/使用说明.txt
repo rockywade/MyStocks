@@ -7,3 +7,5 @@
 5.测试地址：http://211.101.18.254/MyStock  （360浏览器请在极速模式下查看）
 
 icon_return.png
+
+../../admin/img/icon_return.png

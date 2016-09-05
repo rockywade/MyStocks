@@ -12,6 +12,49 @@
 	text-decoration: none;
 	font-weight: bold;
 } /*链接设置*/
+
+*{padding: 0;margin: 0;box-sizing: border-box;}
+body{padding: 0;margin: 0;font: 12px "微软雅黑";}
+li{list-style: none;}
+a{text-decoration: none;}
+/* 这里开始是导航样式 */
+.iNav{
+	width: 100%;
+	min-width: 1200px;
+	background-color: #1a60ac;
+	/**border-bottom: 1px solid #114b8f;*/
+	border-top: 1px solid #114b8f;
+}
+.iNavWrap{
+	width: 1200px;
+	margin: 0 auto;
+}
+.iNavWrap ul{
+	overflow: hidden;
+}
+.iNavWrap ul li{
+	float: left;
+}
+
+.iNavWrap ul li a{
+	display: block;
+	font-size: 16px;
+	padding: 10px 30px 15px;/*修改padding可改变宽高*/
+	color: #FFFFFF ;
+	/*border-top: 5px solid #114b8f;*/
+}
+.iNavWrap ul li a:hover{/*鼠标移上的样式*/
+	color: #000000 !important;
+	background-color: #FFFFFF;
+}
+
+.iNavThis {
+	background-color: #FFFFFF;
+}
+.iNavThis a{/*选中的样式*/
+	color: #000000 !important;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -96,7 +139,23 @@
 <body>
 	<!-- 头部 -->
 	<%@ include file="common/head.jsp"%>
-
+	<!-- 导航开始 -->
+	<div class="iNav">
+		<div class="iNavWrap">
+			<ul>
+				<li><a href="../index.jsp">首页</a></li>
+				<li><a href="../front/news.jsp">新闻公告</a></li>
+				<li><a href="../front/tutoring.jsp">线下辅导</a></li>
+				<li class="iNavThis"><a href="../front/data.jsp">学习资料</a></li>
+				<li><a href="../front/answer.jsp">线上答疑</a></li>
+				<li><a href="../front/apply.jsp">活动报名</a></li>
+				<li><a href="../front/bookshop.jsp">二手书店</a></li>
+				<li><a href="../front/expertReserve.jsp">专家预约</a></li>
+				<li><a href="../front/placeReserve.jsp">场地预约</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- 导航结束 -->
 	<!-- 学习资料 -->
 	<div class="return">
 		<a href="#" onclick="JavaScript:history.back(-1);return false;" /><img
