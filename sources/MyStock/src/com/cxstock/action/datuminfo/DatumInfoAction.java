@@ -283,6 +283,7 @@ public class DatumInfoAction extends BaseAction {
 			DatumInfo datumInfo = new DatumInfo();
 			 if (null != ifApproval && !"".equals(ifApproval)
 					&& ifApproval.equals("1")) {
+				datumInfo.setToptime(this.createtime);
 				datumInfo.setStatus("隐藏中");
 			 }
 			if (null != ifApproval && !"".equals(ifApproval)
