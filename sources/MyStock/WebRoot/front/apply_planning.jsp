@@ -10,7 +10,7 @@
 			});
 
 		var startAllAppoint = 0;
-	    var limitAllAppoint = 5;
+	    var limitAllAppoint = 10;
 	    var currentPageAllAppoint = 1;
 	    var totalPageAllAppoint = 0;
 		function getActivityInfoByGenre(){
@@ -131,7 +131,22 @@
 <body>
 	<!-- 头部 -->
 	<%@ include file="common/head.jsp"%>
-
+	<!-- 导航开始 -->
+	<div class="iNav">
+		<div class="iNavWrap">
+			<ul>
+				<li><a href="../index.jsp">首页</a></li>
+				<li><a href="../front/news.jsp">新闻公告</a></li>
+				<li><a href="../front/tutoring.jsp">线下辅导</a></li>
+				<li><a href="../front/data.jsp">学习资料</a></li>
+				<li><a href="../front/answer.jsp">线上答疑</a></li>
+				<li class="iNavThis"><a href="../front/apply.jsp">活动报名</a></li>
+				<li><a href="../front/bookshop.jsp">二手书店</a></li>
+				<li><a href="../front/expertReserve.jsp">专家预约</a></li>
+				<li><a href="../front/placeReserve.jsp">场地预约</a></li>
+			</ul>
+		</div>
+	</div>
 	<div class="return">
 		<a href="#" onclick="JavaScript:history.back(-1);return false;" /><img
 			src="img/icon_return.png"></a>

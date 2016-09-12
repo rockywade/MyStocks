@@ -10,7 +10,7 @@
 			});
 
 			var startAllAppoint = 0;
-		    var limitAllAppoint = 5;
+		    var limitAllAppoint = 10;
 		    var currentPageAllAppoint = 1;
 		    var totalPageAllAppoint = 0;
 			function getDataActivityInfo(){
