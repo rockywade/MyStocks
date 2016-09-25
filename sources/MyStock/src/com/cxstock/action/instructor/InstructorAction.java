@@ -21,7 +21,17 @@ public class InstructorAction extends BaseAction {
 	
 	private String iclass;
 	
+	private String ids;
 	
+	
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
 	private InstructorBiz instructorBiz;
 	
 	public Integer getId() {
@@ -154,6 +164,23 @@ public class InstructorAction extends BaseAction {
 	public String deleteInstructor() {
 		try {
 			instructorBiz.deleteInstructor(id);
+			this.outString("{success:true}");
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.outError();
+		}
+		return null;
+	}
+	/**
+	 * 删除多个用户
+	 */
+	public String deleteInstructors() {
+		try {
+			String[] idArr = ids.split(",");
+			for(String id : idArr) {
+				
+				instructorBiz.deleteInstructor(Integer.valueOf(id));
+			}
 			this.outString("{success:true}");
 		} catch (Exception e) {
 			e.printStackTrace();

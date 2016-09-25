@@ -131,7 +131,10 @@ public class HeadMasterBizImp implements HeadMasterBiz {
 		String sql = "delete from user_role where userid = (select userid from users a, tbl_headmaster b where" +
 		" a.logincode=b.zgh and b.id="+id+") and roleid=4";
 		baseDao.excuteBySql(sql);
-		baseDao.deleteById(Instructor.class, id);
+		String stuUpSql = "UPDATE tbl_student SET headmaster_id = null where headmaster_id = " + id;
+		baseDao.excuteBySql(stuUpSql);
+		
+		baseDao.deleteById(HeadMaster.class, id);
 	}
 
 

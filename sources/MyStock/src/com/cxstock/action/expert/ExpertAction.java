@@ -1,6 +1,8 @@
 package com.cxstock.action.expert;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import com.cxstock.pojo.Expert;
 import com.cxstock.utils.pubutil.ComboData;
 import com.cxstock.utils.pubutil.Page;
 import com.cxstock.utils.system.Tools;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 @SuppressWarnings("serial")
 public class ExpertAction extends BaseAction {
@@ -40,6 +43,16 @@ public class ExpertAction extends BaseAction {
 	
 	private ExpertBiz expertBiz;
 	
+	private String ids;
+	
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -265,6 +278,22 @@ public class ExpertAction extends BaseAction {
 	public String deleteExpert() {
 		try {
 			expertBiz.deleteExpert(id);
+			this.outString("{success:true}");
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.outError();
+		}
+		return null;
+	}
+	
+	public String deleteExpers() {
+		try {
+			String[] idArr = ids.split(",");
+			List<Integer> list = new ArrayList<Integer>();
+			for(String id : idArr) {
+				list.add(Integer.valueOf(id));
+			}
+			expertBiz.deleteExperts(list);
 			this.outString("{success:true}");
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -14,7 +14,17 @@ public class LeaderShipAction extends BaseAction {
 	private String xb;
 	private String ssyq;
 	private String phone;
+	private String ids;
 	
+	
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -131,6 +141,23 @@ public class LeaderShipAction extends BaseAction {
 	public String deleteLeaderShip() {
 		try {
 			leaderShipBiz.deleteLeaderShip(id);
+			this.outString("{success:true}");
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.outError();
+		}
+		return null;
+	}
+	/**
+	 * 删除用户
+	 */
+	public String deleteLeaderShips() {
+		try {
+			String[] idArr = ids.split(",");
+			for(String id : idArr) {
+				
+				leaderShipBiz.deleteLeaderShip(Integer.valueOf(id));
+			}
 			this.outString("{success:true}");
 		} catch (Exception e) {
 			e.printStackTrace();

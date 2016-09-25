@@ -9,9 +9,11 @@ import com.cxstock.biz.instructor.InstructorBiz;
 import com.cxstock.biz.instructor.dto.InstructorDTO;
 import com.cxstock.biz.power.UserBiz;
 import com.cxstock.biz.power.dto.UserDTO;
+import com.cxstock.biz.student.StudentBiz;
 import com.cxstock.dao.BaseDAO;
 import com.cxstock.pojo.Classes;
 import com.cxstock.pojo.Instructor;
+import com.cxstock.pojo.Student;
 import com.cxstock.utils.pubutil.Page;
 
 public class InstructorBizImp implements InstructorBiz {
@@ -21,6 +23,18 @@ public class InstructorBizImp implements InstructorBiz {
 	private UserBiz userBiz;
 	
 	private ClassesBiz classesBiz;
+	
+	private StudentBiz studentBiz;
+
+	public StudentBiz getStudentBiz() {
+		return studentBiz;
+	}
+
+
+	public void setStudentBiz(StudentBiz studentBiz) {
+		this.studentBiz = studentBiz;
+	}
+
 
 	public ClassesBiz getClassesBiz() {
 		return classesBiz;
@@ -129,6 +143,8 @@ public class InstructorBizImp implements InstructorBiz {
 		String sql = "delete from user_role where userid = (select userid from users a, tbl_instructor b where" +
 		" a.logincode=b.zgh and b.id="+id+") and roleid=3";
 		baseDao.excuteBySql(sql);
+		String stuUpSql = "UPDATE tbl_student SET instructor_id = null where instructor_id = " + id;
+		baseDao.excuteBySql(stuUpSql);
 		baseDao.deleteById(Instructor.class, id);
 	}
 }

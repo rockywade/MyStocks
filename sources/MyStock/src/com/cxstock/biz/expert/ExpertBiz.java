@@ -25,6 +25,11 @@ public interface ExpertBiz {
 	public void deleteExpert(Integer id);
 
 
+	/**
+	 * 删除多个 
+	 */
+	public void deleteExperts(List<Integer> ids);
+	
 
 	/**
 	 * 专家类别下拉菜单

@@ -100,12 +100,32 @@ public class ExpertBizImp implements ExpertBiz {
 	 * 
 	 */
 	public void deleteExpert(Integer id) {
+		//删除关联的用户
 		String sql = "delete from user_role where userid = (select userid from users a, tbl_expert b where" +
 		" a.logincode=b.zgh and b.id="+id+") and roleid=7";
 		baseDao.excuteBySql(sql);
+		
+		//删除tbl_studentbespeak
+		String sbsSql = "delete from tbl_studentbespeak where expert_id= " + id;
+		//删除tbl_startexpertinfo
+		String seiSql = "delete from tbl_startexpertinfo where expert_id= " + id;
+		
+		baseDao.excuteBySql(sbsSql);
+		baseDao.excuteBySql(seiSql);
+		
 		baseDao.deleteById(Expert.class, id);
 	}
 
+	
+	/**
+	 * 删除多个 
+	 */
+	public void deleteExperts(List<Integer> ids) {
+		for(Integer id : ids) {
+			deleteExpert(id);
+		}
+	}
+	
 
 
 	/**

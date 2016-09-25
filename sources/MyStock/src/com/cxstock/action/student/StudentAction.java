@@ -57,7 +57,17 @@ public class StudentAction extends BaseAction {
 	//fileName 前面必須和uplaod一致,不然找不到文件
 	private String excelFileName; 
 	
+	private String ids;
 	
+	
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
 	public File getExcel() {
 		return excel;
 	}
@@ -295,6 +305,24 @@ public class StudentAction extends BaseAction {
 		}
 		return null;
 	}
+	/**
+	 * 删除多个用户
+	 */
+	public String deleteStudents() {
+		try {
+			String[] idArr = ids.split(",");
+			for(String id : idArr) {
+				studentBiz.deleteStudent(Integer.valueOf(id));
+			}
+			this.outString("{success:true}");
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.outError();
+		}
+		return null;
+	}
+	
+	
 
 	public String importExcel(){
 		try {

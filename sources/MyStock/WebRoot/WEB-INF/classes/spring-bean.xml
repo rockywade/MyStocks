@@ -75,6 +75,7 @@
 		<property name="baseDao" ref="baseDao"/>
 		<property name="userBiz" ref="userBiz"/>
 		<property name="classesBiz" ref="classesBiz"/>
+		<property name="studentBiz" ref="studentBiz"/>
 	</bean>
 	
 	<bean id="newFriendsBiz" class="com.cxstock.biz.newfriends.imp.NewFriendsBizImp">

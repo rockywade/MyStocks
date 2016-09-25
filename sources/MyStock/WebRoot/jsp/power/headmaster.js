@@ -98,7 +98,7 @@ Ext.onReady(function(){
 	    fields: UuserObj
 	});
 	
-	var sm = new Ext.grid.CheckboxSelectionModel({singleSelect: true});//单选
+	var sm = new Ext.grid.CheckboxSelectionModel({singleSelect: false});//单选
     var grid = new Ext.grid.GridPanel({
         store: store,
         cm: new Ext.grid.ColumnModel({
@@ -129,6 +129,7 @@ Ext.onReady(function(){
 	           }
 	            ]
         }),
+        sm:sm,
         stripeRows: true, 	//行分隔符
         columnLines : true, //列分隔符
 		loadMask : true,	//加载时的遮罩
@@ -169,15 +170,22 @@ Ext.onReady(function(){
         	text:'删除',
         	iconCls:'btn-remove',
         	handler: function(){
-        		var record= grid.getSelectionModel().getSelected();
-				if(!record){
+        		var record= grid.getSelectionModel().getSelections();
+				if(record.length == 0){
                 	Ext.Msg.alert('信息提示','请选择要删除的数据');  
 				}else{
 					Ext.MessageBox.confirm('删除提示', '是否删除该用户？', function(c) {
 					   if(c=='yes'){
+						   var ids = "";   
+                           for(var i = 0; i < record.length; i++){   
+                               ids += record[i].get("id")   
+                               if(i<record.length-1){   
+                                   ids = ids + ",";   
+                               }   
+                           } 
 					   		Ext.Ajax.request({
-					   			url : "headMaster_deleteHeadMaster.do",
-					   			params:{ id : record.get("id") },
+					   			url : "headMaster_deleteHeadMasters.do",
+					   			params:{ ids : ids },
 					   			success : function() {
 					   				store.reload();
 					   			}

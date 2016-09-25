@@ -17,7 +17,16 @@ public class NewFriendsAction extends BaseAction {
 	
 	private String nclass;
 	
+	private String ids;
 	
+	
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
 	private NewFriendsBiz newFriendsBiz;
 	
 	public Integer getId() {
@@ -119,7 +128,7 @@ public class NewFriendsAction extends BaseAction {
 	 */
 	public String saveOrUpdateNewFriends() {
 		try {
-			String[] ic = nclass.split(",");
+			/*String[] ic = nclass.split(",");*/
 			NewFriends newFriends = new NewFriends(id,zgh,xm,xb,phone);
 			newFriends.setSsyq(ssyq);
 			boolean b = newFriendsBiz.saveOrUpdateNewFriends(newFriends);
@@ -146,6 +155,23 @@ public class NewFriendsAction extends BaseAction {
 	public String deleteInstructor() {
 		try {
 			newFriendsBiz.deleteNewFriends(id);
+			this.outString("{success:true}");
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.outError();
+		}
+		return null;
+	}
+	/**
+	 * 删除用户
+	 */
+	public String deleteNewFriends() {
+		try {
+			String[] idArr = ids.split(",");
+			for(String id : idArr) {
+				
+				newFriendsBiz.deleteNewFriends(Integer.valueOf(id));
+			}
 			this.outString("{success:true}");
 		} catch (Exception e) {
 			e.printStackTrace();
