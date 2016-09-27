@@ -51,7 +51,7 @@ public class LeaderShipBizImp implements LeaderShipBiz {
 		hql+=" order by zgh desc";
 		List list = baseDao.findByHql(hql, page.getStart(), page.getLimit());
 		List dtos = LeaderShipDTO.createDtos(list);
-		int total = baseDao.countAll("LeaderShip");
+		int total = baseDao.count("LeaderShip", property, value);
 		page.setRoot(dtos);
 		page.setTotal(total);
 	}

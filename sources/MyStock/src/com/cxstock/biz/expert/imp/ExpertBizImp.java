@@ -54,7 +54,7 @@ public class ExpertBizImp implements ExpertBiz {
 		hql+=" order by zgh desc";
 		List list = baseDao.findByHql(hql, page.getStart(), page.getLimit());
 		List dtos = ExpertDTO.createDtos(list);
-		int total = baseDao.countAll("Expert");
+		int total = baseDao.count("Expert", property, value);
 		page.setRoot(dtos);
 		page.setTotal(total);
 	}

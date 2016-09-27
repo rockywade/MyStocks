@@ -128,7 +128,7 @@ public class ApplyActivityBizImp implements ApplyActivityBiz {
 			String[] orderName = {"activitytime","signupendtime"};
 			String[] orderType = {"DESC","DESC"};
 			list = baseDao.findPageAndOrder(hql, orderName, orderType, page.getStart(), page.getLimit());
-			int total = baseDao.countQuery(chql);
+			int total = baseDao.count(chql, orderName, orderType);
 			page.setRoot(list);
 			page.setTotal(total);
 		}else{

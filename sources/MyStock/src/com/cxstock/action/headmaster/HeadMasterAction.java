@@ -240,17 +240,22 @@ public class HeadMasterAction extends BaseAction {
 			List<HeadMaster> importHeadMasterList = exh.readExcel(HeadMaster.class, fieldNames, true);
 			HeadMaster headMaster = null;
 			for(int i=0;i<importHeadMasterList.size();i++){
-				headMaster = importHeadMasterList.get(i);
-				HeadMaster s = headMasterBiz.headMasterExist(headMaster);
-				if(s != null) {
-					headMaster.setId(s.getId());
+				try {
+
+					headMaster = importHeadMasterList.get(i);
+					HeadMaster s = headMasterBiz.headMasterExist(headMaster);
+					if(s != null) {
+						headMaster.setId(s.getId());
+					}
+					Set<Classes> hclassSet = new HashSet<Classes>();
+					String[] ic = headMaster.getHeadClass().split(",");
+					for(int j=0;j<ic.length;j++){
+						hclassSet.add(new Classes(ic[j]));
+					}
+					headMasterBiz.saveOrUpdateHeadMaster(headMaster);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-				Set<Classes> hclassSet = new HashSet<Classes>();
-				String[] ic = headMaster.getHeadClass().split(",");
-				for(int j=0;j<ic.length;j++){
-					hclassSet.add(new Classes(ic[j]));
-				}
-				headMasterBiz.saveOrUpdateHeadMaster(headMaster);
 			}
 			importFile.delete();
 			this.outString("{success:true,message:'导入成功!'}");

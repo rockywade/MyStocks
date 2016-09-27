@@ -71,7 +71,8 @@ public class StudentBizImp implements StudentBiz {
 		hql+=" order by xh desc";
 		List list = baseDao.findByHql(hql, page.getStart(), page.getLimit());
 		List dtos = StudentDTO.createDtos(list);
-		int total = baseDao.countAll("Student");
+		int total = baseDao.count("Student", property, value);
+		
 		page.setRoot(dtos);
 		page.setTotal(total);
 	}

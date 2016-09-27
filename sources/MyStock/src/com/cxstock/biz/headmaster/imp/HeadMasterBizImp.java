@@ -67,7 +67,7 @@ public class HeadMasterBizImp implements HeadMasterBiz {
 		hql+=" order by zgh desc";
 		List list = baseDao.findByHql(hql, page.getStart(), page.getLimit());
 		List dtos = HeadMasterDTO.createDtos(list);
-		int total = baseDao.countAll("HeadMaster");
+		int total = baseDao.count("HeadMaster", property, value);
 		page.setRoot(dtos);
 		page.setTotal(total);
 	}

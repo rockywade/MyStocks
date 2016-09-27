@@ -121,7 +121,8 @@ public class UserBizImpl implements UserBiz {
 		String hql = "from Users as t left join fetch t.roles a where a.rolename='管理员' order by t.userid";
 		List list = baseDao.findByHql(hql, page.getStart(), page.getLimit());
 		List dtoList = UserDTO.createDtos(list);
-		int total = baseDao.countAll("Users");
+		String countSql = "select count(*) " + hql;
+		int total = baseDao.countQuery(countSql);
 		page.setRoot(dtoList);
 		page.setTotal(total);
 	}

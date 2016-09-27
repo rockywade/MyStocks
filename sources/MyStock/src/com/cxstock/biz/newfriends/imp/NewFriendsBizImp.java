@@ -54,7 +54,7 @@ public class NewFriendsBizImp implements NewFriendsBiz {
 		hql+=" order by zgh desc";
 		List list = baseDao.findByHql(hql, page.getStart(), page.getLimit());
 		List dtos = NewFriendsDTO.createDtos(list);
-		int total = baseDao.countAll("NewFriends");
+		int total = baseDao.count("NewFriends", property, value);
 		page.setRoot(dtos);
 		page.setTotal(total);
 	}

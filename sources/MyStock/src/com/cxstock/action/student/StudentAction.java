@@ -340,32 +340,44 @@ public class StudentAction extends BaseAction {
 			List<StudentExcel> importStudentList = exh.readExcel(StudentExcel.class, fieldNames, true);
 			StudentExcel studentExcel = null;
 			for(int i=0;i<importStudentList.size();i++){
-				studentExcel = importStudentList.get(i);
-				if(null==studentExcel.getInstructor()||"".equals(studentExcel.getInstructor())||null==studentExcel.getHeadmaster()||"".equals(studentExcel.getHeadmaster())){
-					continue;
-				}else{
-					Student s = (Student) studentBiz.studentExist(studentExcel);
-					if(null!=s){
-						//保存到用户表
-						saveUser(studentExcel);
-						//检查辅导员是否存在
-						Instructor in = saveInstructor(studentExcel);
-						//检查班主任是否存在
-						HeadMaster hm = saveHeadMaster(studentExcel);
-						//检查班级是否存在
-						Classes c = saveClasses(studentExcel,in,hm);
-						updateStudent(s,studentExcel,c);
-					}else{
-						//保存到用户表
-						saveUser(studentExcel);
-						//检查辅导员是否存在
-						Instructor in = saveInstructor(studentExcel);
-						//检查班主任是否存在
-						HeadMaster hm = saveHeadMaster(studentExcel);
-						//检查班级是否存在
-						Classes c = saveClasses(studentExcel,in,hm);
-						saveStudent(studentExcel,c);
+				try {
+
+					studentExcel = importStudentList.get(i);
+					if(studentExcel == null || studentExcel.getXh() == null || studentExcel.getXh().equals("")) {
+						break;
 					}
+					System.out.println(i + " xh: " + studentExcel.getXh());
+					if(null==studentExcel.getInstructor()||"".equals(studentExcel.getInstructor())||null==studentExcel.getHeadmaster()||"".equals(studentExcel.getHeadmaster())){
+						System.out.println(studentExcel.getInstructor());
+						continue;
+					}else{
+						Student s = (Student) studentBiz.studentExist(studentExcel);
+						if(null!=s){
+							//保存到用户表
+							saveUser(studentExcel);
+							//检查辅导员是否存在
+							Instructor in = saveInstructor(studentExcel);
+							//检查班主任是否存在
+							HeadMaster hm = saveHeadMaster(studentExcel);
+							//检查班级是否存在
+							Classes c = saveClasses(studentExcel,in,hm);
+							updateStudent(s,studentExcel,c);
+						}else{
+							//保存到用户表
+							saveUser(studentExcel);
+							//检查辅导员是否存在
+							Instructor in = saveInstructor(studentExcel);
+							//检查班主任是否存在
+							HeadMaster hm = saveHeadMaster(studentExcel);
+							//检查班级是否存在
+							Classes c = saveClasses(studentExcel,in,hm);
+							saveStudent(studentExcel,c);
+						}
+					}
+				} catch (Exception e) {
+					System.out.println(studentExcel.getXh() + "----------------");
+					e.printStackTrace();
+					continue;
 				}
 			}
 			this.outString("{success:true,message:'导入成功!'}");
@@ -471,7 +483,7 @@ public class StudentAction extends BaseAction {
 		s.setQsh(student.getQsh());
 		s.setQsmc(student.getQsmc());
 		String phones = student.getFqphone().trim();
-		if(phones.indexOf("/")!=-1){
+		if(phones != null && !"/".equals(phones) && phones.indexOf("/")!=-1){
 			if(phones.split("/")[0].length()==11){
 				s.setFqphone(phones.split("/")[0]);
 			}
@@ -484,7 +496,7 @@ public class StudentAction extends BaseAction {
 			}
 		}
 		String sphone = student.getPhone().trim();
-		if(sphone.indexOf("/")!=-1){
+		if(sphone != null && !"/".equals(sphone) && sphone.indexOf("/")!=-1){
 			if(sphone.split("/")[0].length()==11){
 				s.setPhone(sphone.split("/")[0]);
 			}

@@ -80,7 +80,7 @@ public class InstructorBizImp implements InstructorBiz {
 		hql+=" order by zgh desc";
 		List list = baseDao.findByHql(hql, page.getStart(), page.getLimit());
 		List dtos = InstructorDTO.createDtos(list);
-		int total = baseDao.countAll("Instructor");
+		int total = baseDao.count("Instructor", property, value);
 		page.setRoot(dtos);
 		page.setTotal(total);
 	}
