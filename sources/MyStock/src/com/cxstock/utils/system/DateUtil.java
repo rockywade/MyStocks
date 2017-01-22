@@ -291,6 +291,18 @@ public class DateUtil {
         cal.set(Calendar.DAY_OF_MONTH, 1);
         return getIntegralStartTime(cal.getTime());
     }
+    /**
+     * 获取当前日期的前n天
+     * 
+     * @return 获取当前日期的前n天
+     */
+    public static Date getBeforeDay(int day) {
+    	Date date = new Date();//获取当前时间   
+    	Calendar cal = Calendar.getInstance();
+    	cal.setTime(date); 
+    	cal.add(Calendar.DAY_OF_MONTH, day);
+    	return cal.getTime();
+    }
  
     /**
      * 获取上个月最后一天的结束时间，例如2014-07-31 23:59:59
@@ -515,6 +527,8 @@ public class DateUtil {
         System.out.println(getFirstWorkday());
         System.out.println(getLastWorkday());
         System.out.println(getWeekdayDesc(null));
+        System.out.println(format(getBeforeDay(-7),PATTERN_CLASSICAL) + "--------");
+        
     }
  
 }

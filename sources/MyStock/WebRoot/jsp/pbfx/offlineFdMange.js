@@ -119,7 +119,7 @@ Ext.onReady(function(){
 	
 	
 	var store = new Ext.data.JsonStore({
-		 url: 'offlineFd_findPageOfflineFb.do',
+		 url: '/MyStock/offlineFd_findPageOfflineFb.do',
 		 root: 'root',
 		 totalProperty: 'total',
 		 autoLoad: {params:{start:0, limit:15}},
@@ -193,7 +193,7 @@ Ext.onReady(function(){
                      });
 					if(c=='yes'){
 				   	Ext.Ajax.request({
-				   		url : "offlineFd_saveOrUpdaOfflineFdAll.do",
+				   		url : "/MyStock/offlineFd_saveOrUpdaOfflineFdAll.do",
 				   	    params:{ifApproval:"0",offlineFdAll : Ext.encode(jsonArray)},
 				   		success : function() {
 				   		  store.reload();
@@ -225,7 +225,7 @@ Ext.onReady(function(){
                   });
 				  if(c=='yes'){
 			     	Ext.Ajax.request({
-			   		 url : "offlineFd_saveOrUpdaOfflineFdAll.do",
+			   		 url : "/MyStock/offlineFd_saveOrUpdaOfflineFdAll.do",
 			   	     params:{ifApproval:"1",offlineFdAll : Ext.encode(jsonArray)},
 			   		 success : function() {
 			   		  store.reload();
@@ -256,7 +256,7 @@ Ext.onReady(function(){
 	                  });
 					  if(c=='yes'){
 				     	Ext.Ajax.request({
-				   		 url : "offlineFd_saveOrUpdaOfflineFdAll.do",
+				   		 url : "/MyStock/offlineFd_saveOrUpdaOfflineFdAll.do",
 				   	     params:{ifApproval:"2",status:status,offlineFdAll : Ext.encode(jsonArray)},
 				   		 success : function() {
 				   		  store.reload();
@@ -287,7 +287,7 @@ Ext.onReady(function(){
 	                  });
 					  if(c=='yes'){
 				     	Ext.Ajax.request({
-				   		 url : "offlineFd_saveOrUpdaOfflineFdAll.do",
+				   		 url : "/MyStock/offlineFd_saveOrUpdaOfflineFdAll.do",
 				   	     params:{ifApproval:"3",status:status,offlineFdAll : Ext.encode(jsonArray)},
 				   		 success : function() {
 				   		  store.reload();
@@ -318,7 +318,7 @@ Ext.onReady(function(){
 	                  });
 					  if(c=='yes'){
 				     	Ext.Ajax.request({
-				   		 url : "offlineFd_saveOrUpdaOfflineFdAll.do",
+				   		 url : "/MyStock/offlineFd_saveOrUpdaOfflineFdAll.do",
 				   	     params:{ifApproval:"4",status:status,offlineFdAll : Ext.encode(jsonArray)},
 				   		 success : function() {
 				   		  store.reload();
@@ -349,7 +349,7 @@ Ext.onReady(function(){
 	                  });
 					  if(c=='yes'){
 				     	Ext.Ajax.request({
-				   		 url : "offlineFd_saveOrUpdaOfflineFdAll.do",
+				   		 url : "/MyStock/offlineFd_saveOrUpdaOfflineFdAll.do",
 				   	     params:{ifApproval:"5",status:status,offlineFdAll : Ext.encode(jsonArray)},
 				   		 success : function() {
 				   		  store.reload();
@@ -376,7 +376,7 @@ Ext.onReady(function(){
 		                  });
 						  if(c=='yes'){
 					     	Ext.Ajax.request({
-					   		 url : "offlineFd_deleteOfflinedAll.do",
+					   		 url : "/MyStock/offlineFd_deleteOfflinedAll.do",
 					   	     params:{offlineFdAll : Ext.encode(jsonArray)},
 					   		 success : function() {
 					   		    store.reload();
@@ -574,7 +574,7 @@ Ext.onReady(function(){
 			handler : function() {
 			if (addForm.getForm().isValid()) {
 				addForm.getForm().submit({
-					url : 'offlineFd_saveOrUpdateOfflineFd.do',
+					url : '/MyStock/offlineFd_saveOrUpdateOfflineFd.do',
 					success : function(form, action) {
 						Ext.Msg.alert('信息提示',action.result.message);
 						addWindow.hide();

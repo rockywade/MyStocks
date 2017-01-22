@@ -86,7 +86,7 @@ article, aside, dialog, footer, header, section, footer, nav, figure,
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"Expertbespeak_expertBespeakList.do",
+					url:"/MyStock/Expertbespeak_expertBespeakList.do",
 					data:{start:startAllAppoint, limit:limitAllAppoint,yx:$("#yx").val(),bm:$("#bm").val(),experttype:$("#experttype").val(),ename:$("#ename").val()},
 					success : function(data,status){
 						data = eval("("+data+")");
@@ -118,7 +118,7 @@ article, aside, dialog, footer, header, section, footer, nav, figure,
 			function getDataMyAppoint(){
 				$.ajax({
 					type : "post", 
-					url: "Expertbespeak_myBespeak.do",
+					url: "/MyStock/Expertbespeak_myBespeak.do",
 					data :{start:startMyAppoint, limit:limitMyAppoint},
 				 	async : false,  
 					success : function(data,status){
@@ -170,7 +170,7 @@ article, aside, dialog, footer, header, section, footer, nav, figure,
 				var d = null;
 				  $.ajax({
 				         type : "POST",
-		   			      url : "Expertbespeak_mySbDetail.do",
+		   			      url : "/MyStock/Expertbespeak_mySbDetail.do",
 		   			      data:{
 						      sbid:id
 					        },
@@ -267,7 +267,7 @@ article, aside, dialog, footer, header, section, footer, nav, figure,
 				var d = null;
 		        $.ajax({
 		         type : "POST",
-   			      url : "Expertbespeak_expertInfo.do",
+   			      url : "/MyStock/Expertbespeak_expertInfo.do",
    			      data:{
 				      id:eid
 			        },
@@ -347,7 +347,7 @@ article, aside, dialog, footer, header, section, footer, nav, figure,
 			}
 			//园区下拉菜单
 			function initSelect(){
-				$.post("SiteInfo_findParkComb.do",{},
+				$.post("/MyStock/SiteInfo_findParkComb.do",{},
 						function(data,status){
 							data = eval("("+data+")");
 							initYx(data.root);
@@ -362,7 +362,7 @@ article, aside, dialog, footer, header, section, footer, nav, figure,
 			}
 			//部门下拉菜单
 			function unitSelect(){
-				$.post("Expertbespeak_findUnitComb.do",{},
+				$.post("/MyStock/Expertbespeak_findUnitComb.do",{},
 						function(data,status){
 							data = eval("("+data+")");
 							initUnit(data.root);
@@ -380,7 +380,7 @@ article, aside, dialog, footer, header, section, footer, nav, figure,
 				var d = null;
 		        $.ajax({
 		         type : "POST",
-   			      url : "Expertbespeak_getCurentUserInfo.do",
+   			      url : "/MyStock/Expertbespeak_getCurentUserInfo.do",
    			      data:{},
    			      async: false,
    			      success : function(o) {
@@ -486,7 +486,7 @@ article, aside, dialog, footer, header, section, footer, nav, figure,
 			//提交预约
 			function submit(){
 				//showEnterInfo();
-				$.post("Expertbespeak_bespeakExpert.do",{id:$("#eid").val(),applygenre:$("#applygenre").val(),studentemail:$("#email").val(),bespeaktime:$("#bespeaktime").val(),bespeakplace:$("#bespeakplace").val(),detailinfo:$("#detailinfo").val()},
+				$.post("/MyStock/Expertbespeak_bespeakExpert.do",{id:$("#eid").val(),applygenre:$("#applygenre").val(),studentemail:$("#email").val(),bespeaktime:$("#bespeaktime").val(),bespeakplace:$("#bespeakplace").val(),detailinfo:$("#detailinfo").val()},
 					function(data,status){
 						hideEnterInfo();
 						hideInput();
@@ -572,7 +572,7 @@ article, aside, dialog, footer, header, section, footer, nav, figure,
 			function cancel(){
 				hideCencalInfo();
 				hideMySbInfo();
-				$.post("Expertbespeak_cancel.do",{sbid:stid},
+				$.post("/MyStock/Expertbespeak_cancel.do",{sbid:stid},
 						function(data,status){
 							getDataMyAppoint();
 						}
@@ -680,7 +680,7 @@ article, aside, dialog, footer, header, section, footer, nav, figure,
 	<section class="affirmPopupOK">
 		<div class="affirmPopupOK_p">
 			<p>
-				专家预约申请已提交成功!<br />请等待系统分配专家
+				预约申请提交成功
 			</p>
 		</div>
 	</section>

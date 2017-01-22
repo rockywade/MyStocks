@@ -12,7 +12,7 @@ Ext.onReady(function(){
 	
 	 //查询所有所有园区下拉菜单  
     var parkStore = new Ext.data.JsonStore({
-		url: 'SiteInfo_findParkComb.do',
+		url: '/MyStock/SiteInfo_findParkComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text']
@@ -24,7 +24,7 @@ Ext.onReady(function(){
     
     //查询所有所有场地类型下拉菜单
     var groundTypeStore = new Ext.data.JsonStore({
-		url: 'SiteInfo_findGroundTypeComb.do',
+		url: '/MyStock/SiteInfo_findGroundTypeComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text']
@@ -181,7 +181,7 @@ Ext.onReady(function(){
 	
   	
 	  var store = new Ext.data.JsonStore({
-	          url: 'SiteInfo_findPageSiteInfoLog.do',
+	          url: '/MyStock/SiteInfo_findPageSiteInfoLog.do',
 	          root: 'root',
 	          totalProperty: 'total',
 	          autoLoad: {params:{start:0, limit:15,ifApproval:3}},
@@ -262,7 +262,7 @@ Ext.onReady(function(){
                      });
 					if(c=='yes'){
 				   	Ext.Ajax.request({
-				   		url : "SiteInfo_saveOrUpdaSiteInfo.do",
+				   		url : "/MyStock/SiteInfo_saveOrUpdaSiteInfo.do",
 				   	    params:{ifApproval:"0",siteids : Ext.encode(jsonArray)},
 				   		success : function() {
 				   		  store.reload();
@@ -287,7 +287,7 @@ Ext.onReady(function(){
                      });
 					if(c=='yes'){
 				   	Ext.Ajax.request({
-				   		url : "SiteInfo_saveOrUpdaSiteInfo.do",
+				   		url : "/MyStock/SiteInfo_saveOrUpdaSiteInfo.do",
 				   	    params:{ifApproval:"1",siteids : Ext.encode(jsonArray)},
 				   		success : function() {
 				   		  store.reload();
@@ -503,7 +503,7 @@ Ext.onReady(function(){
 			   Ext.MessageBox.confirm('审核提示', '确定审批通过？', function(c) {
 				   if(c=='yes'){
 					 Ext.Ajax.request({
-					   	url : "SiteInfo_saveOrUpdateLog.do",
+					   	url : "/MyStock/SiteInfo_saveOrUpdateLog.do",
 					   	 params:{ 
 						 ifApproval:"0",
 						 logId :record.data.logId,
@@ -552,7 +552,7 @@ Ext.onReady(function(){
 			   Ext.MessageBox.confirm('审核提示', '确定审批不通过？', function(c) {
 				   if(c=='yes'){
 					 Ext.Ajax.request({
-					   	url : "SiteInfo_saveOrUpdateLog.do",
+					   	url : "/MyStock/SiteInfo_saveOrUpdateLog.do",
 					   	 params:{ ifApproval:"1",
 						 logId :record.data.logId,
 						 xh :record.data.xh,

@@ -117,7 +117,7 @@ Ext.onReady(function(){
 	];
 	
     var store = new Ext.data.JsonStore({
-	    url: 'Applyactivity_myJoinedActivity.do',
+	    url: '/MyStock/Applyactivity_myJoinedActivity.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -130,7 +130,7 @@ Ext.onReady(function(){
     	Ext.MessageBox.confirm('取消提示', '确定取消参加此活动吗？', function(c) {
 			   if(c=='yes'){
 				   Ext.Ajax.request({
-			   			url : "Applyactivity_cancelAttend.do",
+			   			url : "/MyStock/Applyactivity_cancelAttend.do",
 			   			params:{usernum:record.data.usernum,activityid:record.data.activityid,state:record.data.state,checkkey:1},
 			   			success : function(response) {
 			   				var responsedata = Ext.util.JSON.decode(response.responseText);

@@ -15,7 +15,7 @@ Ext.onReady(function(){
 	];
 	
 	var store = new Ext.data.JsonStore({
-	    url: 'user_findPageUser.do',
+	    url: '/MyStock/user_findPageUser.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -73,7 +73,7 @@ Ext.onReady(function(){
 					Ext.MessageBox.confirm('删除提示', '是否删除该用户？', function(c) {
 					   if(c=='yes'){
 					   		Ext.Ajax.request({
-					   			url : "user_deleteUser.do",
+					   			url : "/MyStock/user_deleteUser.do",
 					   			params:{ userid : record.get("userid") },
 					   			success : function() {
 					   				store.reload();
@@ -93,7 +93,7 @@ Ext.onReady(function(){
     });
     
     var roleStore = new Ext.data.JsonStore({
-	    url: 'role_findRoleType.do',
+	    url: '/MyStock/role_findRoleType.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields : ["value", "text"]
@@ -154,7 +154,7 @@ Ext.onReady(function(){
 			handler : function() {
 				if (uForm.getForm().isValid()) {
 					uForm.getForm().submit({
-						url : 'user_saveOrUpdateUser.do',
+						url : '/MyStock/user_saveOrUpdateUser.do',
 						success : function(form, action) {
 							Ext.Msg.alert('信息提示',action.result.message);
 							uWindow.hide();

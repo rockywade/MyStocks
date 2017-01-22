@@ -9,7 +9,7 @@ Ext.onReady(function(){
 	
 	 //查询所有所有班级
     var ClassStore = new Ext.data.JsonStore({
-		url: 'LeaveInfo_findClassComb1.do',
+		url: '/MyStock/LeaveInfo_findClassComb1.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text']
@@ -144,7 +144,7 @@ Ext.onReady(function(){
 	
 	
 	var store = new Ext.data.JsonStore({
-		 url: 'LeaveInfo_findPageLeaveInfo4.do',
+		 url: '/MyStock/LeaveInfo_findPageLeaveInfo4.do',
 		 root: 'root',
 		 totalProperty: 'total',
 		 autoLoad: {params:{start:0, limit:15}},
@@ -396,7 +396,7 @@ Ext.onReady(function(){
 	    	  Ext.MessageBox.confirm('审核提示', '确定同意该审核？', function(c) {
 	    		  if(c=='yes'){
 					 Ext.Ajax.request({
-					  url : "LeaveInfo_saveOrUpdate.do",
+					  url : "/MyStock/LeaveInfo_saveOrUpdate.do",
 					  params:{
 					    ifApproval:"3",
 						id : record.data.id,
@@ -438,7 +438,7 @@ Ext.onReady(function(){
 	    	 Ext.MessageBox.confirm('审核提示', '确定不同意该审核？', function(c) {
 	    		 if(c=='yes'){
 					 Ext.Ajax.request({
-					  url : "LeaveInfo_saveOrUpdate.do",
+					  url : "/MyStock/LeaveInfo_saveOrUpdate.do",
 					  params:{
 					   ifApproval:"4",
 					   id : record.data.id,

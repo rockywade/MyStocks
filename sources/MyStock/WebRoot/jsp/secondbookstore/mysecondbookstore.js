@@ -22,7 +22,7 @@ Ext.onReady(function(){
 	
 	var store = new Ext.data.JsonStore({
 		//url: 'datumInfo_findPageDatumInfo.do',datumInfo_findPageDatumInfoBy.do
-		 url: 'secondBookStore_findPageMySecondBookStore.do',
+		 url: '/MyStock/secondBookStore_findPageMySecondBookStore.do',
 		 root: 'root',
 		 totalProperty: 'total',
 		 autoLoad: {params:{start:0, limit:15}},
@@ -103,7 +103,7 @@ Ext.onReady(function(){
     	var record = grid.getStore().getAt(rowIndex); 
     	Ext.MessageBox.confirm('删除提示', '是否删除该主题？', function(c) {
 		   	Ext.Ajax.request({
-		   			url : "secondBookStore_delete.do",
+		   			url : "/MyStock/secondBookStore_delete.do",
 		   			params:{ids : record.get("id")},
 		   			success : function() {
 		   				store.reload();
@@ -116,7 +116,7 @@ Ext.onReady(function(){
     //发布二手书店
     var addForm = new Ext.FormPanel({
 		layout : 'form',
-		url : 'secondBookStore_saveOrUpdateSecondBookStore.do',
+		url : '/MyStock/secondBookStore_saveOrUpdateSecondBookStore.do',
 		fileUpload:true,  
 		frame:true,
 		labelWidth:60,
@@ -163,7 +163,7 @@ Ext.onReady(function(){
 				extension = extension.toLowerCase();   
 				if(extension=="png"||extension=="jpg"||extension=="gif"||extension=="jpeg"||extension=="bmp")
 	            {
-	            	return true; 
+	            	return checkFile(); 
 	            }
 	            else
 	            {
@@ -244,7 +244,7 @@ Ext.onReady(function(){
 					  success : function(form, action) {
 						var id = action.result.id;
 						document.getElementById("id").value=id;
-						var html = '<iframe src="secondBookStore_viewSecondBookStore.do?id='+id+'" frameborder="0" width="100%"  height="100%"></iframe>';
+						var html = '<iframe src="/MyStock/secondBookStore_viewSecondBookStore.do?id='+id+'" frameborder="0" width="100%"  height="100%"></iframe>';
 						if(Ext.getCmp('viewPanel').body){
 							Ext.getCmp('viewPanel').body.update(html);
 						}else{
@@ -270,7 +270,7 @@ Ext.onReady(function(){
 			id:'publish',
 			handler : function() {
 				Ext.Ajax.request({
-		   			url : "secondBookStore_update.do",
+		   			url : "/MyStock/secondBookStore_update.do",
 		   			params:{
 						ids : document.getElementById("id").value,
 						type : 4,
@@ -285,7 +285,7 @@ Ext.onReady(function(){
     
     addWindow.on("hide",function(){
     	Ext.Ajax.request({
-   			url : "secondBookStore_deleteSecondBookStore.do",
+   			url : "/MyStock/secondBookStore_deleteSecondBookStore.do",
    			params:{id : document.getElementById("id").value},
    			success : function() {
    				store.reload();

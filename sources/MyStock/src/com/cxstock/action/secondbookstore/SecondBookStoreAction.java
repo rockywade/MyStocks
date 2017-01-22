@@ -255,7 +255,7 @@ public class SecondBookStoreAction extends BaseAction{
    /**
 	 * 保存/修改 
 	 */
-	public String saveOrUpdateSecondBookStore() {
+	public void saveOrUpdateSecondBookStore() {
 		try {
 			String imageFilePath = "";
 			String attFilePath = "";
@@ -294,7 +294,6 @@ public class SecondBookStoreAction extends BaseAction{
 			e.printStackTrace();
 			this.outError();
 		}
-		return null;
 	}
    
 	

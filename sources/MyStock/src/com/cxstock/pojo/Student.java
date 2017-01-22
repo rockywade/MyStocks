@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.Set;
 
 
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -61,6 +63,8 @@ public class Student implements Serializable {
 	private Set<Attend> attend;
 	//学园
 	private Lyceum  lyceum;
+	//积分
+	private Integer integral;
 	
 	public Student(){
 	}
@@ -255,6 +259,14 @@ public class Student implements Serializable {
 
 	public void setAttend(Set<Attend> attend) {
 		this.attend = attend;
+	}
+
+	public Integer getIntegral() {
+		return integral;
+	}
+
+	public void setIntegral(Integer integral) {
+		this.integral = integral;
 	}
 }
 

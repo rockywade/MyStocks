@@ -110,6 +110,7 @@ public class InstructorBizImp implements InstructorBiz {
 		} 
 		if(null!=instructor.getIclass()){
 			i.setIclass(instructor.getIclass());
+			
 		}
 		
 		if(null!=instructor.getXb()&&!"".equals(instructor.getXb())){
@@ -123,6 +124,12 @@ public class InstructorBizImp implements InstructorBiz {
 		i.setZgh(instructor.getZgh());
 		baseDao.saveOrUpdate(i);
 		instructor.setId(i.getId());
+		if(null!=i.getIclass()){
+			for(Classes c : i.getIclass()) {
+				String sql = "update tbl_student set instructor_id=" + i.getId() + " where classes_id=" + "'" + c.getBjdm() + "'";
+				baseDao.excuteBySql(sql);
+			}
+		}
 		return true;
 	}
 

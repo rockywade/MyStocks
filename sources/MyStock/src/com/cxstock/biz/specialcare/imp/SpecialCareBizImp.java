@@ -27,9 +27,11 @@ public class SpecialCareBizImp implements SpecialCareBiz{
 			sc.setBzr(s.getHeadmaster().getXm());
 			sc.setBzrlogincode(s.getHeadmaster().getZgh());
 			sc.setBzrphone(s.getHeadmaster().getPhone());
-			sc.setFdy(s.getInstructor().getXm());
-			sc.setFdylogincode(s.getInstructor().getZgh());
-			sc.setFdyphone(s.getInstructor().getPhone());
+			if(s.getInstructor() != null) {
+				sc.setFdy(s.getInstructor().getXm());
+				sc.setFdylogincode(s.getInstructor().getZgh());
+				sc.setFdyphone(s.getInstructor().getPhone());
+			}
 			sc.setFq("");
 			sc.setFqphone(s.getFqphone());
 			sc.setMental("");

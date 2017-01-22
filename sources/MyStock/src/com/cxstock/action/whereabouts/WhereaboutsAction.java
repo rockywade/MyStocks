@@ -7,11 +7,13 @@ import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 
 import com.cxstock.action.BaseAction;
@@ -359,6 +361,7 @@ public class WhereaboutsAction extends BaseAction {
 	 */
 	public String whereaboutsLaunch(){
 		try {
+			UserDTO userInfo = (UserDTO) getSession().getAttribute(Constants.USERINFO);
 			Wheresaboutslaunch wheres = new Wheresaboutslaunch();
 			
 			wheres.setLaunchid(Tools.getUid());
@@ -368,6 +371,7 @@ public class WhereaboutsAction extends BaseAction {
 			wheres.setLaunchtime(launchtime);
 			wheres.setCensusendtime(censusendtime);
 			wheres.setLaunchstyle("已发布");
+			wheres.setSsxy(userInfo.getSsyq());
 			
 			whereAboutsBiz.saveLaunch(wheres);
 			this.outString("{success:true,message:'添加成功!'}");
@@ -423,7 +427,11 @@ public class WhereaboutsAction extends BaseAction {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String todaytime = sdf.format(time);
 			launchstyle = "已发布";
-			Wheresaboutslaunch whereslaun = whereAboutsBiz.findNeedWriteWheres(todaytime,launchstyle);
+			String ssxy = getUserDTO().getSsyq();
+			if(ssxy.length() > 2) {
+				ssxy = ssxy.substring(0, 2);
+			}
+			Wheresaboutslaunch whereslaun = whereAboutsBiz.findNeedWriteWheres(todaytime,launchstyle, ssxy);
 			if(whereslaun!=null){
 				Wheresaboutscensus census = whereAboutsBiz.findCensus(this.getUserDTO().getLogincode(),whereslaun.getLaunchid());
 				if(census==null){
@@ -452,10 +460,18 @@ public class WhereaboutsAction extends BaseAction {
 			java.util.Date date1 = null;
 			java.util.Date date2 = null;
 			try {
-				date1 = smd.parse(leaveschooltime);
-				date2 = smd.parse(returnschooltime);
-			} catch (ParseException e) {
+				if(StringUtils.isNotBlank(leaveschooltime) && StringUtils.isNotBlank(returnschooltime)) {
+					
+					date1 = smd.parse(leaveschooltime);
+					date2 = smd.parse(returnschooltime);
+				} 
+			} catch (Exception e) {
 				e.printStackTrace();
+			}
+			if(date1 == null || date2 == null) {
+				Date date = new Date();
+				date1 = date;
+				date2 = date;
 			}
 			daysnum = String.valueOf(DateUtil.getOffsetDays(date1, date2));
 			Wheresaboutscensus wherecensus = new Wheresaboutscensus();
@@ -568,9 +584,12 @@ public class WhereaboutsAction extends BaseAction {
 			Set<Classes> classes = null;
 			if(master!=null){
 				classes = master.getHclass();
-			}else{
+			}else if(instructor!=null){
 				classes = instructor.getIclass();
+			} else {
+				classes = new HashSet<Classes>();
 			}
+			
 			String[] tclasses = new String[classes.size()];
 			int i = 0;
 			for(Classes v:classes){

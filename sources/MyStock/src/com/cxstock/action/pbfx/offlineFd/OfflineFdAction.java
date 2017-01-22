@@ -21,6 +21,7 @@ import com.cxstock.pojo.Sms;
 import com.cxstock.pojo.Student;
 import com.cxstock.utils.pubutil.Page;
 import com.cxstock.utils.system.DateTime;
+import com.cxstock.utils.system.DateUtil;
 import com.cxstock.utils.system.ExcelHelper;
 import com.cxstock.utils.system.JxlExcelHelper;
 import com.cxstock.utils.system.SmsUtil;
@@ -158,6 +159,8 @@ public class OfflineFdAction extends BaseAction{
 				 //调用短息接口的方法
 			    SmsUtil.sendSms(this.teachertel, content);
 			}
+			//fd.setTopTime(new Date(System.currentTimeMillis() ));
+			System.out.println("------------" + DateUtil.format(new Date()) + "-----------------");
 			fd.setTopTime(new Date());
 			fd.setCreatetime(new Date());
 			fd.setCreaterid(this.getUserDTO().getUserid());
@@ -262,7 +265,7 @@ public class OfflineFdAction extends BaseAction{
 		} catch (Exception e) {
 			e.printStackTrace();
 			this.outError();
-		}
+		} 
     	
     	return  null;
     }

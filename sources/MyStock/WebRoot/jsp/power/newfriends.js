@@ -91,7 +91,7 @@ Ext.onReady(function(){
 	
 	var sm = new Ext.grid.CheckboxSelectionModel({singleSelect: true});//单选
 	var store = new Ext.data.JsonStore({
-	    url: 'newFriends_findPageNewFriends.do',
+	    url: '/MyStock/newFriends_findPageNewFriends.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -116,7 +116,7 @@ Ext.onReady(function(){
 	                		Ext.MessageBox.confirm('重置密码提示', '是否为该用户重置密码？', function(c) {
 	     					   if(c=='yes'){
 	     					   		Ext.Ajax.request({
-	     					   			url : "user_resetPwd.do",
+	     					   			url : "/MyStock/user_resetPwd.do",
 	     					   			params:{ logincode : record.data.xh },
 	     					   			success : function() {
 	     					   				Ext.Msg.alert('信息提示','重置成功');
@@ -178,7 +178,7 @@ Ext.onReady(function(){
                                }   
                            } 
 					   		Ext.Ajax.request({
-					   			url : "newFriends_deleteNewFriends.do",
+					   			url : "/MyStock/newFriends_deleteNewFriends.do",
 					   			params:{ ids : ids },
 					   			success : function() {
 					   				store.reload();
@@ -276,7 +276,7 @@ Ext.onReady(function(){
 			handler : function() {
 				if (uForm.getForm().isValid()) {
 					uForm.getForm().submit({
-						url : 'newFriends_saveOrUpdateNewFriends.do',
+						url : '/MyStock/newFriends_saveOrUpdateNewFriends.do',
 						success : function(form, action) {
 							Ext.Msg.alert('信息提示',action.result.message);
 							uWindow.hide();

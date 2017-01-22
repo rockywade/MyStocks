@@ -7,7 +7,7 @@ Ext.onReady(function(){
 	
 	//供应商下拉数据
     var groundStore = new Ext.data.JsonStore({
-		url: 'apply_findActionComb.do',
+		url: '/MyStock/apply_findActionComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text'],
@@ -24,7 +24,7 @@ Ext.onReady(function(){
 	});
 
     var groundStore2 = new Ext.data.JsonStore({
-    	url: 'apply_findActionComb2.do',
+    	url: '/MyStock/apply_findActionComb2.do',
     	root: 'root',
     	totalProperty: 'total',
     	fields: ['value','text'],
@@ -227,7 +227,7 @@ Ext.onReady(function(){
 	];
 	
     var store = new Ext.data.JsonStore({
-	    url: 'checkactivitylist_findPageApply.do',
+	    url: '/MyStock/checkactivitylist_findPageApply.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -283,7 +283,7 @@ Ext.onReady(function(){
 		layout : 'form',
 		baseCls:'x-plain',
 		autoScroll:true,//滚动条
-		url : 'apply_saveOrUpdate.do',
+		url : '/MyStock/apply_saveOrUpdate.do',
         fileUpload:true,  
 		labelWidth:70,
 		border : false,
@@ -385,7 +385,7 @@ Ext.onReady(function(){
     	
 		layout : 'form',//纵向布局
 		baseCls:'x-plain',//基本色调
-		url : 'apply_saveOrUpdate.do',
+		url : '/MyStock/apply_saveOrUpdate.do',
         fileUpload:true,  
         autoScroll:true,//滚动条
 		labelWidth:80,
@@ -548,7 +548,7 @@ Ext.onReady(function(){
 			Ext.MessageBox.confirm('提示', '确定不通过？', function(c) {
 				   if(c=='yes'){
 					   Ext.Ajax.request({
-				   			url : "apply_saveOrUpdate.do",
+				   			url : "/MyStock/apply_saveOrUpdate.do",
 				   			params:{ flag:"f",id : record.get("id"),proposer : record.get("proposer"),number : record.get("number"),tel : record.get("tel"),counselor : record.get("counselor"),actionName : record.get("actionName"),actionContent : record.get("actionContent"),actionType : record.get("actionType"),park : record.get("park"),teacher : record.get("teacher"),size : record.get("size"),shifou : record.get("shifou"),zrsm : record.get("zrsm")}
 					   		
 					   });

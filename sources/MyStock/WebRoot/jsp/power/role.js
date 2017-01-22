@@ -12,7 +12,7 @@ Ext.onReady(function(){
 	];
 	
 	var store = new Ext.data.JsonStore({
-	    url: 'role_findPageRole.do',
+	    url: '/MyStock/role_findPageRole.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -46,7 +46,7 @@ Ext.onReady(function(){
                     var record = store.getAt(rowIndex);
                     var roleid = record.get('roleid')
                 	roleMenuWindow.show(null,function(){
-						tree.loader.dataUrl = '../role_findRoleMenu.do?roleid='+ roleid
+						tree.loader.dataUrl = '/MyStock/role_findRoleMenu.do?roleid='+ roleid
 						tree.getLoader().load(tree.root, function() {
 							tree.root.expand(true, true);
 						});
@@ -123,7 +123,7 @@ Ext.onReady(function(){
 			handler : function() {
 				if (roleForm.getForm().isValid()) {
 					roleForm.getForm().submit({
-						url : 'role_saveOrUpdateRole.do',
+						url : '/MyStock/role_saveOrUpdateRole.do',
 						success : function(form, action) {
 							Ext.Msg.alert('信息提示',action.result.message);
 							roleWindow.hide();
@@ -179,6 +179,7 @@ Ext.onReady(function(){
 		closeAction : 'hide',
 		modal : true,
 		items : [tree],
+		buttonAlign:'center',  
 		buttons : [{
 			text : '提交',
 			pressed : true,
@@ -194,7 +195,7 @@ Ext.onReady(function(){
 					menuids += childNodes[i].id;
 				}
 				Ext.Ajax.request({
-		   			url : "role_saveRoleMenu.do",
+		   			url : "/MyStock/role_saveRoleMenu.do",
 		   			params:{ 
 		   				roleid : roleMenuWindow.roleid, 
 		   				menuids : menuids 

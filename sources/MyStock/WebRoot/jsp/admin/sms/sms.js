@@ -12,7 +12,7 @@ Ext.onReady(function(){
 	];
 	
 	var store = new Ext.data.JsonStore({
-	    url: 'sms_findPageSms.do',
+	    url: '/MyStock/sms_findPageSms.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -108,7 +108,7 @@ Ext.onReady(function(){
 			handler : function() {
 				if (uForm.getForm().isValid()) {
 					uForm.getForm().submit({
-						url : 'sms_saveOrUpdateSms.do',
+						url : '/MyStock/sms_saveOrUpdateSms.do',
 						success : function(form, action) {
 							Ext.Msg.alert('信息提示',action.result.message);
 							uWindow.hide();

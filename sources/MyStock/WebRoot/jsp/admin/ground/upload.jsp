@@ -12,6 +12,6 @@
 </head>
 <body>
 	<div id="form1"></div>
-	<a href="download.do?filename=aaaa.txt">点击下载2</a>
+	<a href="/MyStock/download.do?filename=aaaa.txt">点击下载2</a>
 </body>
 </html>

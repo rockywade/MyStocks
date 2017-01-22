@@ -70,7 +70,7 @@ Ext.onReady(function(){
 	
 	
 	var store = new Ext.data.JsonStore({
-		 url: 'LeaveInfo_findPageLeaveInfo1.do',
+		 url: '/MyStock/LeaveInfo_findPageLeaveInfo1.do',
 		 root: 'root',
 		 totalProperty: 'total',
 		 autoLoad: {params:{start:0, limit:15,ifApproval:3,studentnum:studentnum}},

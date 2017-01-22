@@ -381,7 +381,7 @@ public class DatumInfoBizImp implements DatumInfoBiz{
      */
 	@Override
 	public List<DataJiFen> findAllDataJiFen() {
-		 List<DataJiFen> list =  baseDao.listAll("DataJiFen");
+		 List<DataJiFen> list =  baseDao.listAll("DataJiFen", 0, 10);
 		 if(null !=list){
 			 return list;
 		 }else{

@@ -149,7 +149,7 @@ Ext.onReady(function(){
 		      	];
 	
     var store = new Ext.data.JsonStore({
-	    url: 'Applyactivity_publicity.do',
+	    url: '/MyStock/Applyactivity_publicity.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -157,7 +157,7 @@ Ext.onReady(function(){
 	});
     
     var storeDetail = new Ext.data.JsonStore({
-	    url: 'Applyactivity_attendActivityPublicityDetail.do',
+	    url: '/MyStock/Applyactivity_attendActivityPublicityDetail.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: false,
@@ -168,7 +168,7 @@ Ext.onReady(function(){
 	var lookDetail = function(grid, rowIndex, colIndex){
     	var record = grid.getStore().getAt(rowIndex);
     	storeDetail.load({
-			url:'Applyactivity_attendActivityPublicityDetail.do',
+			url:'/MyStock/Applyactivity_attendActivityPublicityDetail.do',
 	        params:{start:0,limit:15,activityid:record.data.activityid},
 	        scope:this
 	    });
@@ -233,7 +233,7 @@ Ext.onReady(function(){
 			columns:[rownumber,
 			    //{header:'姓名', width: 110,align:'center', dataIndex: 'username'},
 			    {header:'学号',width:110,align:'center',dataIndex:'usernum'},
-			    {header:'所加分值',width:110,align:'center',dataIndex:'gross'}
+			    {header:'所加分值',width:110,align:'center',dataIndex:'gotscore'}
 			]
         }),
         rownumber:rownumberDetail,//checkbox
@@ -379,7 +379,7 @@ Ext.onReady(function(){
       	        ];
     
 	var newsStore = new Ext.data.JsonStore({
-	    url: 'Applyactivity_newsSpecialColumn.do',
+	    url: '/MyStock/Applyactivity_newsSpecialColumn.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},

@@ -60,7 +60,9 @@ public class Activity implements Serializable {
 	//新闻审核状态
 	private String newscheckstyle;
 	//公示审核状态
-	private String publicitycheckstyle;		
+	private String publicitycheckstyle;
+	//理由（不同意理由或者活动考评分修改理由）
+	private String refuse;
 	
 	public Activity(){
 		
@@ -242,5 +244,11 @@ public class Activity implements Serializable {
 	}
 	public void setPublicitycheckstyle(String publicitycheckstyle) {
 		this.publicitycheckstyle = publicitycheckstyle;
+	}
+	public String getRefuse() {
+		return refuse;
+	}
+	public void setRefuse(String refuse) {
+		this.refuse = refuse;
 	}
 }

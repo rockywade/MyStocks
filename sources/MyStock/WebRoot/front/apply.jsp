@@ -17,7 +17,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"front_dataActivityInfo.do",
+					url:"/MyStock/front_dataActivityInfo.do",
 					data:{start:startAllAppoint, limit:limitAllAppoint},
 					success : function(data,status){
 						data = eval("("+data+")");
@@ -47,7 +47,7 @@
 			var d = null;
 		        $.ajax({
 		         type : "POST",
-   			      url : "front_activityDetail.do",
+   			      url : "/MyStock/front_activityDetail.do",
    			      data:{
 				      aid:id
 			        },
@@ -102,7 +102,7 @@
 			return s;
 		}
 		function attend(){
-			window.location.href="front_goToLogin.do?url=../university/attend/activityinfo.jsp";
+			window.location.href="/MyStock/front_goToLogin.do?url=../university/attend/activityinfo.jsp";
 		}
 		//翻页
 		function initpage(){

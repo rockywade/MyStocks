@@ -29,7 +29,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"mobile_activityDetail.do",
+					url:"/MyStock/mobile_activityDetail.do",
 					data:{aid:id},
 					success : function(data,status){
 						data = eval("("+data+")");
@@ -102,7 +102,7 @@
 				$.ajax({
 					type : "post",
 					async : false,  
-					url:"mobile_attendActivity.do",
+					url:"/MyStock/mobile_attendActivity.do",
 					data:{activityid:activityid, activityname:activityname, activitygenre:activitygenre,
 						 activitytime:activitytime, inschoolterm:inschoolterm,
 						 activityplace:activityplace, score:score},

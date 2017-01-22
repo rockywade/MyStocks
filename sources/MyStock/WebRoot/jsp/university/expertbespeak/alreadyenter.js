@@ -139,7 +139,7 @@ Ext.onReady(function(){
 	
 	//获取response数据
 	var store = new Ext.data.JsonStore({
-	    url: 'Expertbespeak_alreadyenter.do',
+	    url: '/MyStock/Expertbespeak_alreadyenter.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -206,7 +206,7 @@ Ext.onReady(function(){
 				}else{
 					//alert(record.get("stid"));
 					Ext.Ajax.request({
-			   			url : "Expertbespeak_sendEnterOrFeedBespeakSMS.do",
+			   			url : "/MyStock/Expertbespeak_sendEnterOrFeedBespeakSMS.do",
 			   			params:{ stid : record.get("stid"),msgKey:"enter" },
 			   			success : function(response) {
 			   				var responsedata = Ext.util.JSON.decode(response.responseText);
@@ -231,7 +231,7 @@ Ext.onReady(function(){
 					Ext.Msg.alert('信息提示','专家老师还未接受预约，请发送确认预约短信');
 				}else{
 					Ext.Ajax.request({
-			   			url : "Expertbespeak_sendEnterOrFeedBespeakSMS.do",
+			   			url : "/MyStock/Expertbespeak_sendEnterOrFeedBespeakSMS.do",
 			   			params:{ stid : record.get("stid"),msgKey:"feed" },
 			   			success : function(response) {
 			   				var responsedata = Ext.util.JSON.decode(response.responseText);
@@ -252,7 +252,7 @@ Ext.onReady(function(){
 					Ext.MessageBox.confirm('删除提示', '是否删除该用户？', function(c) {
 					   if(c=='yes'){
 					   		Ext.Ajax.request({
-					   			url : "Expertbespeak_deleteBespeak.do",
+					   			url : "/MyStock/Expertbespeak_deleteBespeak.do",
 					   			params:{ sbid : record.get("stid") },
 					   			success : function() {
 					   				store.reload();

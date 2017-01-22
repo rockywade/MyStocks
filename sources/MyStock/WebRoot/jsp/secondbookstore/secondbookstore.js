@@ -91,7 +91,7 @@ Ext.onReady(function(){
 	
 	var store = new Ext.data.JsonStore({
 		//url: 'datumInfo_findPageDatumInfo.do',datumInfo_findPageDatumInfoBy.do
-		 url: 'secondBookStore_findPageSecondBookStore.do',
+		 url: '/MyStock/secondBookStore_findPageSecondBookStore.do',
 		 root: 'root',
 		 totalProperty: 'total',
 		 autoLoad: {params:{start:0, limit:15}},
@@ -167,10 +167,10 @@ Ext.onReady(function(){
     //发布二手书店
     var addForm = new Ext.FormPanel({
 		layout : 'form',
-		url : 'secondBookStore_saveOrUpdateSecondBookStore.do',
+		url : '/MyStock/secondBookStore_saveOrUpdateSecondBookStore.do',
 		fileUpload:true,  
 		frame:true,
-		labelWidth:60,
+		labelWidth:100,
 		border : false,
 		padding : '15 10 500 10',
 		defaults : {
@@ -215,7 +215,7 @@ Ext.onReady(function(){
 				extension = extension.toLowerCase();   
 				if(extension=="png"||extension=="jpg"||extension=="gif"||extension=="jpeg"||extension=="bmp")
 	            {
-	            	return true; 
+	            	return checkFile(); 
 	            }
 	            else
 	            {
@@ -235,7 +235,7 @@ Ext.onReady(function(){
 				if(''==value){
 					return true;
 				}
-				var extension=new String(value.substring(value.lastIndexOf(".")+1,value.length));
+				/*var extension=new String(value.substring(value.lastIndexOf(".")+1,value.length));
 				extension = extension.toLowerCase();   
 				if(extension=="png"||extension=="jpg"||extension=="gif"||extension=="jpeg"||extension=="bmp")
 	            {
@@ -244,7 +244,8 @@ Ext.onReady(function(){
 	            else
 	            {
 	            	return checkFile();
-	            }
+	            }*/
+				return checkFile();
 			},
 			maxLength :200
 		},{
@@ -291,28 +292,28 @@ Ext.onReady(function(){
 			handler : function() {
 				if (addForm.getForm().isValid()) {
 					addForm.getForm().submit({
-					  success : function(form, action) {
-						var id = action.result.id;
-						document.getElementById("id").value=id;
-						var html = '<iframe frameborder="0" src="secondBookStore_viewSecondBookStore.do?id='+id+'"  width="100%"  height="100%"></iframe>';
-						if(Ext.getCmp('viewPanel').body){
-							Ext.getCmp('viewPanel').body.update(html);
-						}else{
-							Ext.getCmp('viewPanel').html = html;
+						waitTitle : '预览',
+						waitMsg : '正在预览数据，稍后...',
+						success : function(form, action) {
+							var id = action.result.id;
+							document.getElementById("id").value=id;
+							var html = '<iframe frameborder="0" src="/MyStock/secondBookStore_viewSecondBookStore.do?id='+id+'"  width="100%"  height="100%"></iframe>';
+							if(Ext.getCmp('viewPanel').body){
+								Ext.getCmp('viewPanel').body.update(html);
+							}else{
+								Ext.getCmp('viewPanel').html = html;
+							}
+							viewWindow.show();
+							Ext.getCmp("publish").setVisible(true);
+						},
+						failure : function(form, action) {
+							if(action.result.errors){
+								Ext.Msg.alert('信息提示',action.result.errors);
+							}else{
+								Ext.Msg.alert('信息提示','连接失败');
+							}
 						}
-						viewWindow.show();
-						Ext.getCmp("publish").setVisible(true);
-					},
-					failure : function(form, action) {
-						if(action.result.errors){
-							Ext.Msg.alert('信息提示',action.result.errors);
-						}else{
-							Ext.Msg.alert('信息提示','连接失败');
-						}
-					},
-					waitTitle : '预览',
-					waitMsg : '正在预览数据，稍后...'
-				});
+					});
 				}
 			}
 		},{
@@ -320,7 +321,7 @@ Ext.onReady(function(){
 			id:'publish',
 			handler : function() {
 				Ext.Ajax.request({
-		   			url : "secondBookStore_update.do",
+		   			url : "/MyStock/secondBookStore_update.do",
 		   			params:{
 						ids : document.getElementById("id").value,
 						type : 4,
@@ -336,7 +337,7 @@ Ext.onReady(function(){
     
     addWindow.on("hide",function(){
     	Ext.Ajax.request({
-   			url : "secondBookStore_deleteSecondBookStore.do",
+   			url : "/MyStock/secondBookStore_deleteSecondBookStore.do",
    			params:{id : document.getElementById("id").value},
    			success : function() {
    				store.reload();

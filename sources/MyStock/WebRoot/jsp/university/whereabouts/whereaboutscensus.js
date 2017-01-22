@@ -80,7 +80,7 @@ Ext.onReady(function(){
 	
 	//获取response数据
 	var store = new Ext.data.JsonStore({
-	    url: 'Whereabouts_personalWheresCensusList.do',
+	    url: '/MyStock/Whereabouts_personalWheresCensusList.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -223,7 +223,7 @@ Ext.onReady(function(){
 		layout : 'form',
 		//baseCls:'x-plain',
 		frame:true,
-		url :'Whereabouts_whereAboutsCensus.do',
+		url :'/MyStock/Whereabouts_whereAboutsCensus.do',
 		labelWidth:56,
 		border : false,
 		padding : '15 10 0 10',
@@ -542,7 +542,7 @@ Ext.onReady(function(){
     //获取当前用户信息
     var getCurrentUserInfo = function(){
     	Ext.Ajax.request({
-    		url:"Applyactivity_getCurrentUserInfo.do",
+    		url:"/MyStock/Applyactivity_getCurrentUserInfo.do",
     		success:function(response){
     			var responsedata = Ext.util.JSON.decode(response.responseText);
     			if(responsedata){
@@ -562,7 +562,7 @@ Ext.onReady(function(){
     //获取待填写去向
     var getNeedWriteWheres = function(){
     	Ext.Ajax.request({
-			url:'Whereabouts_findNeedWriteWheres.do',		//检索待填去向链接
+			url:'/MyStock/Whereabouts_findNeedWriteWheres.do',		//检索待填去向链接
 			success:function(response){
 				var resdata = Ext.util.JSON.decode(response.responseText);
 				if(resdata.message!="nothing"){

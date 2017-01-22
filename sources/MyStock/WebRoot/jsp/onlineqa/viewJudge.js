@@ -19,7 +19,7 @@ Ext.onReady(function(){
 	   	
 	   	var store = new Ext.data.JsonStore({
 	   		 id :"store",
-	   		 url: 'onlineQAJudge_findPageOnlineQAJudge.do?qaid='+document.getElementById("id").value,
+	   		 url: '/MyStock/onlineQAJudge_findPageOnlineQAJudge.do?qaid='+document.getElementById("id").value,
 	   		 root: 'root',
 	   		 totalProperty: 'total',
 	   		 autoLoad: {params:{start:0, limit:15}},
@@ -77,7 +77,7 @@ Ext.onReady(function(){
     	var record = grid.getStore().getAt(rowIndex); 
     	Ext.MessageBox.confirm('删除提示', '是否删除该评论？', function(c) {
 		   	Ext.Ajax.request({
-		   			url : "onlineQAJudge_delete.do",
+		   			url : "/MyStock/onlineQAJudge_delete.do",
 		   			params:{id : record.get("id")},
 		   			success : function() {
 		   				store.reload();
@@ -96,7 +96,7 @@ Ext.onReady(function(){
 	
 	bt.on("click", function(){
 		Ext.Ajax.request({
-   			url : "onlineQAJudge_saveOrUpdateOnlineQAJudge.do",
+   			url : "/MyStock/onlineQAJudge_saveOrUpdateOnlineQAJudge.do",
    			params:{
 				qaid : document.getElementById("id").value,
 				content : document.getElementById("judgeContent").value

@@ -159,7 +159,7 @@ Ext.onReady(function(){
 	
 	
 	var store = new Ext.data.JsonStore({
-		 url: 'offlineFd_findMangeProject.do',
+		 url: '/MyStock/offlineFd_findMangeProject.do',
 		 root: 'root',
 		 totalProperty: 'total',
 		 autoLoad: {params:{start:0, limit:15,xmid:xmid}},
@@ -194,7 +194,7 @@ Ext.onReady(function(){
         	handler: function(){
         	  Ext.MessageBox.confirm('信息提示', '确定要导出报名名单吗？', function(c) {
          	   if(c=='yes'){
-         		   window.location.href="exportStudent.do?xmid="+xmid;
+         		   window.location.href="/MyStock/exportStudent.do?xmid="+xmid;
          	        store.reload();
          	     }
       		});
@@ -205,7 +205,7 @@ Ext.onReady(function(){
         	handler: function(){
       	  Ext.MessageBox.confirm('信息提示', '确定要导出报名表模板吗？', function(c) {
         	   if(c=='yes'){
-        		   window.location.href="exportStudent.do?ifApproval=1&xmid="+xmid;
+        		   window.location.href="/MyStock/exportStudent.do?ifApproval=1&xmid="+xmid;
         	        store.reload();
         	     }
      		});
@@ -229,7 +229,7 @@ Ext.onReady(function(){
      //获取项目数据
 	var getModle = function(){
 		Ext.Ajax.request({
-   			url : "offlineFd_findSingOfflineFd.do",
+   			url : "/MyStock/offlineFd_findSingOfflineFd.do",
    			params:{xmid:xmid
 			     },
    			success : function(o) {

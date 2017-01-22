@@ -689,6 +689,15 @@ public class ExpertbespeakAction extends BaseAction {
 					//指定专家预约，预约成功后给专家发送短信
 					if(id!=null && !id.equals("")){
 						Expert expert = expertBespeakBiz.findExpertById(id);
+						if(expert == null) {
+							Page page = new Page();
+							page.setLimit(1);
+							page.setStart(0);
+							String[] property = {};
+							String[] values = {};
+							expertBespeakBiz.findPageExpert(page, property, values);
+							expert = (Expert) page.getRoot().get(0);
+						}
 						Student std = expertBespeakBiz.findStudentById(stdid);
 						String mobile = expert.getPhone();
 						SmsBiz smsBiz = ServiceHelper.getSmsBiz();
@@ -696,9 +705,9 @@ public class ExpertbespeakAction extends BaseAction {
 						String content = sms.getContent().replace("$(XM)",std.getXm());
 						SmsUtil.sendSms(mobile, content);
 					}
-					this.outString("{success:true,message:'预约成功!'}");
+					this.outString("{success:true,message:'预约申请提交成功!'}");
 				}else{
-					this.outString("{success:true,message:'成功!'}");
+					this.outString("{success:true,message:'预约申请提交成功!'}");
 				}
 			}
 			

@@ -8,6 +8,7 @@ import java.util.Map;
 import com.cxstock.biz.usermenu.UserMenuBiz;
 import com.cxstock.dao.BaseDAO;
 import com.cxstock.pojo.Menu;
+import com.cxstock.pojo.Rolemenu;
 import com.cxstock.pojo.UserMenu;
 import com.cxstock.utils.pubutil.TreeNodeChecked;
 
@@ -66,7 +67,24 @@ public class UserMenuBizImp implements UserMenuBiz {
 	public List<TreeNodeChecked> findUserMenu(String zgh) {
 		String hql = "from Menu order by ordernum";
 		List menuList = baseDao.findByHql(hql);
+		
 		hql = "from UserMenu where zgh='"+zgh+"'";
+		
+		String roleHql = "select t.menu from Rolemenu as t where t.role.roleid=3";
+		List roleMenuList = baseDao.findByHql(roleHql);
+		if(roleMenuList != null && roleMenuList.size() > 0) {
+			for(Object  obj : roleMenuList) {
+				Menu menu = (Menu) obj;
+				for(int i = 0; i < menuList.size(); i++) {
+					Menu menu2 = (Menu) menuList.get(i);
+					if(menu2.getMenuid() == menu.getMenuid()) {
+						menuList.remove(i);
+					}
+				}
+			}
+			
+		}
+		
 		List<UserMenu> userMenuList = baseDao.findByHql(hql);
 		List treeNodeList = this.getTreeNode(-1,menuList,userMenuList);
 		return treeNodeList;
@@ -84,7 +102,8 @@ public class UserMenuBizImp implements UserMenuBiz {
 		for (Object obj : list) {
 			Menu menu = (Menu) obj;
 			TreeNodeChecked treeNodeChecked = new TreeNodeChecked();
-			treeNodeChecked.setText(menu.getMenuname());
+//			treeNodeChecked.setText(menu.getMenuname());
+			treeNodeChecked.setText(menu.getLabername());
 			treeNodeChecked.setId(menu.getMenuid().toString());
 			treeNodeChecked.setIconCls(menu.getIcon()==null?"":menu.getIcon());
 			if(null!=m.get(menu.getMenuid())){
@@ -92,6 +111,7 @@ public class UserMenuBizImp implements UserMenuBiz {
 			}else{
 				treeNodeChecked.setChecked(false);
 			}
+			treeNodeChecked.setLaber(menu.getLabername());
 			treeNodeChecked.setChildren(getTreeNode(menu.getMenuid(),listFunc,listRoleFunc));//递归
 			resultList.add(treeNodeChecked);
 		}

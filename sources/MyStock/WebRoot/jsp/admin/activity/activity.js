@@ -7,7 +7,7 @@ Ext.onReady(function(){
 	
 	//组织名称下拉菜单
     var zzStore = new Ext.data.JsonStore({
-		url: 'SiteInfo_findOrgaComb.do',
+		url: '/MyStock/SiteInfo_findOrgaComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text'],
@@ -22,7 +22,7 @@ Ext.onReady(function(){
 	});
     //所在学期下拉菜单
     var szxqStore = new Ext.data.JsonStore({
-		url: 'Applyactivity_findSzxqComb.do',
+		url: '/MyStock/Applyactivity_findSzxqComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text'],
@@ -237,7 +237,7 @@ Ext.onReady(function(){
 	
 	//获取response数据
 	var store = new Ext.data.JsonStore({
-	    url: 'Applyactivity_listMyActivity.do',
+	    url: '/MyStock/Applyactivity_listMyActivity.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -257,7 +257,7 @@ Ext.onReady(function(){
     	Ext.MessageBox.confirm('取消提示', '确定取消？', function(c) {
 			   if(c=='yes'){
 				   Ext.Ajax.request({
-			   			url : "Applyactivity_saveActivity.do",
+			   			url : "/MyStock/Applyactivity_saveActivity.do",
 			   			params:{activityid:record.data.activityid,checkkey:1}
 				   });
 				   store.reload();
@@ -268,7 +268,7 @@ Ext.onReady(function(){
     var manage = function(grid, rowIndex, colIndex){
     	var record = grid.getStore().getAt(rowIndex);
     	Ext.Ajax.request({
-	   		url : "Applyactivity_activityGetId.do",
+	   		url : "/MyStock/Applyactivity_activityGetId.do",
 	   		params:{activityid:record.data.activityid},
 	   		success:function(msg){
 		    	window.location.href = 'activitymanage.jsp';
@@ -281,7 +281,7 @@ Ext.onReady(function(){
     	Ext.MessageBox.confirm('取消提示', '确定取消？', function(c) {
 			   if(c=='yes'){
 				   Ext.Ajax.request({
-			   			url : "Applyactivity_deleteActivity.do",
+			   			url : "/MyStock/Applyactivity_deleteActivity.do",
 			   			params:{activityid:record.data.activityid}
 				   });
 				   store.reload();
@@ -292,7 +292,7 @@ Ext.onReady(function(){
     var news = function(grid, rowIndex, colIndex){
     	var record = grid.getStore().getAt(rowIndex);
     	Ext.Ajax.request({
-    		url:"Applyactivity_newsDeatail.do",
+    		url:"/MyStock/Applyactivity_newsDeatail.do",
     		params:{activityid:record.data.activityid},
     		success:function(response){
     			var  responsedata = Ext.util.JSON.decode(response.responseText);
@@ -635,7 +635,7 @@ Ext.onReady(function(){
     //获取当前用户信息
     var getCurrentUserInfo = function(){
     	Ext.Ajax.request({
-    		url:"Applyactivity_getCurrentUserInfo.do",
+    		url:"/MyStock/Applyactivity_getCurrentUserInfo.do",
     		success:function(response){
     			var responsedata = Ext.util.JSON.decode(response.responseText);
     			if(responsedata){
@@ -652,7 +652,7 @@ Ext.onReady(function(){
 		layout : 'form',
 		//baseCls:'x-plain',
 		frame:true,
-		url :'Applyactivity_saveActivity.do',
+		url :'/MyStock/Applyactivity_saveActivity.do',
 		labelWidth:70,
 		//labelAlign : "right",
 		border : false,
@@ -911,7 +911,7 @@ Ext.onReady(function(){
 		layout : 'form',
 		//baseCls:'x-plain',
 		frame:true,
-		url :'Applyactivity_submitNews.do',
+		url :'/MyStock/Applyactivity_submitNews.do',
 		labelWidth:48,
 		border : false,
 		labelAlign:"right",

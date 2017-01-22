@@ -17,7 +17,7 @@
 			$.ajax({
 				type : "post", 
 				async : false,  
-				url:"front_activityInfoByGenre.do",
+				url:"/MyStock/front_activityInfoByGenre.do",
 				data:{start:startAllAppoint, limit:limitAllAppoint,key:"sygh",serchKey:$("#serch").val()},
 				success : function(data,status){
 					data = eval("("+data+")");
@@ -47,7 +47,7 @@
 			var d = null;
 		        $.ajax({
 		         type : "POST",
-   			      url : "front_activityDetail.do",
+   			      url : "/MyStock/front_activityDetail.do",
    			      data:{
 				      aid:id
 			        },
@@ -227,7 +227,7 @@
 				cellspacing="0" cellpadding="0">
 			</table>
 			<div class="apply_btn popup_btn">
-				<a href="login_goToLogin.do">我要报名</a>
+				<a href="/MyStock/login_goToLogin.do">我要报名</a>
 			</div>
 		</div>
 	</section>

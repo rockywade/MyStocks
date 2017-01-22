@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONArray;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 
 import com.cxstock.action.BaseAction;
@@ -568,8 +569,12 @@ public class SiteInfoAction extends BaseAction {
 				lg.setUsetime(usetTiem);
 			}
 			lg.setNowstatus("预约情况");
-			
-			
+			if(StringUtils.isNotBlank(lg.getSiteid())) {
+				SiteInfo  siteInfo = siteInfoBiz.findBySiteid(lg.getSiteid());
+				if(siteInfo != null) {
+					lg.setCounsellor(siteInfo.getCounsellor());
+				}
+			}
 			this.siteInfoBiz.saveOrUpdateSiteInfoLog(lg);
 		    if (this.logId == null || "".equals(this.logId)) {
 					this.outString("{success:true,message:'保存成功!'}");

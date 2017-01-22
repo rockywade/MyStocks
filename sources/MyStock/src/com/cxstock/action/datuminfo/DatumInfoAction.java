@@ -501,13 +501,21 @@ public class DatumInfoAction extends BaseAction {
 			list = datumInfoBiz.findAllDataJiFen();
 			List<UserDTO> list1 = new ArrayList<UserDTO>();
 			if (null != list) {
-				for (int i = 0; i < list.size(); i++) {
+				if(list.size() > 0) {
+					for (int i = 0; i < list.size(); i++) {
+						UserDTO dto = new UserDTO();
+						dto.setNickname(list.get(i).getNickname());
+						dto.setZljf(list.get(i).getZljf());
+						dto.setOrderName("No." + (i+1));
+						list1.add(dto);
+					}
+				} else {
 					UserDTO dto = new UserDTO();
-					dto.setNickname(list.get(i).getNickname());
-					dto.setZljf(list.get(i).getZljf());
-					dto.setOrderName("No." + (i+1));
+					dto.setNickname("每月1号统计上月分享之星");
+					dto.setZljf(null);
 					list1.add(dto);
 				}
+				
 				this.outListString(list1);
 			}
 		} catch (Exception e) {

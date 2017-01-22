@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"front_findSecondBookStore.do",
+					url:"/MyStock/front_findSecondBookStore.do",
 					data:{id:$("#id").val()},
 					success:function(data,status){
 						data = eval("("+data+")");
@@ -69,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"secondBookStoreJudge_findPageSecondBookStoreJudge.do",
+					url:"/MyStock/secondBookStoreJudge_findPageSecondBookStoreJudge.do",
 					data:{start:start, limit:limit,storeid:document.getElementById("id").value},
 					success:function(data,status){
 						data = eval("("+data+")");
@@ -112,7 +112,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					alert("请填写评论内容");
 					return false;
 				}
-				$.post("secondBookStoreJudge_saveOrUpdateSecondBookStoreJudge.do",{storeid:document.getElementById("id").value, content:UE.getEditor('judgeContent').getContent()},
+				$.post("/MyStock/secondBookStoreJudge_saveOrUpdateSecondBookStoreJudge.do",{storeid:document.getElementById("id").value, content:UE.getEditor('judgeContent').getContent()},
 					function(data,status){
 						UE.getEditor('judgeContent').setContent("");
 						alert("评论成功");
@@ -122,7 +122,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			
 			function updatePopularity(){
-				$.post("front_updateSecondBookStorePopularity.do",{id:$("#id").val()},
+				$.post("/MyStock/front_updateSecondBookStorePopularity.do",{id:$("#id").val()},
 					function(data,status){
 					}
 				);

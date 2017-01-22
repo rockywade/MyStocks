@@ -119,7 +119,7 @@ Ext.onReady(function(){
 	var enddate = Ext.getCmp("enddate").getValue();
 	
 	var store = new Ext.data.JsonStore({
-		 url: 'datumInfo_findByHqlAndDate1.do',
+		 url: '/MyStock/datumInfo_findByHqlAndDate1.do',
 		 root: 'root',
 		 totalProperty: 'total',
 		 autoLoad: {params:{start:0, limit:15,startdate:startdate,enddate:enddate}},
@@ -181,7 +181,7 @@ Ext.onReady(function(){
     //上传文件
     var addForm = new Ext.FormPanel({
 		layout : 'form',
-		url : 'datumInfo_saveDatumInfo.do',
+		url : '/MyStock/datumInfo_saveDatumInfo.do',
 		fileUpload:true,  
 		frame:true,
 		labelWidth:60,
@@ -260,7 +260,7 @@ Ext.onReady(function(){
     	Ext.MessageBox.confirm('删除提示', '确定要删除该数据吗？', function(c) {
     	   if(c=='yes'){
  		   Ext.Ajax.request({
-	   			url : "datumInfo_deleteDatumInfo.do",
+	   			url : "/MyStock/datumInfo_deleteDatumInfo.do",
 	   			params:{id : id},
 	   			success : function() {
 	   				store.reload();

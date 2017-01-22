@@ -7,7 +7,7 @@ Ext.onReady(function(){
 	
 	//组织名称下拉菜单
     var zzStore = new Ext.data.JsonStore({
-		url: 'SiteInfo_findOrgaComb.do',
+		url: '/MyStock/SiteInfo_findOrgaComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text'],
@@ -22,7 +22,7 @@ Ext.onReady(function(){
 	});
     //所在学期下拉菜单
     var szxqStore = new Ext.data.JsonStore({
-		url: 'Applyactivity_findSzxqComb.do',
+		url: '/MyStock/Applyactivity_findSzxqComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text'],
@@ -232,12 +232,13 @@ Ext.onReady(function(){
 	        		{ name:'uploadnewstime', type:'string'},
 	        		{ name:'activitypublicitytime', type:'string'},
 	        		{ name:'newscheckstyle', type:'string'},
-	        		{ name:'publicitycheckstyle', type:'string'}
+	        		{ name:'publicitycheckstyle', type:'string'},
+	        		{ name:'refuse', type:'string'}
 	        	];
 	
 	//获取response数据
 	var store = new Ext.data.JsonStore({
-	    url: 'Applyactivity_listMyActivity.do',
+	    url: '/MyStock/Applyactivity_listMyActivity.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -257,7 +258,7 @@ Ext.onReady(function(){
     	Ext.MessageBox.confirm('取消提示', '确定取消？', function(c) {
 			   if(c=='yes'){
 				   Ext.Ajax.request({
-			   			url : "Applyactivity_applyActivity.do",
+			   			url : "/MyStock/Applyactivity_applyActivity.do",
 			   			params:{activityid:record.data.activityid,checkkey:1}
 				   });
 				   store.reload();
@@ -268,7 +269,7 @@ Ext.onReady(function(){
     var manage = function(grid, rowIndex, colIndex){
     	var record = grid.getStore().getAt(rowIndex);
     	Ext.Ajax.request({
-	   		url : "Applyactivity_activityGetId.do",
+	   		url : "/MyStock/Applyactivity_activityGetId.do",
 	   		params:{activityid:record.data.activityid},
 	   		success:function(msg){
 		    	window.location.href = 'activitymanage.jsp';
@@ -279,7 +280,7 @@ Ext.onReady(function(){
     var news = function(grid, rowIndex, colIndex){
     	var record = grid.getStore().getAt(rowIndex);
     	Ext.Ajax.request({
-    		url:"Applyactivity_newsDeatail.do",
+    		url:"/MyStock/Applyactivity_newsDeatail.do",
     		params:{activityid:record.data.activityid},
     		success:function(response){
     			var  responsedata = Ext.util.JSON.decode(response.responseText);
@@ -314,8 +315,8 @@ Ext.onReady(function(){
 			    {header:'时间',width:100,align:'center',dataIndex:'activitytime'},
 	            {header: '所在学期', width: 100,align:'center', dataIndex: 'inschoolterm'},
 	            {header: '活动地点', width: 100,align:'center', dataIndex: 'activityplace'},
-	            {header: '活动考评分', width: 100,align:'center', dataIndex: 'score'},
-	            {header: '状态', width: 100,align:'center', dataIndex: 'applystyle',renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+	            {header: '活动考评分', width: 80,align:'center', dataIndex: 'score'},
+	            {header: '状态', width: 50,align:'center', dataIndex: 'applystyle',renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
 		               if(value == '已通过') { 
 	                        return "<span style='color:#6bbc6e;font-weight:bold;'>已通过</span>"
 	                   }     
@@ -330,6 +331,7 @@ Ext.onReady(function(){
 		               }
 	                }
 	            },
+	            {header: '理由', width: 170,align:'center', dataIndex: 'refuse'},
 	            {xtype: 'actioncolumn',header : '操作', width: 160,align : 'center',menuDisabled : true,
 	                items: [{
 	                    icon: '../../../img/btn/print.png',
@@ -617,7 +619,7 @@ Ext.onReady(function(){
     //获取当前用户信息
     var getCurrentUserInfo = function(){
     	Ext.Ajax.request({
-    		url:"Applyactivity_getCurrentUserInfo.do",
+    		url:"/MyStock/Applyactivity_getCurrentUserInfo.do",
     		success:function(response){
     			var responsedata = Ext.util.JSON.decode(response.responseText);
     			if(responsedata){
@@ -634,7 +636,7 @@ Ext.onReady(function(){
 		layout : 'form',
 		//baseCls:'x-plain',
 		frame:true,
-		url :'Applyactivity_applyActivity.do',
+		url :'/MyStock/Applyactivity_applyActivity.do',
 		labelWidth:70,
 		//labelAlign : "right",
 		border : false,
@@ -733,23 +735,24 @@ Ext.onReady(function(){
 					width: 150,
 				},{
 					id:'zzCombo',
-					xtype:'combo',
-					hiddenName:'organizename',
+					xtype:'textfield',
+					//hiddenName:'organizename',
+					name : 'organizename',
 					fieldLabel:'组织名称',
-					mode: 'local',
-					triggerAction: 'all',
-					valueField :"value",
-					displayField: "text",
+					//mode: 'local',
+					//triggerAction: 'all',
+					//valueField :"value",
+					//displayField: "text",
+					//allowBlank : false,
+					//editable : false,
+					//store : zzStore
 					allowBlank : false,
-					editable : false,
-					store : zzStore,
-					allowBlank : false,
-					width: 150,
-					listeners:{
+					width: 150
+					/*listeners:{
 						select : function(a,b){
 							addForm.getForm().findField("organizename").setValue(b.data.text);
 						}
-					}
+					}*/
 				},{
 					xtype : 'numberfield',
 					name:'phonenum',
@@ -804,7 +807,7 @@ Ext.onReady(function(){
 				},*/
 				items:[{
 					id:'endTimeId',
-					xtype : 'textfield',
+					//xtype : 'textfield',
 					name:'activitytime',
 					xtype:"datetimefield",
 					fieldLabel:'活动时间',
@@ -819,7 +822,7 @@ Ext.onReady(function(){
 
 				},{
 					id:'startTimeId',
-					xtype : 'textfield',
+					//xtype : 'textfield',
 					name:'signupendtime',
 					xtype:"datetimefield",
 					fieldLabel:'报名截止',
@@ -893,7 +896,7 @@ Ext.onReady(function(){
 		layout : 'form',
 		//baseCls:'x-plain',
 		frame:true,
-		url :'Applyactivity_submitNews.do',
+		url :'/MyStock/Applyactivity_submitNews.do',
 		labelWidth:48,
 		border : false,
 		labelAlign:"right",

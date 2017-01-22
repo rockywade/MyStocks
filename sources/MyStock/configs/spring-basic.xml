@@ -8,7 +8,7 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver">
 		</property>  
-		<property name="url" value="jdbc:mysql://127.0.0.1:3306/mystock?useUnicode=true&amp;characterEncoding=UTF-8">
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/mystock?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull">
 		</property>
 		<property name="username" value="root"></property>
 		<property name="password" value="root"></property>
@@ -105,7 +105,7 @@
                 <!-- 设置Hibernate的数据库方言 -->
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
                 <!-- 设置Hibernate是否在控制台输出SQL语句，开发调试阶段通常设为true -->
-                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.show_sql">false</prop>
                 <!-- 设置Hibernate是否自动建表 validate | update | create | create-drop-->
                 <prop key="hibernate.hbm2ddl.auto">update</prop> 
 				<!-- 设置Hibernate一个提交批次中的最大SQL语句数 -->

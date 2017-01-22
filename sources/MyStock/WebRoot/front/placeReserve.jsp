@@ -31,7 +31,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"front_findPageSiteInfoBy.do",
+					url:"/MyStock/front_findPageSiteInfoBy.do",
 					data:{start:start, limit:limit,sitename:sitename,sitetype:sitetype,park:park},
 					success:function(data,status){
 							data = eval("("+data+")");
@@ -88,7 +88,7 @@
 			
 			//去登录页面
 			function golog(){
-				window.location.href="login_goToLogin.do?url=../siteinfo/siteinfoApproval.jsp";
+				window.location.href="/MyStock/login_goToLogin.do?url=../siteinfo/siteinfoApproval.jsp";
 			   }
 			
 			//时间预览

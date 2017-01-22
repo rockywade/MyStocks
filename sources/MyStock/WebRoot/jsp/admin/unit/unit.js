@@ -12,7 +12,7 @@ Ext.onReady(function(){
 	];
 	
 	var store = new Ext.data.JsonStore({
-	    url: 'unit_findPageUnit.do',
+	    url: '/MyStock/unit_findPageUnit.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -68,7 +68,7 @@ Ext.onReady(function(){
 					Ext.MessageBox.confirm('删除提示', '是否删除该部门？', function(c) {
 					   if(c=='yes'){
 					   		Ext.Ajax.request({
-					   			url : "unit_deletUnit.do",
+					   			url : "/MyStock/unit_deletUnit.do",
 					   			params:{ id : record.get("id") },
 					   			success : function() {
 					   				store.reload();
@@ -136,7 +136,7 @@ Ext.onReady(function(){
 			handler : function() {
 				if (uForm.getForm().isValid()) {
 					uForm.getForm().submit({
-						url : 'unit_saveOrUpdateUnit.do',
+						url : '/MyStock/unit_saveOrUpdateUnit.do',
 						success : function(form, action) {
 							Ext.Msg.alert('信息提示',action.result.message);
 							uWindow.hide();

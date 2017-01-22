@@ -1,11 +1,20 @@
 
 package com.cxstock.action.leaveinfo;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.struts2.ServletActionContext;
 
 import net.sf.json.JsonConfig;
 import net.sf.json.util.CycleDetectionStrategy;
@@ -23,6 +32,7 @@ import com.cxstock.pojo.LeaveInfoLog;
 import com.cxstock.pojo.Sms;
 import com.cxstock.pojo.Student;
 import com.cxstock.utils.pubutil.Page;
+import com.cxstock.utils.system.FileUtils;
 import com.cxstock.utils.system.SmsUtil;
 
 /**
@@ -96,6 +106,10 @@ public class LeaveInfoAction extends BaseAction{
 	//其他做别判断
 	private String ifApproval;
 	
+	//文件上传
+	private File image;
+	//fileName 前面必須和uplaod一致,不然找不到文件
+	private String imageFileName; 
 	
 	/**
 	 *我的学生预览分页，搜索，排序查询
@@ -284,6 +298,17 @@ public class LeaveInfoAction extends BaseAction{
 	 */
 	public String saveLeaveInfo(){
 		 try {
+			String imageFilePath = "";
+			if (null != this.image) {
+				Date d = new Date();
+				String path =  ServletActionContext.getServletContext().getRealPath(
+	            "upload")
+	            + File.separator + d.getTime() + getFileExp(this.imageFileName);
+				imageFilePath = this.getRequest().getContextPath()+"/"+"upload" + "/"+ d.getTime() + getFileExp(this.imageFileName); // 使用時間戳作為文件名
+				
+				File toFile = new File(path);
+				writeFile(this.image, toFile);
+			}
 			 //明细数据新增
 			LeaveInfo leaveInfo = new LeaveInfo();
 				leaveInfo.setId(this.id);
@@ -307,6 +332,7 @@ public class LeaveInfoAction extends BaseAction{
 				leaveInfo.setChecksopinion(this.checksopinion);
 				leaveInfo.setTutorstatus("待审核");
 				leaveInfo.setSchoolstatus("无");
+				leaveInfo.setImage(imageFilePath);
 				if(this.id == null){
 				 //获取登录者信息
 				 Student  student = this.getUserDTO().getStudent();
@@ -315,7 +341,9 @@ public class LeaveInfoAction extends BaseAction{
 				  String content = sms.getContent().replace("$(XM)", this.counsellor);
 				
 				   //调用短息接口的方法
-			     SmsUtil.sendSms(student.getInstructor().getPhone(), content);
+				  if(student.getInstructor() != null) {
+					  SmsUtil.sendSms(student.getInstructor().getPhone(), content);
+				  }
 				}
 				
 				//获取数据判断是否是第一次新增记录表数据
@@ -762,6 +790,62 @@ public class LeaveInfoAction extends BaseAction{
 		this.ifApproval = ifApproval;
 	}
 
+
+	public File getImage() {
+		return image;
+	}
+
+
+	public void setImage(File image) {
+		this.image = image;
+	}
+
+
+	public String getImageFileName() {
+		return imageFileName;
+	}
+
+
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
+	}
+
+	private String getFileExp(String name) {
+		int pos = name.lastIndexOf(".");
+		return name.substring(pos);
+	}
 	
+	private final int BUFFER_SIZE = 16 * 1024;
+	private String writeFile(File src, File dst) {
+		String style = "";
+		try {
+			InputStream in = null;
+			OutputStream out = null;
+			try {
+				//获取文件大小
+				long   size =  src.length();
+				//文件格式化
+			    style = FileUtils.getFormatSize(size);
+				in = new BufferedInputStream(new FileInputStream(src),
+						BUFFER_SIZE);
+				out = new BufferedOutputStream(new FileOutputStream(dst),
+						BUFFER_SIZE);
+				byte[] buffer = new byte[BUFFER_SIZE];
+				while (in.read(buffer) > 0) {
+					out.write(buffer);
+				}
+			} finally {
+				if (null != in) {
+					in.close();
+				}
+				if (null != out) {
+					out.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return style;
+	}
 	
 }

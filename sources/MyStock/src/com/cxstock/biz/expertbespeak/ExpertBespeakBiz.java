@@ -138,5 +138,10 @@ public interface ExpertBespeakBiz {
 	 * @return
 	 */
 	boolean saveOrUpdateExpertInfo(Expert expert);
+	
+	/**
+	 * 分页查询列表
+	 */
+	public void findPageExpert(Page page,String[] property, Object[] value);
 
 }

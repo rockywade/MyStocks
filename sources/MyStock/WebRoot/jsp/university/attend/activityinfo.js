@@ -117,7 +117,7 @@ Ext.onReady(function(){
 	//获取response数据
 	var store;
 	store = new Ext.data.JsonStore({
-	    url: 'Applyactivity_couldJoinActivity.do',
+	    url: '/MyStock/Applyactivity_couldJoinActivity.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -615,7 +615,7 @@ Ext.onReady(function(){
 		layout : 'form',
 		//baseCls:'x-plain',
 		frame:true,
-		url :'Applyactivity_attendActivity.do',
+		url :'/MyStock/Applyactivity_attendActivity.do',
 		labelWidth:72,
 		border : false,
 		padding : '15 0 0 50',
@@ -783,7 +783,7 @@ Ext.onReady(function(){
     //获取当前用户信息
     var getCurrentUserInfo = function(){
     	Ext.Ajax.request({
-    		url:"Applyactivity_getCurrentUserInfo.do",
+    		url:"/MyStock/Applyactivity_getCurrentUserInfo.do",
     		success:function(response){
     			var responsedata = Ext.util.JSON.decode(response.responseText);
     			if(responsedata){
@@ -893,7 +893,7 @@ Ext.onReady(function(){
     fileDownload = function (){
     	Ext.MessageBox.confirm('信息提示',"确定下载《求是学院记实考评工作实施办法》?",function(btn){
     		if(btn=="yes"){
-    			window.location.href="fileDownload.do?fileDownKey=AttendFileDeatil";
+    			window.location.href="/MyStock/fileDownload.do?fileDownKey=AttendFileDeatil";
     		}
     	});
     }

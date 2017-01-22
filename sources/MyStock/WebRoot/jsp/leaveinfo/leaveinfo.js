@@ -2,6 +2,9 @@
  * 请假信息申请列表
  */
 
+function showImg(value){
+	return "<img src='"+value+"'  id='imgsrc' height='50'/>";
+}
 
  var stater;
 Ext.onReady(function(){
@@ -82,6 +85,7 @@ Ext.onReady(function(){
 	            		{ name:'leavetime', type:'string' },
 	            		{ name:'backsctime', type:'string'},
 	            		{ name:'daysum', type:'int'},
+	            		{ name:'image', type:'string'},
 	            		{ name:'parentsinfo', type:'string'},
 	            		{ name:'rulesstate', type:'string'},
 	            		{ name:'tutorstatus', type:'string'},
@@ -94,7 +98,7 @@ Ext.onReady(function(){
 	
 	
 	var store = new Ext.data.JsonStore({
-	    url: 'LeaveInfo_findPageLeaveInfo1.do',
+	    url: '/MyStock/LeaveInfo_findPageLeaveInfo1.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15,ifApproval:1}},
@@ -109,12 +113,12 @@ Ext.onReady(function(){
         cm: new Ext.grid.ColumnModel({
 			defaults: {	menuDisabled : true},//禁止表头菜单
 			columns:[new Ext.grid.RowNumberer(),
-			            {header: '请假事由',  width: 200, align:'center', dataIndex: 'leavereason'},
-			            {header: '离校时间',  width: 200, align:'center', dataIndex: 'leavetime'},
-			            {header: '返校时间',  width: 200, align:'center', dataIndex: 'backsctime'},
-			            {header: '请假天数',  width: 130, align:'center', dataIndex: 'daysum'},
-			            {header: '父母知情',  width: 140, align:'center', dataIndex: 'parentsinfo'},
-			            {header: '辅导员审核状态', width: 150, align:'center', dataIndex: 'tutorstatus',renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+			            {header: '请假事由',  width: 300, align:'center', dataIndex: 'leavereason'},
+			            {header: '离校时间',  width: 150, align:'center', dataIndex: 'leavetime'},
+			            {header: '返校时间',  width: 150, align:'center', dataIndex: 'backsctime'},
+			            {header: '请假天数',  width: 120, align:'center', dataIndex: 'daysum'},
+			            {header: '父母知情',  width: 100, align:'center', dataIndex: 'parentsinfo'},
+			            {header: '辅导员审核状态', width: 100, align:'center', dataIndex: 'tutorstatus',renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
 		                	  if(value == '待审核') { 
 			                        return "<span style='color:blue;font-weight:bold;'>待审核</span>"
 			                   }     
@@ -126,7 +130,7 @@ Ext.onReady(function(){
 				                }   
 			                 }
 		                 },
-			            {header: '学园领导审核状态',width: 150, align:'center', dataIndex: 'schoolstatus',
+			            {header: '学园领导审核状态',width: 100, align:'center', dataIndex: 'schoolstatus',
 			            	renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
 				               if(value == '待审核') { 
 			                        return "<span style='color:blue;font-weight:bold;'>待审核</span>"
@@ -141,6 +145,7 @@ Ext.onReady(function(){
 				                      return "<span style='color:black;font-weight:bold;'>无</span>"
 				                }   
 			                 }},
+			            {header: '医院证明', width: 150,align:'center', dataIndex: 'image',renderer:showImg},      
 			            {xtype: 'actioncolumn',header : '操作', width: 200,align : 'center',
 			            	menuDisabled : true,
 			                items: [ {
@@ -317,7 +322,7 @@ Ext.onReady(function(){
     //请假申获取登录的数据
 	var getModle = function(){
 		Ext.Ajax.request({
-   			url : "LeaveInfo_goAddOrUpateLeaveInfo.do",
+   			url : "/MyStock/LeaveInfo_goAddOrUpateLeaveInfo.do",
    			success : function(o) {
 			   // debugger;
 				var data = Ext.util.JSON.decode(o.responseText);
@@ -339,6 +344,7 @@ Ext.onReady(function(){
 	 //请假
     var addForm = new Ext.FormPanel({
 		layout : 'form',
+		fileUpload:true,
 		frame:true,
 		labelWidth:60,
 		border : false,
@@ -427,11 +433,11 @@ Ext.onReady(function(){
 			items:[{
 				columnWidth:.5,
 				layout:'form',
-				defaults:{
+				/*defaults:{
 					anchor : '95%'
-				},
+				},*/
 				items:[{
-					xtype : 'textfield',
+					//xtype : 'textfield',
 					id:'timeId',
 					name:'leavetime',
 					xtype:"datetimefield",
@@ -440,9 +446,10 @@ Ext.onReady(function(){
 					minValue : new Date(),
 					editable:false,
 					allowBlank : false,
+					maxLength :20,
+					width: 150,
 				    vtype : 'daterange',//daterange类型为上代码定义的类型
 		            endDateField : 'overtimeId',//必须跟endDate的id名相同
-					maxLength :20
 				},{
 					xtype: 'radiogroup',  
 					id   : 'atype',
@@ -463,21 +470,23 @@ Ext.onReady(function(){
 			},{
 				columnWidth:.5,
 				layout:'form',
-				defaults:{
+				/*defaults:{
 					anchor : '95%'
-				},
+				},*/
 				items:[{
-					xtype : 'textfield',
-					name:'backsctime',
 					id:'overtimeId',
+					//xtype : 'textfield',
+					name:'backsctime',
 					xtype:"datetimefield",
-					editable:false,
 					fieldLabel:'返校时间',
 					format: 'Y-m-d H:i:s ',
+					minValue : new Date(),
 					allowBlank : false,
+					editable:false,
+					maxLength :20,
+					width: 150,
 				    vtype : 'daterange',//daterange类型为上代码定义的类型
 		            startDateField : 'timeId',//必须跟startDate的id名相同
-					maxLength :20
 				},{xtype : 'textfield',
 					name:'parentstel',
 					fieldLabel:'父母电话',
@@ -486,6 +495,30 @@ Ext.onReady(function(){
 					maxLength :11
 				}]
 			}]
+		},{
+			xtype:'textfield',
+			name:'image',
+			id:'id_image',
+			fieldLabel:'医院证明',
+			inputType: 'file',
+			height:40,
+			validator: function(value){
+				if(''==value){
+					return true;
+				}
+				var extension=new String(value.substring(value.lastIndexOf(".")+1,value.length));
+				extension = extension.toLowerCase();   
+				if(extension=="png"||extension=="jpg"||extension=="gif"||extension=="jpeg"||extension=="bmp")
+	            {
+	            	return checkFile(); 
+	            }
+	            else
+	            {
+	            	return '只允许上传png|jpg|gif|bmp';
+	            }
+				
+			},
+			maxLength :200
 		},{
 		   fieldLabel : '', 
            name: "rulesstate",
@@ -593,7 +626,7 @@ Ext.onReady(function(){
   			handler : function() {
   				if (addForm.getForm().isValid()) {
   					addForm.getForm().submit({
-  						url : 'LeaveInfo_saveLeaveInfo.do',
+  						url : '/MyStock/LeaveInfo_saveLeaveInfo.do',
   						success : function(form, action) {
   							addWindow.hide();
   							store.reload();
@@ -614,6 +647,47 @@ Ext.onReady(function(){
   	});
       
       
+      var checkFile = function(){  
+          //取控件DOM对象   
+          var field = document.getElementById('id_image');  
+          //取控件中的input元素   
+          var inputs = field.form.getElementsByTagName('input');  
+          var fileInput = null;  
+          var il = inputs.length;  
+          //取出input 类型为file的元素   
+          for(var i = 0; i < il; i ++){  
+              if(inputs[i].type == 'file'){  
+                  fileInput = inputs[i];  
+              }  
+          }  
+          if(fileInput != null){  
+              var fileSize = getFileSize(fileInput);  
+              //允许上传不大于10M的文件 
+              if(fileSize > 10000){  
+                 return "附件不能超过10M"; 
+              }  
+          } 
+          return true;
+      }
+      var getFileSize = function(target){  
+          var isIE = /msie/i.test(navigator.userAgent) && !window.opera;  
+          var fs = 0;  
+          if (isIE && !target.files) {  
+              var filePath = target.value;  
+              var fileSystem = new ActiveXObject("Scripting.FileSystemObject");  
+              var file = fileSystem.GetFile (filePath);  
+              fs = file.Size;   
+          }else if(target.files && target.files.length > 0){  
+              fs = target.files[0].size;  
+          }else{  
+              fs = 0;  
+          }  
+          if(fs > 0){  
+              fs = fs / 1024;  
+          }  
+          return fs;  
+      } 
+      
 
       //取消的方法
       var undo = function (grid, rowIndex, colIndex){
@@ -621,7 +695,7 @@ Ext.onReady(function(){
       	Ext.MessageBox.confirm('取消提示', '是否取消该请假？', function(c) {
       	   if(c=='yes'){
    		   Ext.Ajax.request({
-  				  url : "LeaveInfo_deleteLeaveInfo.do",
+  				  url : "/MyStock/LeaveInfo_deleteLeaveInfo.do",
   				  params:{
   					    id : record.data.id
   					 },

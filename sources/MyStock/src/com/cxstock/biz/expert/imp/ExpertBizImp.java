@@ -9,6 +9,7 @@ import com.cxstock.biz.power.UserBiz;
 import com.cxstock.biz.power.dto.UserDTO;
 import com.cxstock.dao.BaseDAO;
 import com.cxstock.pojo.Expert;
+import com.cxstock.pojo.StartExpertInfo;
 import com.cxstock.pojo.Users;
 import com.cxstock.utils.pubutil.ComboData;
 import com.cxstock.utils.pubutil.Page;
@@ -64,6 +65,7 @@ public class ExpertBizImp implements ExpertBiz {
 	 */
 	public boolean saveOrUpdateExpert(Expert expert) {
 		Expert e = new Expert();
+		StartExpertInfo startExpertInfo = null;
 		if(null != expert.getId()) {
 			e = (Expert) baseDao.loadById(Expert.class,expert.getId());
 		}else{
@@ -80,6 +82,7 @@ public class ExpertBizImp implements ExpertBiz {
 				dto.setRole("7");//专家
 				userBiz.saveOrUpdateUser(dto);
 			}
+			startExpertInfo = new StartExpertInfo();
 		} 
 		e.setPhone(expert.getPhone());
 		e.setXb(expert.getXb());
@@ -92,6 +95,10 @@ public class ExpertBizImp implements ExpertBiz {
 		e.setPhoto(expert.getPhoto());
 		e.setSsyq(expert.getSsyq());
 		baseDao.saveOrUpdate(e);
+		if(startExpertInfo != null) {
+			startExpertInfo.setExpert(e);
+			baseDao.saveOrUpdate(startExpertInfo);
+		}
 		return true;
 	}
 

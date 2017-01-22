@@ -190,15 +190,15 @@ Ext.onReady(function(){
 	
 	//获取response数据
 	var store = new Ext.data.JsonStore({
-	    url: 'specialCare_findPageSpecialCare.do',
+	    url: '/MyStock/specialCare_findPageSpecialCare.do',
 	    root: 'root',
 	    totalProperty: 'total',
-	    autoLoad: false,
+	    autoLoad: true,
 	    fields: SpecialCare
 	});
 	
 	var storeConversation = new Ext.data.JsonStore({
-	    url: 'conversation_findPageConversation.do',
+	    url: '/MyStock/conversation_findPageConversation.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: false,
@@ -209,7 +209,7 @@ Ext.onReady(function(){
 	var getConversation= function(grid, rowIndex, colIndex){
     	var record = grid.getStore().getAt(rowIndex); 
     	storeConversation.load({
-    				url:'conversation_findPageConversation.do',
+    				url:'/MyStock/conversation_findPageConversation.do',
     		        params:{start:0,limit:5,studentid:record.data.id},
     		        scope:this
     		    });
@@ -287,7 +287,7 @@ Ext.onReady(function(){
 					   			"&economic="+economic+
 					   			"&academic="+academic+
 					   			"&mental="+mental;
-					   window.location.href='specialcareExportExcel.do'+s;
+					   window.location.href='/MyStock/specialcareExportExcel.do'+s;
 				    }
 				});
         	}
@@ -310,7 +310,7 @@ Ext.onReady(function(){
 		layout : 'form',
 		fileUpload:true,
 		frame:true,
-		url :'specialCare_save.do',
+		url :'/MyStock/specialCare_save.do',
 		labelWidth:80,
 		border : false,
 		padding : '15 10 0 8',
@@ -337,7 +337,7 @@ Ext.onReady(function(){
 				        "blur" : function() { 
 							Ext.Ajax.request({
 								async: false,
-					   			url : "specialCare_getSpecialCare.do",
+					   			url : "/MyStock/specialCare_getSpecialCare.do",
 					   			params:{ xh : Ext.getCmp("xh").getValue()},
 					   			success : function(response) {
 					   				var responsedata = Ext.util.JSON.decode(response.responseText);
@@ -742,7 +742,7 @@ Ext.onReady(function(){
 		layout : 'form',
 		fileUpload:true,
 		frame:true,
-		url :'specialCare_importExcel.do',
+		url :'/MyStock/specialCare_importExcel.do',
 		labelWidth:60,
 		border : false,
 		padding : '5 10 10 8',
@@ -835,7 +835,7 @@ Ext.onReady(function(){
 	                    tooltip: '查看详情',
 	                    handler: function(grid, rowIndex, colIndex){
 		                	var record = grid.getStore().getAt(rowIndex); 
-		                	var html = '<iframe frameborder="0" src="conversation_viewConversation.do?id='+record.data.id+'"  width="100%"  height="100%"></iframe>';
+		                	var html = '<iframe frameborder="0" src="/MyStock/conversation_viewConversation.do?id='+record.data.id+'"  width="100%"  height="100%"></iframe>';
 							if(Ext.getCmp('viewPanel').body){
 								Ext.getCmp('viewPanel').body.update(html);
 							}else{
@@ -1170,7 +1170,7 @@ Ext.onReady(function(){
 				var f = addForm.getForm();
 				if (f.isValid()) {
 					f.submit({
-						url : 'specialCare_update.do',
+						url : '/MyStock/specialCare_update.do',
 						params :{},
 						success : function(form, action) {
 							Ext.Msg.alert("信息提示","数据保存成功");
@@ -1192,7 +1192,7 @@ Ext.onReady(function(){
     
     var conversationForm = new Ext.FormPanel({
 		layout : 'form',
-		url : 'conversation_saveOrUpdateConversation.do',
+		url : '/MyStock/conversation_saveOrUpdateConversation.do',
 		fileUpload:true,  
 		frame:true,
 		labelWidth:60,
@@ -1278,7 +1278,7 @@ Ext.onReady(function(){
 				var f = conversationForm.getForm();
 				if (f.isValid()) {
 					f.submit({
-						url : 'conversation_saveOrUpdateConversation.do',
+						url : '/MyStock/conversation_saveOrUpdateConversation.do',
 						params :{studentid:Ext.getCmp("id").value},
 						success : function(form, action) {
 							Ext.Msg.alert("信息提示","数据保存成功");

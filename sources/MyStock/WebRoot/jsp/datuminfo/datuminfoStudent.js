@@ -112,7 +112,7 @@ Ext.onReady(function(){
 	
 	
 	var store = new Ext.data.JsonStore({
-		 url: 'datumInfo_findPageDatumInfoOrderBy.do',
+		 url: '/MyStock/datumInfo_findPageDatumInfoOrderBy.do',
 		 root: 'root',
 		 totalProperty: 'total',
 		 autoLoad: {params:{start:0, limit:15}},
@@ -184,7 +184,7 @@ Ext.onReady(function(){
     //上传文件
     var addForm = new Ext.FormPanel({
 		layout : 'form',
-		url : 'datumInfo_saveDatumInfo.do',
+		url : '/MyStock/datumInfo_saveDatumInfo.do',
 		fileUpload:true,  
 		frame:true,
 		labelWidth:60,
@@ -326,7 +326,7 @@ Ext.onReady(function(){
     	var id = record.data.id;
     	Ext.MessageBox.confirm('信息提示', '确定要下载该文件？', function(c) {
     	   if(c=='yes'){
-    		   window.location.href="DatumInfodownload.do?ifApproval=1&id="+id;
+    		   window.location.href="/MyStock/DatumInfodownload.do?ifApproval=1&id="+id;
     	        store.reload();
     	     }
  		});

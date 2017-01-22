@@ -115,7 +115,7 @@ Ext.onReady(function(){
 	var enddate = Ext.getCmp("enddate").getValue();
 	
 	var store = new Ext.data.JsonStore({
-		 url: 'datumInfo_findByHqlAndDate.do',
+		 url: '/MyStock/datumInfo_findByHqlAndDate.do',
 		 root: 'root',
 		 totalProperty: 'total',
 		 autoLoad: {params:{start:0, limit:15,startdate:startdate,enddate:enddate}},
@@ -234,7 +234,7 @@ Ext.onReady(function(){
 				   var sharegrade =  Number(Ext.get("sharegrade").getValue());
 				   if(c=='yes'){
 					 Ext.Ajax.request({
-						url : 'datumInfo_saveOrUpdateDownLog.do',
+						url : '/MyStock/datumInfo_saveOrUpdateDownLog.do',
 					   	params:{ 
 						 downid :record.data.downid,
 						 downname:record.data.downname,

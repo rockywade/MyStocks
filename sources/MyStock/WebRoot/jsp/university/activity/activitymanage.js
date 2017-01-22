@@ -28,7 +28,7 @@ Ext.onReady(function(){
 			Ext.MessageBox.confirm('参与公示提示', '确定参与公示吗？', function(ok) {
 			   if(ok=='yes'){
 			   		Ext.Ajax.request({
-			   			url : "Applyactivity_joinPublish.do",
+			   			url : "/MyStock/Applyactivity_joinPublish.do",
 			   			params:{ activityid : activityid,pulishkey:'1'},
 			   			success : function(response) {
 			   				var responsedata = Ext.util.JSON.decode(response.responseText);
@@ -202,7 +202,7 @@ Ext.onReady(function(){
 	
 	//获取response数据
 	var store = new Ext.data.JsonStore({
-	    url: 'Applyactivity_activityManageAttendList.do',
+	    url: '/MyStock/Applyactivity_activityManageAttendList.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -237,7 +237,7 @@ Ext.onReady(function(){
 				var activityname = Ext.getCmp("activityname").getValue();
 				Ext.MessageBox.confirm('提示', '确定导出名单吗？', function(ok) {
 				   if(ok=='yes'){
-					   window.location.href="exportExcel.do?activityid="+activityid+"&activityname="+activityname+"&fileDownKey="+null;
+					   window.location.href="/MyStock/exportExcel.do?activityid="+activityid+"&activityname="+activityname+"&fileDownKey="+null;
 				    }
 				});
 			}
@@ -275,7 +275,7 @@ Ext.onReady(function(){
 		layout : 'form',
 		fileUpload:true,
 		frame:true,
-		url :'Applyactivity_importExcel.do',
+		url :'/MyStock/Applyactivity_importExcel.do',
 		labelWidth:60,
 		border : false,
 		padding : '5 10 10 8',
@@ -339,7 +339,7 @@ Ext.onReady(function(){
 		layout : 'form',
 		//baseCls:'x-plain',
 		frame:true,
-		url :'Applyactivity_submitNews.do',
+		url :'/MyStock/Applyactivity_submitNews.do',
 		labelWidth:48,
 		border : false,
 		padding : '15 10 0 8',
@@ -359,7 +359,8 @@ Ext.onReady(function(){
 			fieldLabel:'网址',
 			anchor : '97.5%',
 			emptyText: 'http://www.abc.mnp.com(网址输入格式)',
-			regex:/^[a-zA-z]+:\/\/(\w+(-\w+)*)(\.(\w+(-\w+)*))*(\?\S*)?$/,
+			//regex:/^[a-zA-z]+:\/\/(\w+(-\w+)*)(\.(\w+(-\w+)*))*(\?\S*)?$/,
+			regex: /^(http|https|ftp):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?\/?/i,
 			listeners:{
 				blur : function(a,b){
 					var v = Ext.getCmp("websiteid").getValue();
@@ -486,7 +487,7 @@ Ext.onReady(function(){
     //获取活动详情
     var getActivityDetail = function(){
     	Ext.Ajax.request({
-    		url:"Applyactivity_activityDetail.do",
+    		url:"/MyStock/Applyactivity_activityDetail.do",
     		success:function(response){
     			var responsedata = Ext.util.JSON.decode(response.responseText);
     			if(responsedata){
@@ -537,7 +538,7 @@ Ext.onReady(function(){
     //获取当前用户信息
     var getCurrentUserInfo = function(){
     	Ext.Ajax.request({
-    		url:"Applyactivity_getCurrentUserInfo.do",
+    		url:"/MyStock/Applyactivity_getCurrentUserInfo.do",
     		success:function(response){
     			var responsedata = Ext.util.JSON.decode(response.responseText);
     			if(responsedata){

@@ -98,7 +98,7 @@ Ext.onReady(function(){
 	
 	var store = new Ext.data.JsonStore({
 		// url: 'datumInfo_findPageDatumInfo.do',findPageDatumInfoBy
-		 url: 'datumInfo_findPageDatumInfoBy.do',
+		 url: '/MyStock/datumInfo_findPageDatumInfoBy.do',
 		 root: 'root',
 		 totalProperty: 'total',
 		 autoLoad: {params:{start:0, limit:15}},
@@ -182,7 +182,7 @@ Ext.onReady(function(){
                      });
 					if(c=='yes'){
 				   	Ext.Ajax.request({
-				   		url : "datumInfo_saveOrUpdataDatumInfoAll.do",
+				   		url : "/MyStock/datumInfo_saveOrUpdataDatumInfoAll.do",
 				   	    params:{ifApproval:"1",datumInfoAll : Ext.encode(jsonArray)},
 				   		success : function() {
 				   		  store.reload();
@@ -215,7 +215,7 @@ Ext.onReady(function(){
                      });
 					if(c=='yes'){
 				   	Ext.Ajax.request({
-				   		url : "datumInfo_saveOrUpdataDatumInfoAll.do",
+				   		url : "/MyStock/datumInfo_saveOrUpdataDatumInfoAll.do",
 				   	    params:{ifApproval:"0",datumInfoAll : Ext.encode(jsonArray)},
 				   		success : function() {
 				   		  store.reload();
@@ -247,7 +247,7 @@ Ext.onReady(function(){
                      });
 					if(c=='yes'){
 				   	Ext.Ajax.request({
-				   		url : "datumInfo_saveOrUpdataDatumInfoAll.do",
+				   		url : "/MyStock/datumInfo_saveOrUpdataDatumInfoAll.do",
 				   	    params:{ifApproval:"2",datumInfoAll : Ext.encode(jsonArray)},
 				   		success : function() {
 				   		  store.reload();
@@ -280,7 +280,7 @@ Ext.onReady(function(){
                      });
 					if(c=='yes'){
 				   	Ext.Ajax.request({
-				   		url : "datumInfo_saveOrUpdataDatumInfoAll.do",
+				   		url : "/MyStock/datumInfo_saveOrUpdataDatumInfoAll.do",
 				   	    params:{ifApproval:"3",datumInfoAll : Ext.encode(jsonArray)},
 				   		success : function() {
 				   		  store.reload();
@@ -307,7 +307,7 @@ Ext.onReady(function(){
 	                     });
 						if(c=='yes'){
 					   	Ext.Ajax.request({
-					   		url : "datumInfo_deleteDatumInfoAll.do",
+					   		url : "/MyStock/datumInfo_deleteDatumInfoAll.do",
 					   	    params:{datumInfoAll : Ext.encode(jsonArray)},
 					   		success : function() {
 					   		  store.reload();
@@ -347,7 +347,7 @@ Ext.onReady(function(){
     //上传文件
     var addForm = new Ext.FormPanel({
 		layout : 'form',
-		url : 'datumInfo_saveDatumInfo.do',
+		url : '/MyStock/datumInfo_saveDatumInfo.do',
 		fileUpload:true,  
 		frame:true,
 		labelWidth:60,
@@ -392,7 +392,7 @@ Ext.onReady(function(){
 			   var id = record.data.id;
 			   Ext.MessageBox.confirm('下载提示', '是否要将该学习资料下载到本地？', function(c) {
 				  if(c=='yes'){ 
-				     window.location.href="DatumInfodownload.do?id="+id;
+				     window.location.href="/MyStock/DatumInfodownload.do?id="+id;
 				     addWindow.hide();
 				     store.reload();
 				   }

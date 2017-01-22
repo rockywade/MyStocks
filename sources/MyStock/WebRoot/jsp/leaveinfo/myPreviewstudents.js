@@ -7,7 +7,7 @@ Ext.onReady(function(){
 	
 	 //查询所有所有班级
     var ClassStore = new Ext.data.JsonStore({
-		url: 'LeaveInfo_findClassComb1.do',
+		url: '/MyStock/LeaveInfo_findClassComb1.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text']
@@ -125,7 +125,7 @@ Ext.onReady(function(){
 	
 	
 	var store = new Ext.data.JsonStore({
-		 url: 'LeaveInfo_findPageLeaveInfoLog.do',
+		 url: '/MyStock/LeaveInfo_findPageLeaveInfoLog.do',
 		 root: 'root',
 		 totalProperty: 'total',
 		 autoLoad: {params:{start:0, limit:15}},

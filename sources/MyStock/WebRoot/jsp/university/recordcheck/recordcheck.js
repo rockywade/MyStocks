@@ -7,7 +7,7 @@ Ext.onReady(function(){
 
 	//班级下拉菜单
     var bjStore = new Ext.data.JsonStore({
-		url: 'LeaveInfo_findClassComb1.do',
+		url: '/MyStock/LeaveInfo_findClassComb1.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text'],
@@ -18,7 +18,7 @@ Ext.onReady(function(){
     
     //所在学期下拉菜单
     var szxqStore = new Ext.data.JsonStore({
-		url: 'Applyactivity_findSzxqComb.do',
+		url: '/MyStock/Applyactivity_findSzxqComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text'],
@@ -172,7 +172,7 @@ Ext.onReady(function(){
 	
 	//获取response数据
 	var store = new Ext.data.JsonStore({
-	    url: 'Applyactivity_recordcheck.do',
+	    url: '/MyStock/Applyactivity_recordcheck.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -180,7 +180,7 @@ Ext.onReady(function(){
 	});
 	
 	var storeDetail = new Ext.data.JsonStore({
-	    url: 'Applyactivity_recordcheckDetail.do',
+	    url: '/MyStock/Applyactivity_recordcheckDetail.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: false,
@@ -192,7 +192,7 @@ Ext.onReady(function(){
 		//alert("查看详情");
     	var record = grid.getStore().getAt(rowIndex); 
     	storeDetail.load({
-    				url:'Applyactivity_recordcheckDetail.do',
+    				url:'/MyStock/Applyactivity_recordcheckDetail.do',
     		        params:{start:0,limit:15,studentid:record.data.id,inschoolterm:record.data.inschoolterm},
     		        scope:this
     	});

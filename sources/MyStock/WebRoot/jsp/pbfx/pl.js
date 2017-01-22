@@ -68,7 +68,7 @@ Ext.onReady(function(){
 	
 	
 	var store = new Ext.data.JsonStore({
-		 url: 'offlineFd_findPl.do',
+		 url: '/MyStock/offlineFd_findPl.do',
 		 root: 'root',
 		 totalProperty: 'total',
 		 autoLoad: {params:{start:0, limit:15,xmid:xmid}},

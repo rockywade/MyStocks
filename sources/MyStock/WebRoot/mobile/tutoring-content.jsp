@@ -29,7 +29,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url : "mobile_findSingOfflineFd.do",
+					url : "/MyStock/mobile_findSingOfflineFd.do",
 				    data:{xmid:xmid},
 					success:function(data,status){
 						data = eval("("+data+")");
@@ -92,7 +92,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url : "mobile_saveOrUpdate.do",
+					url : "/MyStock/mobile_saveOrUpdate.do",
 				    data:{ifApproval:0,bmnumber:obj.bmnumber,xmid:xmid,fxxm:obj.fxxm,fxtime:obj.fxtime,
 				    		fxaddress:obj.fxaddress,fxteacher:obj.fxteacher,xmzise:obj.xmzise,creatername:obj.creatername,
 				    		plnumber:obj.plnumber,xmxh:obj.xmxh,xmintro:obj.xmintro},

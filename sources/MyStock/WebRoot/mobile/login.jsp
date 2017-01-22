@@ -42,7 +42,7 @@
 			<div class="login_logo">
 				<img src="img/logo.png" />
 			</div>
-			<form class="login_from" action="mobile_login.do">
+			<form class="login_from" action="/MyStock/mobile_login.do">
 				<input id="logincode" type="text" class="login_name"
 					name="logincode" placeholder="账号" /> <input id="password"
 					type="password" class="login_pwd" name="password" placeholder="密码" />

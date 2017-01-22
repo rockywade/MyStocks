@@ -1,6 +1,8 @@
 package com.cxstock.action.classes;
 
 
+import org.apache.commons.lang.StringUtils;
+
 import com.cxstock.action.BaseAction;
 import com.cxstock.biz.classes.ClassesBiz;
 
@@ -51,7 +53,11 @@ public class ClassesAction extends BaseAction  {
 	 */
 	public String findClassesBySsyq() {
 		try {
-			this.outListString(classesBiz.findClassesBySsyq(this.ssyq));
+			if(getUserDTO().getLogincode().equals("admin")) {
+				this.outListString(classesBiz.findClasses());
+			} else {
+				this.outListString(classesBiz.findClassesBySsyq(getUserDTO().getSsyq()));
+			}
 		} catch (Exception e) {
 			 e.printStackTrace();
 			 this.outError();

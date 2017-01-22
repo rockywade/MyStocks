@@ -78,7 +78,7 @@ Ext.onReady(function(){
 	
 	var store = new Ext.data.JsonStore({
 		//url: 'datumInfo_findPageDatumInfo.do',datumInfo_findPageDatumInfoBy.do
-		 url: 'secondBookStore_findPageAllSecondBookStore.do',
+		 url: '/MyStock/secondBookStore_findPageAllSecondBookStore.do',
 		 root: 'root',
 		 totalProperty: 'total',
 		 autoLoad: {params:{start:0, limit:15}},
@@ -153,7 +153,7 @@ Ext.onReady(function(){
 					jsonArray.push(item.data.id);
                 });
 				Ext.Ajax.request({
-			   		url : "secondBookStore_update.do",
+			   		url : "/MyStock/secondBookStore_update.do",
 				   	params:{ 
 						type:2,
 			   		 	ids : jsonArray,
@@ -179,7 +179,7 @@ Ext.onReady(function(){
 					jsonArray.push(item.data.id);
                 });
 				Ext.Ajax.request({
-			   		url : "secondBookStore_update.do",
+			   		url : "/MyStock/secondBookStore_update.do",
 				   	params:{ 
 				   		type:2,
 			   		 	ids : jsonArray,
@@ -205,7 +205,7 @@ Ext.onReady(function(){
 					jsonArray.push(item.data.id);
                 });
 				Ext.Ajax.request({
-			   		url : "secondBookStore_update.do",
+			   		url : "/MyStock/secondBookStore_update.do",
 				   	params:{ 
 				   		type:1,
 			   		 	ids : jsonArray,
@@ -232,7 +232,7 @@ Ext.onReady(function(){
 					jsonArray.push(item.data.id);
                 });
 				Ext.Ajax.request({
-			   		url : "secondBookStore_update.do",
+			   		url : "/MyStock/secondBookStore_update.do",
 				   	params:{ 
 				   		type:1,
 			   		 	ids : jsonArray,
@@ -258,7 +258,7 @@ Ext.onReady(function(){
 					jsonArray.push(item.data.id);
                 });
 				Ext.Ajax.request({
-			   		url : "secondBookStore_update.do",
+			   		url : "/MyStock/secondBookStore_update.do",
 				   	params:{ 
 				   		type:3,
 			   		 	ids : jsonArray,
@@ -284,7 +284,7 @@ Ext.onReady(function(){
 					jsonArray.push(item.data.id);
                 });
 				Ext.Ajax.request({
-			   		url : "secondBookStore_update.do",
+			   		url : "/MyStock/secondBookStore_update.do",
 				   	params:{ 
 				   		type:3,
 			   		 	ids : jsonArray,
@@ -311,7 +311,7 @@ Ext.onReady(function(){
 	                });
 					Ext.MessageBox.confirm('删除提示', '是否删除该主题？', function(c) {
 					   	Ext.Ajax.request({
-					   			url : "secondBookStore_delete.do",
+					   			url : "/MyStock/secondBookStore_delete.do",
 					   			params:{ids : jsonArray},
 					   			success : function() {
 					   				store.reload();
@@ -333,7 +333,7 @@ Ext.onReady(function(){
     var viewDetail = function(grid, rowIndex, colIndex){
     	var record = grid.getStore().getAt(rowIndex); 
     	
-    	location.href='secondBookStore_viewSecondBookStore.do?id='+record.data.id; 
+    	location.href='/MyStock/secondBookStore_viewSecondBookStore.do?id='+record.data.id; 
     	
     	/*var html = '<iframe src="secondBookStore_viewSecondBookStore.do?id='+record.data.id+'"  width="100%" frameborder="0" height="100%"></iframe>';
 		if(Ext.getCmp('viewPanel').body){

@@ -7,7 +7,7 @@ Ext.onReady(function(){
 	
 	//专家类别下拉菜单
     var expertTypeStore = new Ext.data.JsonStore({
-		url: 'expert_findEtComb.do',
+		url: '/MyStock/expert_findEtComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text'],
@@ -23,7 +23,7 @@ Ext.onReady(function(){
     
 	//专家下拉菜单
     var expertStore = new Ext.data.JsonStore({
-		url: 'expert_findEnComb.do',
+		url: '/MyStock/expert_findEnComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{}},
@@ -185,7 +185,7 @@ Ext.onReady(function(){
 	
 	//获取response数据
 	var store = new Ext.data.JsonStore({
-	    url: 'Expertbespeak_waitEnter.do',
+	    url: '/MyStock/Expertbespeak_waitEnter.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -261,7 +261,7 @@ Ext.onReady(function(){
 							Ext.Msg.alert('信息提示','非待接受状态的不能发送短信');
 						}else{
 							Ext.Ajax.request({
-					   			url : "Expertbespeak_sendEnterOrFeedBespeakSMS.do",
+					   			url : "/MyStock/Expertbespeak_sendEnterOrFeedBespeakSMS.do",
 					   			params:{ stid : record.get("stid"),msgKey:"enter" },
 					   			success : function(response) {
 					   				var responsedata = Ext.util.JSON.decode(response.responseText);
@@ -293,7 +293,7 @@ Ext.onReady(function(){
 							Ext.Msg.alert('信息提示','无法给拒绝预约的专家老师发送短信');
 						}else{
 							Ext.Ajax.request({
-					   			url : "Expertbespeak_sendEnterOrFeedBespeakSMS.do",
+					   			url : "/MyStock/Expertbespeak_sendEnterOrFeedBespeakSMS.do",
 					   			params:{ stid : record.get("stid"),msgKey:"enter" },
 					   			success : function(response) {
 					   				var responsedata = Ext.util.JSON.decode(response.responseText);
@@ -318,7 +318,7 @@ Ext.onReady(function(){
 					Ext.MessageBox.confirm('删除提示', '是否删除该用户？', function(c) {
 					   if(c=='yes'){
 					   		Ext.Ajax.request({
-					   			url : "Expertbespeak_deleteBespeak.do",
+					   			url : "/MyStock/Expertbespeak_deleteBespeak.do",
 					   			params:{ sbid : record.get("stid") },
 					   			success : function() {
 					   				store.reload();
@@ -363,7 +363,7 @@ Ext.onReady(function(){
     //获取当前用户信息
     var getCurrentUserInfo = function(){
     	Ext.Ajax.request({
-    		url:"Applyactivity_getCurrentUserInfo.do",
+    		url:"/MyStock/Applyactivity_getCurrentUserInfo.do",
     		success:function(response){
     			var responsedata = Ext.util.JSON.decode(response.responseText);
     			if(responsedata){
@@ -380,7 +380,7 @@ Ext.onReady(function(){
 		layout : 'form',
 		//baseCls:'x-plain',
 		frame:true,
-		url :'Expertbespeak_updateWaitbespeak.do',
+		url :'/MyStock/Expertbespeak_updateWaitbespeak.do',
 		labelWidth:60,
 		border : false,
 		padding : '15 10 15 80',

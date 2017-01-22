@@ -90,7 +90,7 @@ Ext.onReady(function(){
 	
 	//获取response数据
 	var store = new Ext.data.JsonStore({
-	    url: 'Whereabouts_launchByPageList.do',
+	    url: '/MyStock/Whereabouts_launchByPageList.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -209,7 +209,7 @@ Ext.onReady(function(){
     var addForm = new Ext.FormPanel({
 		layout : 'form',
 		frame:true,
-		url :'Whereabouts_whereaboutsLaunch.do',
+		url :'/MyStock/Whereabouts_whereaboutsLaunch.do',
 		labelWidth:56,
 		border : false,
 		padding : '15 10 0 8',
@@ -349,7 +349,7 @@ Ext.onReady(function(){
     	
 		layout : 'form',//纵向布局
 		baseCls:'x-plain',//基本色调
-		url : 'cancel_cancelAttend.do',
+		url : '/MyStock/cancel_cancelAttend.do',
         fileUpload:true,  
         autoScroll:true,//滚动条
 		labelWidth:80,
@@ -393,7 +393,7 @@ var fungrid;
 function cancel(rowIndex){
 	var record = fungrid.getStore().getAt(rowIndex);
 	Ext.Ajax.request({
-		url : "Whereabouts_cancelWhereLaunch.do",
+		url : "/MyStock/Whereabouts_cancelWhereLaunch.do",
 		params:{ launchid : record.data.launchid,launchstyle:record.data.launchstyle},
 		success : function(response) {
 			var responsedata = Ext.util.JSON.decode(response.responseText);
@@ -406,7 +406,7 @@ function cancel(rowIndex){
 function count(rowIndex){
 	var record = fungrid.getStore().getAt(rowIndex);
 	Ext.Ajax.request({
-		url:'Whereabouts_wheresLaunchProperty.do',
+		url:'/MyStock/Whereabouts_wheresLaunchProperty.do',
 	    params:{launchid:record.data.launchid,launchname:record.data.launchname},
 	    success:function(msg){
 	    	window.location.href = 'wherescount.jsp';

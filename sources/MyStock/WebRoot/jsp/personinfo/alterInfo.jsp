@@ -26,7 +26,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"user_updatePwd.do",
+					url:"/MyStock/user_updatePwd.do",
 					data:{password:$("#pwd1").val()},
 					success:function(data,status){
 						$("#pwd1").val("")
@@ -45,7 +45,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"user_updateNickName.do",
+					url:"/MyStock/user_updateNickName.do",
 					data:{nickName:$("#nickname").val()},
 					success:function(data,status){
 						alert("昵称修改成功");
@@ -66,7 +66,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"user_updatePhone.do",
+					url:"/MyStock/user_updatePhone.do",
 					data:{phone:$("#phone").val()},
 					success:function(data,status){
 						alert("手机号码修改成功");

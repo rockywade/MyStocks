@@ -64,7 +64,7 @@ Ext.onReady(function(){
 								emptyText: '全部',
 							}]
 								
-						}/*,{
+						},{
 							width:260,
 							items:[{
 								width:100,
@@ -80,7 +80,7 @@ Ext.onReady(function(){
 								store : style,
 								emptyText: '全部',
 						}]
-						}*/,{
+						},{
 					width:260,
 					items:[{
 						width:75,
@@ -151,7 +151,7 @@ Ext.onReady(function(){
 	];
 	
     var store = new Ext.data.JsonStore({
-	    url: 'Applyactivity_publicitylist.do',
+	    url: '/MyStock/Applyactivity_publicitylist.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -225,7 +225,7 @@ var fungrid;	//获取grid
 function newsAndPublicityManage(rowIndex){
 	var record = fungrid.getStore().getAt(rowIndex);
 	Ext.Ajax.request({
-		url:'Applyactivity_activityGetId.do',
+		url:'/MyStock/Applyactivity_activityGetId.do',
 	    params:{activityid:record.data.activityid},
 	    success:function(msg){
 	    	window.location.href = 'newsandpublicitycheck.jsp';

@@ -88,4 +88,8 @@
 	<session-config>
 		<session-timeout>600</session-timeout>
 	</session-config>
+	<mime-mapping>     
+	 <extension> xls </extension>     
+	 <mime-type> application/vnd.ms-excel </mime-type>     
+	 </mime-mapping>  
 </web-app>

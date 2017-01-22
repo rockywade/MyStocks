@@ -67,7 +67,7 @@ Ext.onReady(function(){
 	
 	
 	var store = new Ext.data.JsonStore({
-		 url: 'offlineFd_findPageCy.do',
+		 url: '/MyStock/offlineFd_findPageCy.do',
 		 root: 'root',
 		 totalProperty: 'total',
 		 autoLoad: {params:{start:0, limit:15}},
@@ -197,7 +197,7 @@ Ext.onReady(function(){
 				 Ext.MessageBox.confirm('取消提示', '确定要取消报名？', function(c) {
 					 if(c=='yes'){
 						 Ext.Ajax.request({
-						   		url : "offlineFd_saveOrUpdate.do",
+						   		url : "/MyStock/offlineFd_saveOrUpdate.do",
 							   	params:{ 
 						   		 ifApproval:"3",
 						   		 xmid : xmid,
@@ -230,7 +230,7 @@ Ext.onReady(function(){
 				   Ext.MessageBox.confirm('关注提示', '确定要关注这个项目吗？', function(c) {
 					   if(c=='yes'){
 						 Ext.Ajax.request({
-						   		url : "offlineFd_saveOrUpdate.do",
+						   		url : "/MyStock/offlineFd_saveOrUpdate.do",
 							   	params:{ 
 						   		 ifApproval:"2",
 						   		 xmid : xmid,					   	
@@ -377,7 +377,7 @@ Ext.onReady(function(){
 			   Ext.MessageBox.confirm('报名提示', '确定要报名吗？', function(c) {
 				   if(c=='yes'){
 					 Ext.Ajax.request({
-					   		url : "offlineFd_saveOrUpdate.do",
+					   		url : "/MyStock/offlineFd_saveOrUpdate.do",
 						   	params:{ 
 					   		 ifApproval:"0",
 					   		 xmid : xmid,					   	
@@ -416,7 +416,7 @@ Ext.onReady(function(){
 			 Ext.MessageBox.confirm('评论提示', '确定要评论吗？', function(c) {
 				 if(c=='yes'){
 					 Ext.Ajax.request({
-					   	  url : "offlineFd_saveOrUpdate.do",
+					   	  url : "/MyStock/offlineFd_saveOrUpdate.do",
 						   	params:{ 
 				   		     ifApproval:"1",
 					   		 xmid : xmid,					   	

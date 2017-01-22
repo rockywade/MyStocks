@@ -133,12 +133,17 @@ public class InstructorAction extends BaseAction {
 	 */
 	public String saveOrUpdateInstructor() {
 		try {
-			Set<Classes> iclassSet = new HashSet<Classes>();
-			String[] ic = iclass.split(",");
-			for(int i=0;i<ic.length;i++){
-				iclassSet.add(new Classes(ic[i]));
+			Instructor instructor = new Instructor(id,zgh,xm,xb,phone);
+			Set<Classes> iclassSet = null;
+			
+			if(iclass != null && !iclass.equals("")) {
+				String[] ic = iclass.split(",");
+				iclassSet = new HashSet<Classes>();
+				for(int i=0;i<ic.length;i++){
+					iclassSet.add(new Classes(ic[i]));
+				}
+				instructor.setIclass(iclassSet);
 			}
-			Instructor instructor = new Instructor(id,zgh,xm,xb,phone,iclassSet);
 			instructor.setSsyq(ssyq);
 			boolean b = instructorBiz.saveOrUpdateInstructor(instructor);
 			if (b) {

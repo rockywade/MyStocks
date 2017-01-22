@@ -84,7 +84,7 @@ public class ClassesBizImp implements ClassesBiz {
 
 	@Override
 	public List findClassesBySsyq(String ssyq) {
-		String hql = " from Classes c where ssyq='"+ssyq+"'";
+		String hql = " from Classes c where c.ssyq like '%"+ssyq+"%'";
 		List list = new ArrayList();
 		List<Classes> classesList = baseDao.findByHql(hql);
 		for (Classes classes : classesList) {

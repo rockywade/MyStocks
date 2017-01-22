@@ -58,7 +58,7 @@ style type ="text/css">.x-grid3-row td, .x-grid3-summary-row td {
 				var d = null;
 			        $.ajax({
 			         type : "POST",
-	   			      url : "front_newsDetail.do",
+	   			      url : "/MyStock/front_newsDetail.do",
 	   			      data:{
 					      newsid:id
 				        },

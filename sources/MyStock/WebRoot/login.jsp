@@ -170,7 +170,7 @@ input:-webkit-autofill {
 						<h2 class="loginTit">用户登录</h2>
 						<table width="500" cellpadding="0" cellspacing="0"
 							class="loginWrap">
-							<form action="user_login.do" method="post">
+							<form action="/MyStock/user_login.do" method="post">
 								<tr>
 									<td align="center" colspan="2"><p id="error" color="red">${error}&nbsp;</p></td>
 								</tr>

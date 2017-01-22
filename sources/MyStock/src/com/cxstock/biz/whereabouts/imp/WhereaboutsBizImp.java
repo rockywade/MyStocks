@@ -60,8 +60,8 @@ public class WhereaboutsBizImp implements WhereaboutsBiz {
 	/**
 	 * 待填写假日去向统计
 	 */
-	public Wheresaboutslaunch findNeedWriteWheres(String todaytime,String launchstyle) {
-		String hql = "from Wheresaboutslaunch as w where w.censusendtime >= '"+todaytime+"' and w.launchstyle = '"+launchstyle+"'";
+	public Wheresaboutslaunch findNeedWriteWheres(String todaytime,String launchstyle, String ssxy) {
+		String hql = "from Wheresaboutslaunch as w where w.censusendtime >= '"+todaytime+"' and w.launchstyle = '"+launchstyle+"'" + " and (w.ssxy like'%" +ssxy+"%' or w.ssxy IS NULL or w.ssxy='')";
 		return (Wheresaboutslaunch) baseDao.loadObject(hql);
 	}
 
@@ -130,9 +130,12 @@ public class WhereaboutsBizImp implements WhereaboutsBiz {
 	 */
 	public void findPageCensusByProperty(Page page, String[] property,
 			String[] values, String tmajor, String[] tclasses) {
-		String hql = "from Wheresaboutscensus as model where model.mojar = '"+tmajor+"' and ";
+		String hql = "from Wheresaboutscensus as model where model.mojar = '"+tmajor+"' ";
 		//查询老师所属班级
 		for(int i=0;i<tclasses.length;i++){
+			if(i == 0) {
+				hql += " and ";
+			}
 			hql += " model.classes = '" +tclasses[i]+ "'";
 			if(tclasses.length>1 && i<tclasses.length-1){
 				hql += " or ";

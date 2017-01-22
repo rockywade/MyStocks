@@ -29,7 +29,7 @@
 				$.ajax({
 					type : "post",
 					async : false,  
-					url:"mobile_bespeakExpert.do",
+					url:"/MyStock/mobile_bespeakExpert.do",
 					data:{id:expertId, applygenre:applygenre,studentemail:$("#studentemail").val(),
 							bespeaktime:$("#bespeaktime").val(),bespeakplace:$("#bespeakplace").val(),
 							detailinfo:$("#detailinfo").val()},

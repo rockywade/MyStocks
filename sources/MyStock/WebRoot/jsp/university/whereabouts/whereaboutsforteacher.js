@@ -6,7 +6,7 @@ Ext.onReady(function(){
 	Ext.QuickTips.init();
 	//班级下拉菜单
     var bjStore = new Ext.data.JsonStore({
-		url: 'LeaveInfo_findClassComb1.do',
+		url: '/MyStock/LeaveInfo_findClassComb1.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text'],
@@ -140,7 +140,7 @@ Ext.onReady(function(){
 	
 	//获取response数据
 	var store = new Ext.data.JsonStore({
-	    url: 'Whereabouts_allCensusList.do',
+	    url: '/MyStock/Whereabouts_allCensusList.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},

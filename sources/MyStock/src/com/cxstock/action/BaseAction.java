@@ -36,11 +36,21 @@ public class BaseAction extends ActionSupport {
 	}
 
 	public void outString(String str) {
+		PrintWriter out = null;
 		try {
-			PrintWriter out = getResponse().getWriter();
+			out = getResponse().getWriter();
 			out.print(str);
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if(out != null) {
+					out.flush();
+					out.close();
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 		}
 	}
 

@@ -47,7 +47,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"front_dataExpertSbInfo.do",
+					url:"/MyStock/front_dataExpertSbInfo.do",
 					data:{start:startAllAppoint, limit:limitAllAppoint,yx:$("#yx").val(),bm:$("#bm").val(),experttype:$("#experttype").val(),ename:$("#ename").val()},
 					success : function(data,status){
 						data = eval("("+data+")");
@@ -79,7 +79,7 @@
 				var d = null;
 		        $.ajax({
 		         type : "POST",
-   			      url : "front_expertInfo.do",
+   			      url : "/MyStock/front_expertInfo.do",
    			      data:{
 				      id:eid
 			        },
@@ -166,7 +166,7 @@
 
 			//院系下拉菜单
 			function initSelect(){
-				$.post("front_findXyComb.do",{},
+				$.post("/MyStock/front_findXyComb.do",{},
 						function(data,status){
 							data = eval("("+data+")");
 							initYx(data.root);
@@ -186,7 +186,7 @@
 			}
 
 			function bespeak(){
-				window.location.href="front_goToLogin.do?url=../university/expertbespeak/studentbespeak.jsp";
+				window.location.href="/MyStock/front_goToLogin.do?url=../university/expertbespeak/studentbespeak.jsp";
 			}
 		  </script>
 	<!-- 专家预约 -->

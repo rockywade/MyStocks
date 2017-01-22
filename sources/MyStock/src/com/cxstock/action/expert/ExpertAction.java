@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
 import com.cxstock.action.BaseAction;
@@ -195,7 +196,7 @@ public class ExpertAction extends BaseAction {
 		return null;
 	}
 	
-	public String saveOrUpdateExpertByAdmin() {
+	public void saveOrUpdateExpertByAdmin() {
 		try {
 			Date d = new Date();
 			//图片保存路径
@@ -206,7 +207,8 @@ public class ExpertAction extends BaseAction {
 				photo = this.getRequest().getContextPath() + "/upload" + "/"
 									+ d.getTime() + Tools.getFileExp(this.imageFileName); 
 				File toFile = new File(path);
-				Tools.writeFile(this.image,toFile);
+//				Tools.writeFile(this.image,toFile);
+				FileUtils.copyFile(this.image,toFile);
 			}
 			
 			Expert expert = new Expert(id,zgh,xm,xb,phone,photo,
@@ -227,13 +229,12 @@ public class ExpertAction extends BaseAction {
 			e.printStackTrace();
 			this.outError();
 		}
-		return null;
 	}
 
 	/**
 	 * 保存/修改 
 	 */
-	public String saveOrUpdateExpert() {
+	public void saveOrUpdateExpert() {
 		try {
 			Date d = new Date();
 			//图片保存路径
@@ -244,11 +245,9 @@ public class ExpertAction extends BaseAction {
 				photo = this.getRequest().getContextPath() + "/upload" + "/"
 									+ d.getTime() + Tools.getFileExp(this.uploadFileName); 
 				File toFile = new File(path);
-				Tools.writeFile(this.upload,toFile);
+//				Tools.writeFile(this.upload,toFile);
+				FileUtils.copyFile(this.upload,toFile);
 			}
-			
-			
-			
 			
 			id = this.getUserDTO().getExpert().getId();
 			zgh = this.getUserDTO().getExpert().getZgh();
@@ -269,7 +268,6 @@ public class ExpertAction extends BaseAction {
 			e.printStackTrace();
 			this.outError();
 		}
-		return null;
 	}
 
 	/**

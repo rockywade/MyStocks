@@ -187,6 +187,20 @@ public class BaseDAOImpl extends HibernateDaoSupport implements BaseDAO {
 				});
 		return count.intValue();
 	}
+	/** 统计指定类的查询结果 */
+	public int countBySql(String countSql) {
+		final String hql = countSql;
+		Long count = (Long) getHibernateTemplate().execute(
+				new HibernateCallback() {
+					public Object doInHibernate(Session session)
+							throws HibernateException {
+						Query query = session.createQuery(hql);
+						query.setMaxResults(1);
+						return query.uniqueResult();
+					}
+				});
+		return count.intValue();
+	}
 
 	/** 统计指定类的查询结果 */
 	public int count1(String clazz,String[] property,Object[] value,String orderName3,String classcode ,List<Classes> classcodevalue ) {

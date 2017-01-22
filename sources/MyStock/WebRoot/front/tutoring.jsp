@@ -75,7 +75,7 @@ a{text-decoration: none;}
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"front_findPageOfflineFd.do",
+					url:"/MyStock/front_findPageOfflineFd.do",
 					data:{start:start, limit:limit},
 					success:function(data,status){
 						data = eval("("+data+")");
@@ -139,7 +139,7 @@ a{text-decoration: none;}
 			
 			
 			function publish(){
-				window.location.href="login_goToLogin.do?url=../pbfx/offlineFdStudent.jsp";
+				window.location.href="/MyStock/login_goToLogin.do?url=../pbfx/offlineFdStudent.jsp";
 			}
 			
           
@@ -147,7 +147,7 @@ a{text-decoration: none;}
                 var dateAll = null;
 		         $.ajax({
 		          type : "POST",
-   			      url : "offlineFd_findSingOfflineFd.do",
+   			      url : "/MyStock/offlineFd_findSingOfflineFd.do",
    			      data:{
 				      xmid:xmid
 			        },

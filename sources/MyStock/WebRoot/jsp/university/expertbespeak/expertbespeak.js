@@ -36,7 +36,7 @@ Ext.onReady(function(){
 	
 	//园区下拉菜单
     var xyStore = new Ext.data.JsonStore({
-		url: 'SiteInfo_findParkComb.do',
+		url: '/MyStock/SiteInfo_findParkComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text'],
@@ -51,7 +51,7 @@ Ext.onReady(function(){
 	});
     //办公/单位下拉菜单
     var unitStore = new Ext.data.JsonStore({
-		url: 'Expertbespeak_findUnitComb.do',
+		url: '/MyStock/Expertbespeak_findUnitComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text'],
@@ -120,7 +120,7 @@ Ext.onReady(function(){
 	
 	//获取response数据
 	var store = new Ext.data.JsonStore({
-	    url: 'Expertbespeak_myBespeakToExpert.do',
+	    url: '/MyStock/Expertbespeak_myBespeakToExpert.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -227,7 +227,7 @@ Ext.onReady(function(){
     var addForm = new Ext.FormPanel({
 		layout : 'form',
 		frame:true,
-		url :'Expertbespeak_saveOrUpdateExpertBespeak.do',
+		url :'/MyStock/Expertbespeak_saveOrUpdateExpertBespeak.do',
 		fileUpload:true,  
 		labelWidth:62,
 		border : false,
@@ -445,7 +445,7 @@ Ext.onReady(function(){
     var bespeakCheckForm = new Ext.FormPanel({
 		layout : 'form',
 		frame:true,
-		url :'Expertbespeak_checkBespeak.do',
+		url :'/MyStock/Expertbespeak_checkBespeak.do',
 		labelWidth:80,
 		border : false,
 		labelAlign:"right",
@@ -617,7 +617,7 @@ Ext.onReady(function(){
     var addTalkForm = new Ext.FormPanel({
 		layout : 'form',
 		frame:true,
-		url :'Expertbespeak_addTalk.do',
+		url :'/MyStock/Expertbespeak_addTalk.do',
 		labelWidth:62,
 		border : false,
 		padding : '15 10 0 50',
@@ -899,7 +899,7 @@ Ext.onReady(function(){
 	//获取当前登录专家的信息
 	var getCurentUserInfo = function(){
     	Ext.Ajax.request({
-    		url:"Expertbespeak_getCurentUserInfo.do",
+    		url:"/MyStock/Expertbespeak_getCurentUserInfo.do",
     		success:function(response){
     			var responsedata = Ext.util.JSON.decode(response.responseText);
     			//alert(responsedata.data.xm);
@@ -914,7 +914,7 @@ Ext.onReady(function(){
   //获取当前专家信息
 	var getExpertInfo = function(){
     	Ext.Ajax.request({
-    		url:"Expertbespeak_getExpertDetailInfo.do",
+    		url:"/MyStock/Expertbespeak_getExpertDetailInfo.do",
     		success:function(response){
     			var responsedata = Ext.util.JSON.decode(response.responseText);
     			
@@ -962,7 +962,7 @@ Ext.onReady(function(){
     
     var getStartExpert = function(){
     	Ext.Ajax.request({
-    		url:"Expertbespeak_getStartExpert.do",
+    		url:"/MyStock/Expertbespeak_getStartExpert.do",
     		success:function(response){
     			var responsedata = Ext.util.JSON.decode(response.responseText);
     			if(responsedata){

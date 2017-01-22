@@ -65,7 +65,7 @@ Ext.onReady(function(){
 								//emptyText: '全部',
 							}]
 								
-						}/*,{
+						},{
 							width:260,
 							items:[{
 								width:100,
@@ -82,7 +82,7 @@ Ext.onReady(function(){
 								store : style,
 								emptyText: '全部',						}]
 								
-						}*/,{
+						},{
 					width:260,
 					items:[{
 						width:75,
@@ -153,7 +153,7 @@ Ext.onReady(function(){
 	];
 	
     var store = new Ext.data.JsonStore({
-	    url: 'Applyactivity_findPageApply.do',
+	    url: '/MyStock/Applyactivity_findPageApply.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -229,7 +229,7 @@ Ext.onReady(function(){
     var checkaddWindow=new Ext.FormPanel({
 		layout : 'form',//纵向布局
 		//baseCls:'x-plain',//基本色调
-		url : 'Applyactivity_activityCheck.do',
+		url : '/MyStock/Applyactivity_activityCheck.do',
         fileUpload:true,  
         autoScroll:true,//滚动条
 		labelWidth:72,
@@ -237,14 +237,14 @@ Ext.onReady(function(){
 		padding : '8 0 0 10',//上右下左
 		defaults : {
 			anchor : '100%',
-    		cls:"borderNone",
+    		//cls:"borderNone",
     		//width:300,
 		},
 		items:[{
-				xtype : 'textfield',
+				xtype : 'displayfield',
 				name:'activityname',
 				fieldLabel:'活动名称',
-				readOnly:true,
+				//readOnly:true,
 				anchor : '90%',
 				//maxLength :50,
 				//allowBlank : false
@@ -255,84 +255,87 @@ Ext.onReady(function(){
 					layout:'form',
 					defaults:{
 						anchor : '95%',
-						cls:"borderNone",
+						//cls:"borderNone",
 					},
 					items:[{
-						xtype : 'textfield',
+						xtype : 'displayfield',
 						name:'applyuser',
 						fieldLabel:'申<i class="ikg1"></i>请<i class="ikg1"></i>人',
 						readOnly:true,
 					},{
-						xtype : 'textfield',
+						xtype : 'displayfield',
 						name:'studentphonenum',
 						fieldLabel:'联系电话',
 						readOnly:true,
 					},{
-						xtype : 'textfield',
+						xtype : 'displayfield',
 						name:'teacher',
 						fieldLabel:'指导老师',
 						readOnly:true,
 						
 					},{
-						xtype : 'textfield',
+						xtype : 'displayfield',
 						name:'inschoolterm',
 						fieldLabel:'所在学期',
 						readOnly:true,
 					},{
-						xtype : 'textfield',
+						xtype : 'displayfield',
 						name:'timeofduration',
 						fieldLabel:'时<i class="ikg2"></i>长',
 						readOnly:true,
 					},{
-						xtype : 'textfield',
+						xtype : 'displayfield',
 						name:'activitytime',
 						fieldLabel:'活动时间',
 						readOnly:true,
 					},{
+						id:'id_score',
 						xtype : 'textfield',
 						name:'score',
 						fieldLabel:'活动考评分',
-						readOnly:true,
+						allowBlank:false,
+						regex:/^[-+]?[\d]+$/,
+						regexText:'请输入正确的整数',
 					}]
 				},{
 					columnWidth:.5,
 					layout:'form',
 					defaults:{
 						anchor : '95%',
-						cls:"borderNone",
+						//cls:"borderNone",
 					},
 					items:[{
-						xtype : 'textfield',
+						xtype : 'displayfield',
 						name:'studentnum',
 						fieldLabel:'学<i class="ikg2"></i>号',
 						readOnly:true,
 					},{
-						xtype : 'textfield',
+						xtype : 'displayfield',
 						name:'organizename',
 						fieldLabel:'所在组织',
 						readOnly:true,
 					},{
-						xtype : 'textfield',
+						xtype : 'displayfield',
 						name:'phonenum',
 						fieldLabel:'老师电话',
 						readOnly:true,
 					},{
-						xtype : 'textfield',
+						xtype : 'displayfield',
 						name:'activityplace',
 						fieldLabel:'活动地点',
 						readOnly:true,
 					},{
-						xtype : 'textfield',
+						xtype : 'displayfield',
 						name:'capacity',
 						fieldLabel:'规模(人)',
 						readOnly:true,
 					},{
-						xtype : 'textfield',
+						xtype : 'displayfield',
 						name:'signupendtime',
 						fieldLabel:'报名截止',
 						readOnly:true,
 					},{
-						xtype : 'textfield',
+						xtype : 'displayfield',
 						name:'activitygenre',
 						fieldLabel:'活动类型',
 						readOnly:true,
@@ -340,18 +343,36 @@ Ext.onReady(function(){
 					}]
 				}]
 			},{
-				xtype : 'textfield',
+				xtype : 'displayfield',
 				name:'faceobj',
 				fieldLabel:'面向对象',
 				readOnly:true,
 				anchor : '90%',
 				//allowBlank : false
 			},{
-				xtype : 'textarea',
+				xtype : 'displayfield',
 				name:'activitycontent',
 				fieldLabel:'活动内容',
 				readOnly:true,
 				anchor : '90%',
+			},{
+				id:'id_refuse',
+				xtype : 'textfield',
+				name:'refuse',
+				fieldLabel:'理<i class="ikg2"></i>由',
+				readOnly:false,
+				anchor : '90%',
+				value:"不同意理由或者活动考评分修改理由",
+				listeners: { 
+				   render: function(p) { 
+				      // Append the Panel to the click handler's argument list. 
+				      p.getEl().on('click', function(combo,record){ 
+				    	  if('不同意理由或者活动考评分修改理由' == p.getValue()) {
+				    		  p.setValue('');
+				    	  }
+				      }); 
+				  }
+				}
 			},{
 				xtype : 'hidden',
 			    name : 'activityid'
@@ -375,8 +396,14 @@ Ext.onReady(function(){
 			text : '通过',
 			handler : function() {
 				if (checkaddWindow.getForm().isValid()) {
+					var refuse = Ext.getCmp('id_refuse').getValue();
+					var score = Ext.getCmp('id_score').getValue();
+					if(refuse == '不同意理由或者活动考评分修改理由') {
+						refuse = '';
+						Ext.getCmp('id_refuse').setValue('');
+					}
 					checkaddWindow.getForm().submit({
-						params :{checkkey:'1'},
+						params :{'checkkey':'1', 'refuse':refuse, 'updateScore':score},
 						success : function(form, action) {
 							Ext.Msg.alert('信息提示',action.result.message);
 							checkingWindow.hide();
@@ -398,9 +425,15 @@ Ext.onReady(function(){
 			text : '不通过',
 			handler : function() {
 				//alert("hello");
+				var refuse = Ext.getCmp('id_refuse').getValue();
+				var score = Ext.getCmp('id_score').getValue();
+				if(refuse == '不同意理由或者活动考评分修改理由') {
+					refuse = '';
+					Ext.getCmp('id_refuse').setValue('');
+				}
 				if (checkaddWindow.getForm().isValid()) {
 					checkaddWindow.getForm().submit({
-						params :{checkkey:0},
+						params :{'checkkey':'0', 'refuse':refuse, 'updateScore':score},
 						success : function(form, action) {
 							Ext.Msg.alert('信息提示',action.result.message);
 							checkingWindow.hide();

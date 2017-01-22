@@ -92,6 +92,22 @@ public class SiteInfoBizImp implements SiteInfoBiz{
 	   }
 		return null;
 	}
+	
+	/**
+	 * 根据场地siteid查询
+	 * 场地编号
+	 * @param siteid
+	 * @return
+	 */
+	public SiteInfo findBySiteid(String siteid) {
+		
+		String hql = "from SiteInfo where siteid ='" + siteid+ "'";
+		List<SiteInfo> list=  baseDao.findByHql(hql, 0, 1);
+		if(list != null && list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
+	}
      
 	/**
 	 * 场地审核/批量审核

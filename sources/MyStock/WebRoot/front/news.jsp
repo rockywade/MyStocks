@@ -60,7 +60,7 @@ a{text-decoration: none;}
 	    	$.ajax({
 				type : "post", 
 				async : false,  
-				url:"front_newsSpecialColumn.do",
+				url:"/MyStock/front_newsSpecialColumn.do",
 				data:{start:startAllAppoint, limit:limitAllAppoint},
 				success : function(data,status){
 					data = eval("("+data+")");

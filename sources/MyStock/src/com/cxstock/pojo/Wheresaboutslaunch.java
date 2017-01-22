@@ -28,7 +28,9 @@ public class Wheresaboutslaunch implements Serializable {
 	//登计人数
 	private int censuspersonnum;	
 	//假日去向发起状态
-	private String launchstyle;		
+	private String launchstyle;	
+	//所属学院
+	private String ssxy;
 	
 	@Id
 	public String getLaunchid() {
@@ -78,6 +80,12 @@ public class Wheresaboutslaunch implements Serializable {
 	}
 	public void setLaunchstyle(String launchstyle) {
 		this.launchstyle = launchstyle;
+	}
+	public String getSsxy() {
+		return ssxy;
+	}
+	public void setSsxy(String ssxy) {
+		this.ssxy = ssxy;
 	}
 	
 }

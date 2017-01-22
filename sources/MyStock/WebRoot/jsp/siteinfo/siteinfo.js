@@ -85,7 +85,7 @@ Ext.onReady(function(){
 	              	];
 	
 	var store = new Ext.data.JsonStore({
-	    url: 'SiteInfo_findPageSiteInfoLog.do',
+	    url: '/MyStock/SiteInfo_findPageSiteInfoLog.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15,ifApproval:1}},
@@ -300,7 +300,7 @@ Ext.onReady(function(){
     	Ext.MessageBox.confirm('取消提示', '是否取消该场地？', function(c) {
     	   if(c=='yes'){
  		   Ext.Ajax.request({
-			   	url : "SiteInfo_saveOrUpdateLog.do",
+			   	url : "/MyStock/SiteInfo_saveOrUpdateLog.do",
 			   	params:{
  			     ifApproval:"2",
 				 logId :record.data.logId,

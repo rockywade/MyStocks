@@ -64,6 +64,8 @@ public interface BaseDAO {
 	/** 统计指定类的查询结果 */
 	public int count(String clazz,String[] property,Object[] value) ;
 	
+	/** 统计指定类的查询结果 */
+	public int countBySql(String countSql);
 	/**
 	 *  统计指定类的查询结果
 	 *  判断某个值大于什么数

@@ -60,8 +60,73 @@ a{text-decoration: none;}
 .iNavThis a{/*选中的样式*/
 	color: #000000 !important;
 }
+
+
+/*弹出层的STYLE*/
+html,body {height:100%; margin:0px; font-size:12px;}
+
+.mydiv {
+background-color: #ff6;
+border: 1px solid #f90;
+text-align: center;
+line-height: 40px;
+font-size: 12px;
+font-weight: bold;
+z-index:99;
+width: 300px;
+height: 120px;
+left:50%;/*FF IE7*/
+top: 50%;/*FF IE7*/
+
+margin-left:-150px!important;/*FF IE7 该值为本身宽的一半 */
+margin-top:-60px!important;/*FF IE7 该值为本身高的一半*/
+
+margin-top:0px;
+
+position:fixed!important;/*FF IE7*/
+position:absolute;/*IE6*/
+
+_top:       expression(eval(document.compatMode &&
+            document.compatMode=='CSS1Compat') ?
+            documentElement.scrollTop + (document.documentElement.clientHeight-this.offsetHeight)/2 :/*IE6*/
+            document.body.scrollTop + (document.body.clientHeight - this.clientHeight)/2);/*IE5 IE5.5*/
+
+}
+
+
+.bg {
+background-color: #ccc;
+width: 100%;
+height: 100%;
+left:0;
+top:0;/*FF IE7*/
+filter:alpha(opacity=50);/*IE*/
+opacity:0.5;/*FF*/
+z-index:1;
+
+position:fixed!important;/*FF IE7*/
+position:absolute;/*IE6*/
+
+_top:       expression(eval(document.compatMode &&
+            document.compatMode=='CSS1Compat') ?
+            documentElement.scrollTop + (document.documentElement.clientHeight-this.offsetHeight)/2 :/*IE6*/
+            document.body.scrollTop + (document.body.clientHeight - this.clientHeight)/2);/*IE5 IE5.5*/
+
+}
+/*The END*/
+
 </style>
 <script>
+function showDiv(){
+	document.getElementById('popDiv').style.display='block';
+	document.getElementById('bg').style.display='block';
+	}
+
+function closeDiv(){
+	document.getElementById('popDiv').style.display='none';
+	document.getElementById('bg').style.display='none';
+}
+
 			(function() {
 				if (!
 					/*@cc_on!@*/
@@ -71,6 +136,7 @@ a{text-decoration: none;}
 				while (i--) {
 					document.createElement(e[i]);
 				}
+				
 				//$.post("demo_test_post.asp",
 				  //{
 				    //name:"Donald Duck",
@@ -90,10 +156,11 @@ a{text-decoration: none;}
 			
 				getDataNewsList();
 				//alert(1);
+				showDiv();
 			});
 			//debugger;
 			function getDataNewsList(){
-				$.post("front_newsSpecialColumn.do",{start:0,limit:10},
+				$.post("/MyStock/front_newsSpecialColumn.do",{start:0,limit:10},
 						function(data,status){
 							data = eval("("+data+")");
 							insertNewsInfo(data.root);
@@ -121,7 +188,7 @@ a{text-decoration: none;}
 				src="img/logo_name.png" />
 			</a>
 			<div class="indexLogin_w">
-				<a href="login_goToLogin.do">登录</a>
+				<a href="/MyStock/login_goToLogin.do">登录</a>
 			</div>
 		</div>
 	</header>
@@ -254,5 +321,9 @@ a{text-decoration: none;}
 	<footer>
 		<p>©浙江大学求是学院学生服务平台</p>
 	</footer>
+<div id="popDiv" class="mydiv" style="display:none;">请使用IE9以上、火狐、谷歌、360（极速模式）浏览器<br/>
+	<a href="javascript:closeDiv()" style="font-size:16px;color:red;">关闭窗口</a>
+</div>
+<div id="bg" class="bg" style="display:none;"></div>	
 </body>
 </html>

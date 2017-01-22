@@ -2147,7 +2147,7 @@ public class MobileAction extends BaseAction{
 			usernum = std.getXh();
 			username = std.getXm();
 			classes = std.getClasses().getBjdm();
-			counsellor = std.getInstructor().getXm();
+			counsellor = std.getInstructor() != null ? std.getInstructor().getXm() : "";
 			dorm = std.getQsmc();
 			attendstudentphonenum = std.getPhone();
 			Attend attendIsOrNot = new Attend();
@@ -2385,7 +2385,7 @@ public class MobileAction extends BaseAction{
 				leaveInfo.setClassth(st.getHeadmaster().getXm());
 				leaveInfo.setBedroom(st.getQsmc());
 				leaveInfo.setRelationtel(st.getPhone());
-				leaveInfo.setCounsellor(st.getInstructor().getXm());
+				leaveInfo.setCounsellor(st.getInstructor().getXm() != null ? st.getInstructor().getXm() : "");
 				leaveInfo.setClasscode(st.getClasses().getBjdm());
 				leaveInfo.setParentsinfo(this.parentsinfo);
 				leaveInfo.setRulesstate("on");
@@ -2397,10 +2397,10 @@ public class MobileAction extends BaseAction{
 				if(this.id == null){
 				 //查询发送内容
 				  Sms  sms  = smsBiz.findById(5);
-				  String content = sms.getContent().replace("$(XM)", st.getInstructor().getXm());
+				  String content = sms.getContent().replace("$(XM)", st.getInstructor().getXm() != null ? st.getInstructor().getXm() : "");
 				
 				   //调用短息接口的方法
-			     SmsUtil.sendSms(st.getInstructor().getPhone(), content);
+			     SmsUtil.sendSms(st.getInstructor().getPhone() != null ? st.getInstructor().getPhone() : "", content);
 				}
 				
 				//获取数据判断是否是第一次新增记录表数据
@@ -2415,7 +2415,7 @@ public class MobileAction extends BaseAction{
 						log.setClassth(st.getHeadmaster().getXm());
 						log.setBedroom(st.getQsmc());
 						log.setRelationtel(st.getPhone());
-						log.setCounsellor(st.getInstructor().getXm());
+						log.setCounsellor(st.getInstructor().getXm() != null ? st.getInstructor().getXm() : "");
 						
 						log.setOperatTime(lg.getOperatTime());
 						log.setTotalnum(lg.getTotalnum());
@@ -2432,7 +2432,7 @@ public class MobileAction extends BaseAction{
 					log.setClassth(st.getHeadmaster().getXm());
 					log.setBedroom(st.getQsmc());
 					log.setRelationtel(st.getPhone());
-					log.setCounsellor(st.getInstructor().getXm());
+					log.setCounsellor(st.getInstructor().getXm() != null ? st.getInstructor().getXm() : "");
 					log.setOperatTime(new Date());
 					log.setTotalnum(this.totalnum);
 					//记录表数据

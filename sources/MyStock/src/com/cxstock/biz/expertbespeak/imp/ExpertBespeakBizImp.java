@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import com.cxstock.biz.expertbespeak.ExpertBespeakBiz;
 import com.cxstock.biz.expertbespeak.dto.StartExpertInfoDTO;
 import com.cxstock.biz.expertbespeak.dto.StudentbespeakDTO;
+import com.cxstock.biz.newfriends.dto.NewFriendsDTO;
 import com.cxstock.biz.power.dto.UserDTO;
 import com.cxstock.dao.BaseDAO;
 import com.cxstock.pojo.Expert;
@@ -527,6 +528,25 @@ public class ExpertBespeakBizImp implements ExpertBespeakBiz {
 		e.setSsyq(expert.getSsyq());
 		baseDao.saveOrUpdate(e);
 		return true;
+	}
+
+	@Override
+	public void findPageExpert(Page page, String[] property, Object[] value) {
+		String hql = "from Expert as model where 1=1 ";
+		if(property != null) {
+			for (int i = 0; i < property.length; i++) {
+				if (null != value[i]) {
+					hql += " and model." + property[i] + " like '%" + value[i]
+							+ "%'";
+				}
+			}
+		}
+		hql+=" order by zgh desc";
+		List list = baseDao.findByHql(hql, page.getStart(), page.getLimit());
+		int total = baseDao.count("Expert", property, value);
+		page.setRoot(list);
+		page.setTotal(total);
+		
 	}
 
 }

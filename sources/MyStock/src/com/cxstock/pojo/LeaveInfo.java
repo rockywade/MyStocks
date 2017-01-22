@@ -69,6 +69,8 @@ public class LeaveInfo implements java.io.Serializable{
 	private  String parentstel;
 	//学生守则说明标示：
 	private String rulesstate;
+	//医院证明图片
+	private String image;
 	
 	
 	public LeaveInfo() {
@@ -316,6 +318,14 @@ public class LeaveInfo implements java.io.Serializable{
 
 	public void setStudentnum(String studentnum) {
 		this.studentnum = studentnum;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	 

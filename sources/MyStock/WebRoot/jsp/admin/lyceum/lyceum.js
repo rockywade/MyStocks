@@ -11,7 +11,7 @@ Ext.onReady(function(){
 	];
 	
 	var store = new Ext.data.JsonStore({
-	    url: 'lyceum_findPageLyceum.do',
+	    url: '/MyStock/lyceum_findPageLyceum.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -67,7 +67,7 @@ Ext.onReady(function(){
 					Ext.MessageBox.confirm('删除提示', '是否删除该园区？', function(c) {
 					   if(c=='yes'){
 					   		Ext.Ajax.request({
-					   			url : "lyceum_deleteLyceum.do",
+					   			url : "/MyStock/lyceum_deleteLyceum.do",
 					   			params:{ id : record.get("id") },
 					   			success : function() {
 					   				store.reload();
@@ -123,7 +123,7 @@ Ext.onReady(function(){
 			handler : function() {
 				if (uForm.getForm().isValid()) {
 					uForm.getForm().submit({
-						url : 'lyceum_saveOrUpdateLyceum.do',
+						url : '/MyStock/lyceum_saveOrUpdateLyceum.do',
 						success : function(form, action) {
 							Ext.Msg.alert('信息提示',action.result.message);
 							uWindow.hide();

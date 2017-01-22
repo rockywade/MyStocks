@@ -34,6 +34,14 @@ public interface SiteInfoBiz {
 	public SiteInfo findSing(Integer id);
 	
 	/**
+	 * 根据场地siteid查询
+	 * 场地编号
+	 * @param siteid
+	 * @return
+	 */
+	public SiteInfo findBySiteid(String siteid);
+	
+	/**
 	 * 场地信息批量修改保存
 	 * @param pojo
 	 * @param siteid //审核/批量审核的条件

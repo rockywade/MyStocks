@@ -48,7 +48,7 @@ Ext.onReady(function(){
 						var datapath = f.findField("datapath").getValue();
 						if (datapath) {
 							Ext.Ajax.request({
-					   			url : "dataCopy_backup.do",
+					   			url : "/MyStock/dataCopy_backup.do",
 					   			params:{ datapath : datapath },
 					   			success : function(o) {
 						   			if(o.responseText=="true"){
@@ -98,7 +98,7 @@ Ext.onReady(function(){
 						}
 						if (datafile) {
 							Ext.Ajax.request({
-					   			url : "dataCopy_load.do",
+					   			url : "/MyStock/dataCopy_load.do",
 					   			params:{ datafile : datafile },
 					   			success : function(o) {
 						   			if(o.responseText=="true"){
@@ -143,7 +143,7 @@ Ext.onReady(function(){
 						var f = bfForm.getForm();
 						var delstate = f.findField("delstate").getValue();
 						Ext.Ajax.request({
-				   			url : "dataCopy_delete.do",
+				   			url : "/MyStock/dataCopy_delete.do",
 				   			params:{ delstate : delstate },
 				   			success : function(o) {
 					   			if(o.responseText=="true"){

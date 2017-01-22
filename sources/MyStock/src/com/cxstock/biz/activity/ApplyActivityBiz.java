@@ -47,7 +47,7 @@ public interface ApplyActivityBiz {
 	News findClazzById(String clazz, String findproperty, String idValue);
 
 	void findPageActivity(Page page, String[] property, String[] values,
-			String findstyle);
+			String findstyle, String ssyq);
 
 	void updateNews(News news);
 
@@ -201,7 +201,11 @@ public interface ApplyActivityBiz {
 	 * @return
 	 */
 	Attend findAttendByIds(String usernum, String activityid);
+	
+	Attend findAttend8Id(String id);
 
 
 	void deleteActivity(String activityid);
+	
+	void saveOrUpdateAttend(Attend attend);
 }

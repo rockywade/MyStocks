@@ -20,6 +20,7 @@ import com.cxstock.pojo.Student;
 import com.cxstock.pojo.Term;
 import com.cxstock.utils.pubutil.ComboData;
 import com.cxstock.utils.pubutil.Page;
+import com.cxstock.utils.system.DateUtil;
 
 public class ApplyActivityBizImp implements ApplyActivityBiz {
 
@@ -102,7 +103,7 @@ public class ApplyActivityBizImp implements ApplyActivityBiz {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void findPageApply(Page page, String[] property, String[] value, String ssyq) {
-		String sthql;
+		/*String sthql;
 		if(ssyq!=null && !ssyq.equals("")){
 			sthql = "from Student as model where model.ssyq = '"+ssyq+"'";
 		}else{
@@ -117,6 +118,7 @@ public class ApplyActivityBizImp implements ApplyActivityBiz {
 		String strList = idstr.substring(idstr.indexOf("[")+1, idstr.indexOf("]"));
 		List list = new ArrayList();
 		if(comenYqSt.size()>0){
+			
 			String hql = "from Activity as model where model.applystyle = '待审核' and model.studentnum in ("+strList+")";
 			for (int i = 0; i < property.length; i++) {
 				if (value[i]!=null) {
@@ -128,13 +130,36 @@ public class ApplyActivityBizImp implements ApplyActivityBiz {
 			String[] orderName = {"activitytime","signupendtime"};
 			String[] orderType = {"DESC","DESC"};
 			list = baseDao.findPageAndOrder(hql, orderName, orderType, page.getStart(), page.getLimit());
-			int total = baseDao.count(chql, orderName, orderType);
+			int total = baseDao.countBySql(chql);
 			page.setRoot(list);
 			page.setTotal(total);
 		}else{
 			page.setRoot(list);
 			page.setTotal(0);
+		}*/
+		String sql = null;
+		
+		if(ssyq!=null && !ssyq.equals("")){
+			sql = "from Activity as model, Student as stu where model.studentnum=stu.xh and stu.ssyq like '"+ssyq+ "%'";
+		}else{
+			sql = "from Activity as model, Student as stu where model.studentnum=stu.xh ";
 		}
+		for (int i = 0; i < property.length; i++) {
+			if (StringUtils.isNotBlank(value[i])) {
+				sql += " and model." + property[i] + " like '%" + value[i]
+						+ "%'";
+			}
+		}
+		
+		String chql = "select count(*) "+sql;
+		String[] orderName = {"activitytime","signupendtime"};
+		String[] orderType = {"DESC","DESC"};
+		List list = baseDao.findPageAndOrder("select model " + sql, orderName, orderType, page.getStart(), page.getLimit());
+		int total = baseDao.countBySql(chql);
+		page.setRoot(list);
+		page.setTotal(total);
+		
+		
 	}
 
 	/**
@@ -258,16 +283,27 @@ public class ApplyActivityBizImp implements ApplyActivityBiz {
 	 */
 	@SuppressWarnings("unchecked")
 	public void findPageActivity(Page page, String[] property, String[] values,
-			String findstyle) {
-		String hql = "from Activity as model where 1=1";
+			String findstyle, String ssyq) {
+		
+		String date = DateUtil.format(DateUtil.getBeforeDay(-7), DateUtil.PATTERN_CLASSICAL);
+				
+		String hql = null;
+		
+		if(ssyq!=null && !ssyq.equals("")){
+			hql = "from Activity as model, Student as stu where model.studentnum=stu.xh and stu.ssyq like '"+ssyq+ "%' and model.activitytime>='" + date + "' ";
+		}else{
+			hql = "from Activity as model, Student as stu where model.studentnum=stu.xh and model.activitytime>='" + date + "' ";;
+		}
 		for (int i = 0; i < property.length; i++) {
-			if(null!=values[i]){
+			if(StringUtils.isNotBlank(values[i])){
 				hql += " and model." + property[i] + " like '%"+values[i]+"%'";
 			}
 		}
-		hql +=" and model."+findstyle+"='未公示待审核'";
+		if(StringUtils.isNotBlank(findstyle)) {
+			hql +=" and model."+findstyle+"='未公示待审核'";
+		}
 		String hqlc = "select count(*) " + hql;
-		List list = baseDao.findByHql(hql, page.getStart(), page.getLimit());
+		List list = baseDao.findByHql("select model " +hql, page.getStart(), page.getLimit());
 		int total = baseDao.countQuery(hqlc);
 		page.setRoot(list);
 		page.setTotal(total);
@@ -625,6 +661,9 @@ public class ApplyActivityBizImp implements ApplyActivityBiz {
 		String hql = "from Attend as model where model.usernum = '"+usernum+"' and model.activityid = '"+activityid+"'";
 		return (Attend) baseDao.loadObject(hql);
 	}
+	public Attend findAttend8Id(String id) {
+		return (Attend) baseDao.loadById(Attend.class, id);
+	}
 
 
 
@@ -657,6 +696,14 @@ public class ApplyActivityBizImp implements ApplyActivityBiz {
 			}*/
 		}
 		
+	}
+	
+	public void saveOrUpdateAttend(Attend attend) {
+		try {
+			baseDao.saveOrUpdate(attend);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

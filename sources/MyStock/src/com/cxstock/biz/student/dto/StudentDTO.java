@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.cxstock.pojo.Attend;
 import com.cxstock.pojo.Classes;
 import com.cxstock.pojo.HeadMaster;
@@ -153,7 +155,7 @@ public class StudentDTO {
 					Iterator it = attends.iterator();
 					while(it.hasNext()){
 						at = (Attend)it.next();
-						if(null==inschoolterm){
+						if(StringUtils.isBlank(inschoolterm)){
 							sum += at.getGotscore();
 						}else{
 							if(at.getInschoolterm().equals(inschoolterm)){

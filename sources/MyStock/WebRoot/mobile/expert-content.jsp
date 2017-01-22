@@ -26,7 +26,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"mobile_expertInfo.do",
+					url:"/MyStock/mobile_expertInfo.do",
 					data:{id:eid},
 					success : function(data,status){
 						data = eval("("+data+")");

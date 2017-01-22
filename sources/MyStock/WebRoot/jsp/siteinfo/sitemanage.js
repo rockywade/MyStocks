@@ -12,7 +12,7 @@ Ext.onReady(function(){
 	
 	 //查询所有管理员（辅导员）下拉菜单
     var counsellorStore = new Ext.data.JsonStore({
-		url: 'SiteInfo_findSiteInfoComb.do',
+		url: '/MyStock/SiteInfo_findSiteInfoComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text']
@@ -24,7 +24,7 @@ Ext.onReady(function(){
     
     //查询所有所有园区下拉菜单  
     var parkStore = new Ext.data.JsonStore({
-		url: 'SiteInfo_findParkComb.do',
+		url: '/MyStock/SiteInfo_findParkComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text']
@@ -36,7 +36,7 @@ Ext.onReady(function(){
     
     //查询所有所有场地类型下拉菜单
     var groundTypeStore = new Ext.data.JsonStore({
-		url: 'SiteInfo_findGroundTypeComb.do',
+		url: '/MyStock/SiteInfo_findGroundTypeComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text']
@@ -133,7 +133,7 @@ Ext.onReady(function(){
 	
   	
 	  var store = new Ext.data.JsonStore({
-	          url: 'SiteInfo_findPageSiteInfoBy.do',
+	          url: '/MyStock/SiteInfo_findPageSiteInfoBy.do',
 	          root: 'root',
 	          totalProperty: 'total',
 	          autoLoad: {params:{start:0, limit:7,ifApproval:3}},
@@ -403,7 +403,7 @@ Ext.onReady(function(){
     var viewDo = function (grid, rowIndex){
  		var record = grid.getStore().getAt(rowIndex); 
  	   	var id = record.data.id;
- 	    var html = '<iframe src="SiteInfo_viewImg.do?id='+id+'" frameborder="0" width="100%"  height="100%"></iframe>';
+ 	    var html = '<iframe src="/MyStock/SiteInfo_viewImg.do?id='+id+'" frameborder="0" width="100%"  height="100%"></iframe>';
 			if(Ext.getCmp('viewPanel').body){
 				Ext.getCmp('viewPanel').body.update(html);
 			}else{
@@ -701,7 +701,7 @@ Ext.onReady(function(){
    
 			  if (addForm.getForm().isValid()) {
 					addForm.getForm().submit({
-						url : 'SiteInfo_saveOrUpdatest.do?activitydate='+activitydate+'& activitytime='+activitytime,
+						url : '/MyStock/SiteInfo_saveOrUpdatest.do?activitydate='+activitydate+'& activitytime='+activitytime,
 						success : function(form, action) {
 							Ext.Msg.alert('信息提示',action.result.message);
 							addWindow.hide();
@@ -810,7 +810,7 @@ Ext.onReady(function(){
    	Ext.MessageBox.confirm('取消提示', '是否取消该场地？', function(c) {
    	   if(c=='yes'){
 		   Ext.Ajax.request({
-		   	url : "SiteInfo_deleteSiteInfo.do",
+		   	url : "/MyStock/SiteInfo_deleteSiteInfo.do",
 		   	params:{ id : id },
 		   	success : function() {
 		   		store.reload();

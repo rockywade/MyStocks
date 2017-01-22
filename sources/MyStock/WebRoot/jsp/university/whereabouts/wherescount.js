@@ -8,7 +8,7 @@ Ext.onReady(function(){
 	
 	//班级下拉菜单
     var bjStore = new Ext.data.JsonStore({
-		url: 'Whereabouts_findClassesComb.do',
+		url: '/MyStock/Whereabouts_findClassesComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text'],
@@ -147,7 +147,7 @@ Ext.onReady(function(){
 	];
 	
     var store = new Ext.data.JsonStore({
-    	url: 'Whereabouts_wheresCount.do',
+    	url: '/MyStock/Whereabouts_wheresCount.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -189,7 +189,7 @@ Ext.onReady(function(){
         			var censusname = census.get("launchname");
     				Ext.MessageBox.confirm('提示', '确定导出去向信息吗？', function(ok) {
     				   if(ok=='yes'){
-    					   window.location.href="wheresExcel.do?censusid="+censusid+"&launchname="+censusname;
+    					   window.location.href="/MyStock/wheresExcel.do?censusid="+censusid+"&launchname="+censusname;
     				    }
     				});
         		}else{

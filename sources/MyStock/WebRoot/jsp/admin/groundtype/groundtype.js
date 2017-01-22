@@ -12,7 +12,7 @@ Ext.onReady(function(){
 	];
 	
 	var store = new Ext.data.JsonStore({
-	    url: 'groundType_findPageGroundType.do',
+	    url: '/MyStock/groundType_findPageGroundType.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -68,7 +68,7 @@ Ext.onReady(function(){
 					Ext.MessageBox.confirm('删除提示', '是否删除该场地类型？', function(c) {
 					   if(c=='yes'){
 					   		Ext.Ajax.request({
-					   			url : "groundType_deleteGroundType.do",
+					   			url : "/MyStock/groundType_deleteGroundType.do",
 					   			params:{ id : record.get("id") },
 					   			success : function() {
 					   				store.reload();
@@ -136,7 +136,7 @@ Ext.onReady(function(){
 			handler : function() {
 				if (uForm.getForm().isValid()) {
 					uForm.getForm().submit({
-						url : 'groundType_saveOrUpdateGroundType.do',
+						url : '/MyStock/groundType_saveOrUpdateGroundType.do',
 						success : function(form, action) {
 							Ext.Msg.alert('信息提示',action.result.message);
 							uWindow.hide();

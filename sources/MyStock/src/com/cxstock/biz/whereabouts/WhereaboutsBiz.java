@@ -33,7 +33,7 @@ public interface WhereaboutsBiz {
 	 * @param launchstyle
 	 * @return
 	 */
-	Wheresaboutslaunch findNeedWriteWheres(String todaytime,String launchstyle);
+	Wheresaboutslaunch findNeedWriteWheres(String todaytime,String launchstyle,String ssxy);
 	/**
 	 * 提交假日去向统计
 	 * @param wherecensus

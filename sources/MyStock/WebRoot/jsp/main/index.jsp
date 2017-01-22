@@ -41,7 +41,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"Applyactivity_getCurrentUserInfo.do",
+					url:"/MyStock/Applyactivity_getCurrentUserInfo.do",
 					data:{},
 					success : function(data,status){
 						data = eval("("+data+")");
@@ -63,15 +63,23 @@
 			
 			$(function(){
 				$("#wheresfact").change(function (){
-					if($("#wheresfact").val()=="留校" || $("#wheresfact").val()=="回家"){
+					if($("#wheresfact").val()=="留校"){
 						$("#mddtext").hide();
 						$("#stmdd").hide();
 						$("#stmdd").val($("#wheresfact").val());
+						$("#letttruntime").hide();
 						//alert($("#stmdd").val());
-					}else{
+					} else if($("#wheresfact").val()=="回家") {
+						$("#mddtext").hide();
+						$("#stmdd").hide();
+						$("#stmdd").val($("#wheresfact").val());
+						$("#letttruntime").show();
+					}
+					else{
 						$("#stmdd").val("");
 						$("#mddtext").show();
 						$("#stmdd").show();
+						$("#letttruntime").show();
 					}
 				});
 			});
@@ -82,7 +90,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"Whereabouts_findNeedWriteWheres.do",
+					url:"/MyStock/Whereabouts_findNeedWriteWheres.do",
 					data:{},
 					success : function(data,status){
 						data = eval("("+data+")");
@@ -185,7 +193,7 @@
 											if($("#readcheck").is(":checked")){
 												submitFlg = true;
 											}else{
-												alert("请先阅读《学生假期安全提心》");
+												alert("请先阅读《学生假期安全提醒》");
 												submitFlg = false;
 											}
 										}else{
@@ -193,12 +201,16 @@
 											submitFlg = false;
 										}
 									}else{
-										alert("返校时间不能为空!");
-										submitFlg = false;
+										if(wf != "留校") {
+											alert("返校时间不能为空!");
+											submitFlg = false;
+										}
 									}
 								}else{
-									alert("离校时间不能为空!");
-									submitFlg = false;
+									if(wf != "留校") {
+										alert("离校时间不能为空!");
+										submitFlg = false;
+									}
 								}
 							}else{
 								alert("紧急电话不能为空!");
@@ -216,7 +228,7 @@
 					if(submitFlg){
 						 $.ajax({
 					         type : "POST",
-			   			     url : "Whereabouts_whereAboutsCensus.do",
+			   			     url : "/MyStock/Whereabouts_whereAboutsCensus.do",
 			   			      data:{censususername:$("#stname").val(),censususernum:$("#stxh").val(),
 			   			    	launchid:$("#lanchid").val(),launchname:$("#jrname").val(),
 			   			    	holidaytime:$("#jrtime").val(),classes:$("#stbj").val(),
@@ -302,11 +314,11 @@
 				<tr>
 					<td align="right">班<i class="ikg1"></i>主<i class="ikg1"></i>任：
 					</td>
-					<td colspan="2"><input id="stinstor" type="text"
+					<td colspan="2"><input id="sthamor" type="text"
 						style="width: 80%" readonly="readonly"></td>
 					<td align="right">辅<i class="ikg1"></i>导<i class="ikg1"></i>员：
 					</td>
-					<td><input id="sthamor" type="text" style="width: 80%"
+					<td><input id="stinstor" type="text" style="width: 80%"
 						readonly="readonly"></td>
 				</tr>
 				<tr>
@@ -325,11 +337,11 @@
 					</td>
 				</tr>
 				<tr>
-					<td align="right">紧急电话：</td>
+					<td align="right">紧急联系电话：</td>
 					<td colspan="4"><input id="jinjiphone" type="text"
 						style="width: 91.5%" onblur="phoneNumCheck(120)"></td>
 				</tr>
-				<tr>
+				<tr id="letttruntime">
 					<td align="right">离校时间：</td>
 					<td colspan="2"><input id="lefttime" type="text"
 						class="applyFor_date"

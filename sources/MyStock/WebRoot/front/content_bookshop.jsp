@@ -16,7 +16,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"front_findSecondBookStore.do",
+					url:"/MyStock/front_findSecondBookStore.do",
 					data:{id:$("#storeid").val()},
 					success:function(data,status){
 						data = eval("("+data+")");
@@ -46,7 +46,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"front_findPageSecondBookStoreJudge.do",
+					url:"/MyStock/front_findPageSecondBookStoreJudge.do",
 					data:{start:start, limit:limit,storeid:$("#storeid").val()},
 					success:function(data,status){
 						data = eval("("+data+")");
@@ -72,7 +72,7 @@
 			}
 			
 			function updatePopularity(){
-				$.post("front_updateSecondBookStorePopularity.do",{id:$("#storeid").val()},
+				$.post("/MyStock/front_updateSecondBookStorePopularity.do",{id:$("#storeid").val()},
 					function(data,status){
 					}
 				);

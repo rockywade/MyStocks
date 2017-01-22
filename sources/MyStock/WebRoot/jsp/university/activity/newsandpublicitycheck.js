@@ -126,6 +126,15 @@ Ext.onReady(function(){
 							name:'signupendtime',
 							fieldLabel:'报名截止',
 							readOnly:true
+						},{
+							cls :'returnBtn',
+							width:75,
+							xtype:"button",
+							//style:'margin-top:25px',
+							text:"返<i class='ikg2'></i>回",
+							handler:function(){
+									   window.location.href="activitypublicity.jsp";
+							}
 						}]
 					}]
 				}]
@@ -167,7 +176,7 @@ Ext.onReady(function(){
 	
 	//获取response数据
 	var store = new Ext.data.JsonStore({
-	    url: 'Applyactivity_activityManageAttendList.do',
+	    url: '/MyStock/Applyactivity_activityManageAttendList.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -187,7 +196,12 @@ Ext.onReady(function(){
 			    {header:'联系电话',width:100,align:'center',dataIndex:'attendstudentphonenum'},
 			    {header:'寝室',width:100,align:'center',dataIndex:'dorm'},
 			    {header:'签到',width:100,align:'center',dataIndex:'state'},
-			    {header:'所加分数',width:100,align:'center',dataIndex:'gotscore'},
+			    {header:'所加分数',width:100,align:'center',dataIndex:'gotscore',
+	              renderer:function(value, metaData, record, rowIndex, colIndex, store, view){
+		            	var returnStr = "<a href='javascript:void(0)' onclick='updateGotscore("+rowIndex+")'>" +value+"</a>";
+		                return returnStr;
+	              }
+			    },
 	        ]
         }),
         rownumber:rownumber,//checkbox
@@ -202,7 +216,7 @@ Ext.onReady(function(){
         	handler:function(){
         		var activityid = Ext.getCmp("activityid").getValue();
         		Ext.Ajax.request({
-					url:'Applyactivity_newsDetail.do',
+					url:'/MyStock/Applyactivity_newsDetail.do',
 					params:{activityid:activityid},
 					success:function(response){
 		    			var responsedata = Ext.util.JSON.decode(response.responseText);
@@ -222,41 +236,49 @@ Ext.onReady(function(){
         },'-',{
         	text:'允许公示',
         	handler:function(){
-        		var activityid = Ext.getCmp("activityid").getValue();
-				Ext.MessageBox.confirm('公示提示', '确定通过该活动审核并参与公示吗？', function(ok) {
-				   if(ok=='yes'){
-				   		Ext.Ajax.request({
-				   			url : "Applyactivity_publishActivity.do",
-				   			params:{ activityid : activityid,pulishkey:'1'},
-				   			success : function(response) {
-				   				var responsedata = Ext.util.JSON.decode(response.responseText);
-				   				Ext.Msg.alert('信息提示',responsedata.message,function(){
-				   					window.location.href="activitypublicity.jsp";
-				   				});
-				   				//store.reload();
-				   			}
-				   		});
-				    }
-				});
+        		if(store.getCount() != 0) {
+        			var activityid = Ext.getCmp("activityid").getValue();
+        			Ext.MessageBox.confirm('公示提示', '确定通过该活动审核并参与公示吗？', function(ok) {
+        				if(ok=='yes'){
+        					Ext.Ajax.request({
+        						url : "/MyStock/Applyactivity_publishActivity.do",
+        						params:{ activityid : activityid,pulishkey:'1'},
+        						success : function(response) {
+        							var responsedata = Ext.util.JSON.decode(response.responseText);
+        							Ext.Msg.alert('信息提示',responsedata.message,function(){
+        								window.location.href="activitypublicity.jsp";
+        							});
+        							//store.reload();
+        						}
+        					});
+        				}
+        			});
+        		} else {
+        			 Ext.Msg.alert("提示", "学生没提交公示，不允许公示");
+        		}
 			}
         },'-',{
         	text:'不允许公示',
         	handler:function(){
-        		var activityid = Ext.getCmp("activityid").getValue();
-				Ext.MessageBox.confirm('公示提示', '确定该活动不允许公示吗？', function(ok) {
-				   if(ok=='yes'){
-				   		Ext.Ajax.request({
-				   			url : "Applyactivity_publishActivity.do",
-				   			params:{ activityid : activityid,pulishkey:'2'},
-				   			success : function(response) {
-				   				var responsedata = Ext.util.JSON.decode(response.responseText);
-				   				Ext.Msg.alert('信息提示',responsedata.message,function(){
-				   					window.location.href="activitypublicity.jsp";
-				   				});
-				   			}
-				   		});
-				    }
-				});
+        		if(store.getCount() != 0) {
+        			var activityid = Ext.getCmp("activityid").getValue();
+        			Ext.MessageBox.confirm('公示提示', '确定该活动不允许公示吗？', function(ok) {
+        				if(ok=='yes'){
+        					Ext.Ajax.request({
+        						url : "/MyStock/Applyactivity_publishActivity.do",
+        						params:{ activityid : activityid,pulishkey:'2'},
+        						success : function(response) {
+        							var responsedata = Ext.util.JSON.decode(response.responseText);
+        							Ext.Msg.alert('信息提示',responsedata.message,function(){
+        								window.location.href="activitypublicity.jsp";
+        							});
+        						}
+        					});
+        				}
+        			});
+        		} else {
+        			 Ext.Msg.alert("提示", "学生没提交公示，不允许公示");
+        		}
 			}
         }],
         bbar: new Ext.PagingToolbar({
@@ -283,7 +305,7 @@ Ext.onReady(function(){
 		layout : 'form',
 		//baseCls:'x-plain',
 		frame:true,
-		url :'Applyactivity_submitNews.do',
+		url :'/MyStock/Applyactivity_submitNews.do',
 		labelWidth:60,
 		border : false,
 		padding : '15 10 0 8',
@@ -416,7 +438,7 @@ Ext.onReady(function(){
     //获取活动详情
     var getActivityDetail = function(){
     	Ext.Ajax.request({
-    		url:"Applyactivity_activityDetail.do",
+    		url:"/MyStock/Applyactivity_activityDetail.do",
     		success:function(response){
     			var responsedata = Ext.util.JSON.decode(response.responseText);
     			if(responsedata){
@@ -462,4 +484,75 @@ Ext.onReady(function(){
 			}
 		}
 	});
+    fungrid = grid;
 });
+var fungrid;
+
+var updateGotscore = function(rowIndex){
+	
+    var updateScoreForm = new Ext.FormPanel({
+		layout : 'form',
+		//baseCls:'x-plain',
+		frame:true,
+		url :'/MyStock/Applyactivity_updateGotscore.do',
+		labelWidth:60,
+		border : false,
+		padding : '15 10 0 8',
+		defaults : {
+			anchor : '100%'
+		},
+		items:[{
+			xtype : 'textfield',
+			name:'sscore',
+			fieldLabel:'所加分数',
+			anchor : '97.5%',
+			allowBlank : false,
+			regex:/^[-+]?[\d]+$/,
+			regexText:'请输入正确的整数',
+		},{
+			xtype:'hidden',
+			name:'activityid'
+		}]
+	});
+    
+    //添加form窗口
+    var updateScoreWindow = new Ext.Window({
+		title : '所加分数',
+		width:300,
+		height:200,
+		closeAction:'hide',
+		modal : true,
+		layout : 'fit',
+		buttonAlign : 'center',
+		items : [updateScoreForm],
+		buttons : [{
+			text : '确认所加',
+			handler : function() {
+				if (updateScoreForm.getForm().isValid()) {
+					updateScoreForm.getForm().submit({
+						success : function(form, action) {
+							Ext.Msg.alert('信息提示',action.result.message);
+							updateScoreWindow.hide();
+							fungrid.getStore().reload();
+						},
+						failure : function(form, action) {
+							if(action.result.errors){
+								Ext.Msg.alert('信息提示',action.result.errors);
+							}else{
+								Ext.Msg.alert('信息提示','连接失败');
+							}
+						},
+						waitTitle : '提交',
+						waitMsg : '正在保存数据，稍后...'
+					});
+				}
+			}
+		}]
+	});
+    
+    var record = fungrid.getStore().getAt(rowIndex);
+    
+	updateScoreForm.getForm().findField('sscore').setValue(record.data.gotscore);
+	updateScoreForm.getForm().findField('activityid').setValue(record.data.id);
+	updateScoreWindow.show();
+};

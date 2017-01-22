@@ -84,7 +84,7 @@ public class RoleBizImpl implements RoleBiz {
 	 * @see com.cxstock.biz.power.RoleBiz#findRoleMenu()
 	 */
 	public List findRoleMenu(Integer roleid) {
-		String hql = "from Menu order by ordernum";
+		String hql = "from Menu where menuid != 20 order by ordernum";
 		List menuList = baseDao.findByHql(hql);
 		hql = "select t.menu from Rolemenu as t where t.role.roleid="+roleid;
 		List roleMenuList = baseDao.findByHql(hql);

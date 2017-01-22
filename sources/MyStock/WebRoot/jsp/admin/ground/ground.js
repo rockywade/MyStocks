@@ -81,7 +81,7 @@ Ext.onReady(function(){
 	
 	
 	var store = new Ext.data.JsonStore({
-	    url: 'ground_findPageGround.do',
+	    url: '/MyStock/ground_findPageGround.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -144,7 +144,7 @@ Ext.onReady(function(){
 					Ext.MessageBox.confirm('删除提示', '是否删除该场地？', function(c) {
 					   if(c=='yes'){
 					   		Ext.Ajax.request({
-					   			url : "ground_deleteGround.do",
+					   			url : "/MyStock/ground_deleteGround.do",
 					   			params:{ groundid : record.get("groundid") },
 					   			success : function() {
 					   				store.reload();
@@ -166,7 +166,7 @@ Ext.onReady(function(){
     var addForm = new Ext.FormPanel({
 		layout : 'form',
 		baseCls:'x-plain',
-		url : 'ground_saveOrUpdateGround.do',
+		url : '/MyStock/ground_saveOrUpdateGround.do',
         fileUpload:true,  
 		labelWidth:70,
 		border : false,

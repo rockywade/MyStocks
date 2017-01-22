@@ -38,7 +38,7 @@ var IndexPage = Ext.extend(Ext.Viewport, {
 	loadMenu : function(){
 		//var toolBar = Ext.getCmp("top-toolbar");
 		Ext.Ajax.request({
-			url : "user_getMenuBuf.do",
+			url : "/MyStock/user_getMenuBuf.do",
             scope: this,
 			success : function(response, options) {
 				var menudata = response.responseText;

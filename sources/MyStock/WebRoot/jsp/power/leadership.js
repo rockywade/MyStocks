@@ -90,7 +90,7 @@ Ext.onReady(function(){
 	];
 	
 	var store = new Ext.data.JsonStore({
-	    url: 'leaderShip_findPageLeaderShip.do',
+	    url: '/MyStock/leaderShip_findPageLeaderShip.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -115,7 +115,7 @@ Ext.onReady(function(){
 	                		Ext.MessageBox.confirm('重置密码提示', '是否为该用户重置密码？', function(c) {
 	     					   if(c=='yes'){
 	     					   		Ext.Ajax.request({
-	     					   			url : "user_resetPwd.do",
+	     					   			url : "/MyStock/user_resetPwd.do",
 	     					   			params:{ logincode : record.data.xh },
 	     					   			success : function() {
 	     					   				Ext.Msg.alert('信息提示','重置成功');
@@ -176,7 +176,7 @@ Ext.onReady(function(){
                                }   
                            } 
 					   		Ext.Ajax.request({
-					   			url : "leaderShip_deleteLeaderShips.do",
+					   			url : "/MyStock/leaderShip_deleteLeaderShips.do",
 					   			params:{ ids : ids },
 					   			success : function() {
 					   				store.reload();
@@ -274,7 +274,7 @@ Ext.onReady(function(){
 			handler : function() {
 				if (uForm.getForm().isValid()) {
 					uForm.getForm().submit({
-						url : 'leaderShip_saveOrUpdateLeaderShip.do',
+						url : '/MyStock/leaderShip_saveOrUpdateLeaderShip.do',
 						success : function(form, action) {
 							Ext.Msg.alert('信息提示',action.result.message);
 							uWindow.hide();

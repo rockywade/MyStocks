@@ -91,7 +91,7 @@ Ext.onReady(function(){
 	];
 	
 	var store = new Ext.data.JsonStore({
-	    url: 'instructor_findPageInstructor.do',
+	    url: '/MyStock/instructor_findPageInstructor.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -121,7 +121,7 @@ Ext.onReady(function(){
 	                        var record = store.getAt(rowIndex);
 	                        var zgh = record.get('zgh')
 	                    	roleMenuWindow.show(null,function(){
-	    						tree.loader.dataUrl = '../userMenu_findUserMenu.do?zgh='+ zgh
+	    						tree.loader.dataUrl = '/MyStock/userMenu_findUserMenu.do?zgh='+ zgh
 	    						tree.getLoader().load(tree.root, function() {
 	    							tree.root.expand(true, true);
 	    						});
@@ -135,7 +135,7 @@ Ext.onReady(function(){
 	                		Ext.MessageBox.confirm('重置密码提示', '是否为该用户重置密码？', function(c) {
 	     					   if(c=='yes'){
 	     					   		Ext.Ajax.request({
-	     					   			url : "user_resetPwd.do",
+	     					   			url : "/MyStock/user_resetPwd.do",
 	     					   			params:{ logincode : record.data.xh },
 	     					   			success : function() {
 	     					   				Ext.Msg.alert('信息提示','重置成功');
@@ -170,7 +170,7 @@ Ext.onReady(function(){
         	text:'修改',
         	iconCls:'btn-edit',
         	handler: function(){
-        		var record= grid.getSelectionModel().getSelecteds(); 
+        		var record= grid.getSelectionModel().getSelected(); 
 				if(!record){
                 	Ext.Msg.alert('信息提示','请选择要修改的数据');
 				}else{
@@ -196,7 +196,7 @@ Ext.onReady(function(){
                                }   
                            } 
 					   		Ext.Ajax.request({
-					   			url : "instructor_deleteInstructors.do",
+					   			url : "/MyStock/instructor_deleteInstructors.do",
 					   			params:{ ids : ids },
 					   			success : function() {
 					   				store.reload();
@@ -260,7 +260,7 @@ Ext.onReady(function(){
 					menuids += childNodes[i].id;
 				}
 				Ext.Ajax.request({
-		   			url : "userMenu_saveUserMenu.do",
+		   			url : "/MyStock/userMenu_saveUserMenu.do",
 		   			params:{ 
 		   				zgh : roleMenuWindow.zgh, 
 		   				menuids : menuids 
@@ -283,7 +283,7 @@ Ext.onReady(function(){
 	});
     
     var classesStore = new Ext.data.JsonStore({
-	    url: 'classes_findClassesBySsyq.do',
+	    url: '/MyStock/classes_findClassesBySsyq.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: false,  
@@ -376,7 +376,7 @@ Ext.onReady(function(){
 				valueField :'value',
 				displayField: 'text',
 				emptyText: '请选择',
-				allowBlank : false,
+				allowBlank : true,
 				editable : false,
 				store : classesStore
 			},{
@@ -399,7 +399,7 @@ Ext.onReady(function(){
 			handler : function() {
 				if (uForm.getForm().isValid()) {
 					uForm.getForm().submit({
-						url : 'instructor_saveOrUpdateInstructor.do',
+						url : '/MyStock/instructor_saveOrUpdateInstructor.do',
 						success : function(form, action) {
 							Ext.Msg.alert('信息提示',action.result.message);
 							uWindow.hide();

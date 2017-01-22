@@ -70,7 +70,7 @@ a{text-decoration: none;}
 				$.ajax({
 					type : "post", 
 					async : false, 
-					url:"front_findPageDtumInfo.do",
+					url:"/MyStock/front_findPageDtumInfo.do",
 					data:{start:start, limit:limit,datumname:datumname,shareman:shareman},
 					success:function(data,status){
 						data = eval("("+data+")");
@@ -132,7 +132,7 @@ a{text-decoration: none;}
 			
 			//未登录 去登录页面
 			function golog(){
-				window.location.href="login_goToLogin.do?url=../datuminfo/datuminfoStudent.jsp";
+				window.location.href="/MyStock/login_goToLogin.do?url=../datuminfo/datuminfoStudent.jsp";
 			}
 	    </script>
 </head>

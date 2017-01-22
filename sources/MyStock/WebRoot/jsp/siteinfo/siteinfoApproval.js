@@ -15,7 +15,7 @@ Ext.onReady(function(){
 	
 	 //查询所有所有 所属组织下拉菜单
     var orgaCombStore = new Ext.data.JsonStore({
-		url: 'SiteInfo_findOrgaComb.do',
+		url: '/MyStock/SiteInfo_findOrgaComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text'],
@@ -31,7 +31,7 @@ Ext.onReady(function(){
     
     //查询所有所有园区下拉菜单  
     var parkStore = new Ext.data.JsonStore({
-		url: 'SiteInfo_findParkComb.do',
+		url: '/MyStock/SiteInfo_findParkComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text']
@@ -43,7 +43,7 @@ Ext.onReady(function(){
     
     //查询所有所有场地类型下拉菜单
     var groundTypeStore = new Ext.data.JsonStore({
-		url: 'SiteInfo_findGroundTypeComb.do',
+		url: '/MyStock/SiteInfo_findGroundTypeComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text']
@@ -384,7 +384,7 @@ Ext.onReady(function(){
 	 var enddate = Ext.getCmp("enddate").getValue();
 	  
 	  var store = new Ext.data.JsonStore({
-	          url: 'SiteInfo_findPageApplySiteInfo.do',
+	          url: '/MyStock/SiteInfo_findPageApplySiteInfo.do',
 	          root: 'root',
 	          totalProperty: 'total',
 	          autoLoad: {params:{start:0, limit:15,startdate:startdate,enddate:enddate}},
@@ -650,7 +650,7 @@ Ext.onReady(function(){
      var viewDo = function (grid, rowIndex){
     		var record = grid.getStore().getAt(rowIndex); 
     	   	var id = record.data.id;
-    	    var html = '<iframe src="SiteInfo_viewImg.do?id='+id+'" frameborder="0" width="100%"  height="100%"></iframe>';
+    	    var html = '<iframe src="/MyStock/SiteInfo_viewImg.do?id='+id+'" frameborder="0" width="100%"  height="100%"></iframe>';
 			if(Ext.getCmp('viewPanel').body){
 				Ext.getCmp('viewPanel').body.update(html);
 			}else{
@@ -697,7 +697,7 @@ Ext.onReady(function(){
      //根据登录者获取登录的数据
  	var getModle = function(){
  		Ext.Ajax.request({
-    			url : "LeaveInfo_goAddOrUpateLeaveInfo.do",
+    			url : "/MyStock/LeaveInfo_goAddOrUpateLeaveInfo.do",
     		    success : function(o) {
  				  var data = Ext.util.JSON.decode(o.responseText);
     				if(o.responseText){
@@ -1133,24 +1133,24 @@ Ext.onReady(function(){
 					//value:'8:00-9:00',
 					maxLength :48
 				},{
-					xtype : 'combo',
+					xtype : 'textfield',
 					name:'beorganize',
 					id:'beorganize',
 					fieldLabel:'所在组织',
-					mode: 'local',
-					triggerAction: 'all',
-					valueField :'value',
-					displayField: 'text',
-					allowBlank : true,
-					editable : false,
-					store : orgaCombStore,
+					//mode: 'local',
+					//triggerAction: 'all',
+					//valueField :'value',
+					//displayField: 'text',
+					allowBlank : true
+					//editable : false,
+					//store : orgaCombStore,
 					//value:'---请选择---',
-					emptyText: '全部',
-					listeners:{
-						select : function(a,b){
-					    addForm.getForm().findField("beorganize").setValue(b.data.text);
-						}
-					}
+					//emptyText: '全部',
+					//listeners:{
+					//	select : function(a,b){
+					//    addForm.getForm().findField("beorganize").setValue(b.data.text);
+					//	}
+					//}
 				},{
 					xtype : 'textfield',
 					name:'sitemodle',
@@ -1524,7 +1524,7 @@ Ext.onReady(function(){
 		       Ext.MessageBox.confirm('数据提示', '确定保存该数据吗？', function(c) {
 		    	   if(c=='yes'){
 		            Ext.Ajax.request({
-					   		url : 'SiteInfo_saveOrUpdateSiteInfoLog.do',
+					   		url : '/MyStock/SiteInfo_saveOrUpdateSiteInfoLog.do',
 						   	params:{
 						    id : record.data.id,
 						    sitecondition:sitecondition,

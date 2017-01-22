@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"front_findOnlineQA.do",
+					url:"/MyStock/front_findOnlineQA.do",
 					data:{id:$("#id").val()},
 					success:function(data,status){
 						data = eval("("+data+")");
@@ -71,7 +71,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"onlineQAJudge_findPageOnlineQAJudge.do",
+					url:"/MyStock/onlineQAJudge_findPageOnlineQAJudge.do",
 					data:{start:start, limit:limit,qaid:document.getElementById("id").value},
 					success :function(data,status){
 						data = eval("("+data+")");
@@ -115,7 +115,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					alert("请填写评论内容");
 					return false;
 				}
-				$.post("onlineQAJudge_saveOrUpdateOnlineQAJudge.do",{qaid:document.getElementById("id").value, content:UE.getEditor('judgeContent').getContent()},
+				$.post("/MyStock/onlineQAJudge_saveOrUpdateOnlineQAJudge.do",{qaid:document.getElementById("id").value, content:UE.getEditor('judgeContent').getContent()},
 					function(data,status){
 						alert("评论成功");
 						UE.getEditor('judgeContent').setContent("");
@@ -125,7 +125,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			
 			function updatePopularity(){
-				$.post("front_updateOnlineQAPopularity.do",{id:$("#id").val()},
+				$.post("/MyStock/front_updateOnlineQAPopularity.do",{id:$("#id").val()},
 					function(data,status){
 					}
 				);

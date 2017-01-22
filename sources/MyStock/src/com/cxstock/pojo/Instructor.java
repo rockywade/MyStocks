@@ -52,6 +52,13 @@ public class Instructor implements Serializable {
 		this.id = id;
 		this.iclass = iclass;
 	}
+	public Instructor(Integer id,String zgh,String xm,String xb,String phone){
+		this.zgh = zgh;
+		this.xm = xm;
+		this.xb = xb;
+		this.phone = phone;
+		this.id = id;
+	}
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

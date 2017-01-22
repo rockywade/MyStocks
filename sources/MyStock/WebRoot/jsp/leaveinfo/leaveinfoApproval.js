@@ -1,4 +1,8 @@
 
+function showImg(value){
+	return "<img src='"+value+"'  id='imgsrc' height='50'/>";
+}
+
 /**
  * 请假审核
  */
@@ -8,7 +12,7 @@ Ext.onReady(function(){
 	
 	 //查询所有所有班级
     var ClassStore = new Ext.data.JsonStore({
-		url: 'LeaveInfo_findClassComb1.do',
+		url: '/MyStock/LeaveInfo_findClassComb1.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text']
@@ -145,6 +149,7 @@ Ext.onReady(function(){
 	            { name:'leavetime', type:'string'},
 	            { name:'backsctime',type:'string'},
 	            { name:'daysum', type:'int'},
+	            { name:'image', type:'string'},
 	            { name:'parentsinfo', type:'string'},
 	            { name:'rulesstate', type:'string'},
 	            { name:'tutorstatus', type:'string'},
@@ -159,7 +164,7 @@ Ext.onReady(function(){
 	
 	var store = new Ext.data.JsonStore({
 		  //url: 'LeaveInfo_findPageLeaveInfo.do',
-		 url: 'LeaveInfo_findPageLeaveInfo1.do',
+		 url: '/MyStock/LeaveInfo_findPageLeaveInfo1.do',
 		 root: 'root',
 		 totalProperty: 'total',
 		 autoLoad: {params:{start:0, limit:15,ifApproval:3}},
@@ -179,9 +184,9 @@ Ext.onReady(function(){
 			    {header: '姓名', width:100, align:'center', dataIndex: 'studentname'},
 			    {header: '学号',  width:100, align:'center', dataIndex: 'studentnum'},
 			    {header: '请假事由',  width: 250, align:'center', dataIndex: 'leavereason'},
-			    {header: '离校时间',  width: 200, align:'center', dataIndex: 'leavetime'},
-	            {header: '返校时间',  width: 200, align:'center', dataIndex: 'backsctime'},
-			    {header: '天数',  width: 80, align:'center', dataIndex: 'daysum'},
+			    {header: '离校时间',  width: 150, align:'center', dataIndex: 'leavetime'},
+	            {header: '返校时间',  width: 150, align:'center', dataIndex: 'backsctime'},
+			    {header: '天数',  width: 50, align:'center', dataIndex: 'daysum'},
 			    {header: '父母知情',  width: 100, align:'center', dataIndex: 'parentsinfo',renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
 		               if(value == '是') { 
 	                        return "<span style='color:green;font-weight:bold;'>是</span>"
@@ -190,7 +195,8 @@ Ext.onReady(function(){
 	                      return "<span style='color:red;font-weight:bold;'>否</span>"
 	                   }   
 	               }},
-			    {header: '累计次数',  width: 120, align:'center', dataIndex: 'totalnum'},
+	            {header: '医院证明', width: 150,align:'center', dataIndex: 'image',renderer:showImg},   
+			    {header: '累计次数',  width: 100, align:'center', dataIndex: 'totalnum'},
 	            {header: '状态', width: 80,align:'center', dataIndex: 'status',renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
               	  if(value == '待审核') { 
                       return "<span style='color:blue;font-weight:bold;'>待审核</span>"
@@ -410,7 +416,7 @@ Ext.onReady(function(){
 	    	  Ext.MessageBox.confirm('审核提示', '确定同意该审核？', function(c) {
 	    		  if(c=='yes'){
 					 Ext.Ajax.request({
-					  url : "LeaveInfo_saveOrUpdate.do",
+					  url : "/MyStock/LeaveInfo_saveOrUpdate.do",
 					  params:{
 					  ifApproval:"0",
 						id : record.data.id,
@@ -451,7 +457,7 @@ Ext.onReady(function(){
 	    	 Ext.MessageBox.confirm('审核提示', '确定不同意该审核？', function(c) {
 	    		 if(c=='yes'){
 					 Ext.Ajax.request({
-					  url : "LeaveInfo_saveOrUpdate.do",
+					  url : "/MyStock/LeaveInfo_saveOrUpdate.do",
 					  params:{
 					   ifApproval:"1",
 					   id : record.data.id,

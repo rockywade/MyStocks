@@ -5,7 +5,7 @@
 			<img src="img/logo_name.png" />
 		</a>
 		<div class="indexLogin_w">
-			<a href="login_goToLogin.do">登录</a>
+			<a href="/MyStock/login_goToLogin.do">登录</a>
 		</div>
 	</div>
 </header>

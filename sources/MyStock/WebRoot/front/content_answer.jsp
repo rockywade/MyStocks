@@ -16,7 +16,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"front_findOnlineQA.do",
+					url:"/MyStock/front_findOnlineQA.do",
 					data:{id:$("#qaid").val()},
 					success:function(data,status){
 						data = eval("("+data+")");
@@ -47,7 +47,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"front_findPageOnlineQAJudge.do",
+					url:"/MyStock/front_findPageOnlineQAJudge.do",
 					data:{start:start, limit:limit,qaid:$("#qaid").val()},
 					success:function(data,status){
 						data = eval("("+data+")");
@@ -73,7 +73,7 @@
 			}
 			
 			function updatePopularity(){
-				$.post("front_updateOnlineQAPopularity.do",{id:$("#qaid").val()},
+				$.post("/MyStock/front_updateOnlineQAPopularity.do",{id:$("#qaid").val()},
 					function(data,status){
 					}
 				);

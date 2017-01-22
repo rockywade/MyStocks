@@ -17,7 +17,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"front_findPageSecondBookStore.do",
+					url:"/MyStock/front_findPageSecondBookStore.do",
 					data:{start:start, limit:limit,key:onlineoakey,storeType:storeType,key: $("#key").val()},
 					success:function(data,status){
 						data = eval("("+data+")");
@@ -81,7 +81,7 @@
 			}
 			
 			function publish(){
-				window.location.href="front_goToLogin.do?url=../secondbookstore/secondbookstore.jsp";
+				window.location.href="/MyStock/front_goToLogin.do?url=../secondbookstore/secondbookstore.jsp";
 			}
 	    </script>
 </head>

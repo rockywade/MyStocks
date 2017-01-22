@@ -16,7 +16,7 @@ Ext.onReady(function(){
 			var expertType = record.get("expertType");
 			//alert(eid);
 			sbStudentstore.load({
-				url: 'Expertbespeak_sbStudents.do',
+				url: '/MyStock/Expertbespeak_sbStudents.do',
 		        params:{start:0,limit:15,experttype:expertType},
 		        scope:this
 	    	});
@@ -124,7 +124,7 @@ Ext.onReady(function(){
 	];
 
 	var store = new Ext.data.JsonStore({
-	    url: 'expert_findPageExpert.do',
+	    url: '/MyStock/expert_findPageExpert.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -132,7 +132,7 @@ Ext.onReady(function(){
 	});
 	
 	var storeDetail = new Ext.data.JsonStore({
-	    url: 'Expertbespeak_expertSB.do',
+	    url: '/MyStock/Expertbespeak_expertSB.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: false,
@@ -140,7 +140,7 @@ Ext.onReady(function(){
 	});
 	
 	var sbStudentstore = new Ext.data.JsonStore({
-	    url: 'Expertbespeak_sbStudents.do',
+	    url: '/MyStock/Expertbespeak_sbStudents.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: false,
@@ -153,7 +153,7 @@ Ext.onReady(function(){
     	record = grid.getStore().getAt(rowIndex);
     	var eid = record.get("id");
     	storeDetail.load({
-    		url: 'Expertbespeak_expertSB.do',
+    		url: '/MyStock/Expertbespeak_expertSB.do',
 	        params:{start:0,limit:15,id:eid},
 	        scope:this
     	});
@@ -196,7 +196,7 @@ Ext.onReady(function(){
 	                		Ext.MessageBox.confirm('重置密码提示', '是否为该用户重置密码？', function(c) {
 	     					   if(c=='yes'){
 	     					   		Ext.Ajax.request({
-	     					   			url : "user_resetPwd.do",
+	     					   			url : "/MyStock/user_resetPwd.do",
 	     					   			params:{ logincode : record.data.xh },
 	     					   			success : function() {
 	     					   				Ext.Msg.alert('信息提示','重置成功');
@@ -257,7 +257,7 @@ Ext.onReady(function(){
                                }   
                            } 
 					   		Ext.Ajax.request({
-					   			url : "expert_deleteExpers.do",
+					   			url : "/MyStock/expert_deleteExpers.do",
 					   			params:{ ids : ids },
 					   			success : function() {
 					   				store.reload();
@@ -454,7 +454,7 @@ Ext.onReady(function(){
         		var v = Ext.getCmp("serchid").getValue();
         		var expertType = record.get("expertType");
         		sbStudentstore.load({
-    				url: 'Expertbespeak_sbStudents.do',
+    				url: '/MyStock/Expertbespeak_sbStudents.do',
     		        params:{start:0,limit:15,experttype:expertType,xm:v},
     		        scope:this
     	    	});
@@ -502,7 +502,7 @@ Ext.onReady(function(){
 				});
 				if(stidArray.length>0){
 					Ext.Ajax.request({
-			    		url:"Expertbespeak_updateAllotExpertForStd.do",
+			    		url:"/MyStock/Expertbespeak_updateAllotExpertForStd.do",
 			    		params:{ id:eid,stidArray:Ext.encode(stidArray)},
 			    		success:function(response){
 			    			var responsedata = Ext.util.JSON.decode(response.responseText);
@@ -662,7 +662,7 @@ Ext.onReady(function(){
 			handler : function() {
 				if (uForm.getForm().isValid()) {
 					uForm.getForm().submit({
-						url : 'expert_saveOrUpdateExpertByAdmin.do',
+						url : '/MyStock/expert_saveOrUpdateExpertByAdmin.do',
 						success : function(form, action) {
 							Ext.Msg.alert('信息提示',action.result.message);
 							uWindow.hide();
@@ -692,7 +692,7 @@ Ext.onReady(function(){
 	var getESBInfo = function(eid){
 		//alert(eid);
     	Ext.Ajax.request({
-    		url:"Expertbespeak_getESBDetailInfo.do",
+    		url:"/MyStock/Expertbespeak_getESBDetailInfo.do",
     		params:{ id :eid },
     		success:function(response){
     			var responsedata = Ext.util.JSON.decode(response.responseText);

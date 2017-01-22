@@ -21,7 +21,7 @@
 				var d = null;
 			        $.ajax({
 			         type : "POST",
-	   			      url : "front_newsDetail.do",
+	   			      url : "/MyStock/front_newsDetail.do",
 	   			      data:{
 					      newsid:id
 				        },

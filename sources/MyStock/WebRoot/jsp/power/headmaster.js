@@ -91,7 +91,7 @@ Ext.onReady(function(){
 	];
 	
 	var store = new Ext.data.JsonStore({
-	    url: 'headMaster_findPageHeadMaster.do',
+	    url: '/MyStock/headMaster_findPageHeadMaster.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -116,7 +116,7 @@ Ext.onReady(function(){
 	                		Ext.MessageBox.confirm('重置密码提示', '是否为该用户重置密码？', function(c) {
 	     					   if(c=='yes'){
 	     					   		Ext.Ajax.request({
-	     					   			url : "user_resetPwd.do",
+	     					   			url : "/MyStock/user_resetPwd.do",
 	     					   			params:{ logincode : record.data.xh },
 	     					   			success : function() {
 	     					   				Ext.Msg.alert('信息提示','重置成功');
@@ -184,7 +184,7 @@ Ext.onReady(function(){
                                }   
                            } 
 					   		Ext.Ajax.request({
-					   			url : "headMaster_deleteHeadMasters.do",
+					   			url : "/MyStock/headMaster_deleteHeadMasters.do",
 					   			params:{ ids : ids },
 					   			success : function() {
 					   				store.reload();
@@ -200,7 +200,7 @@ Ext.onReady(function(){
         	handler: function(){
             	Ext.MessageBox.confirm('信息提示',"确定下载《班主任导入模板》?",function(btn){
             		if(btn=="yes"){
-            			window.location.href="fileDownload.do?fileDownKey=HeadMasterTemplate";
+            			window.location.href="/MyStock/fileDownload.do?fileDownKey=HeadMasterTemplate";
             		}
             	});
         	}
@@ -217,7 +217,7 @@ Ext.onReady(function(){
 		layout : 'form',
 		fileUpload:true,
 		frame:true,
-		url :'headMaster_importExcel.do',
+		url :'/MyStock/headMaster_importExcel.do',
 		labelWidth:60,
 		border : false,
 		padding : '5 10 10 8',
@@ -269,7 +269,7 @@ Ext.onReady(function(){
 	});
     
     var classesStore = new Ext.data.JsonStore({
-	    url: 'classes_findClassesBySsyq.do',
+	    url: '/MyStock/classes_findClassesBySsyq.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields : ["value", "text"]
@@ -384,7 +384,7 @@ Ext.onReady(function(){
 			handler : function() {
 				if (uForm.getForm().isValid()) {
 					uForm.getForm().submit({
-						url : 'headMaster_saveOrUpdateHeadMaster.do',
+						url : '/MyStock/headMaster_saveOrUpdateHeadMaster.do',
 						success : function(form, action) {
 							Ext.Msg.alert('信息提示',action.result.message);
 							uWindow.hide();

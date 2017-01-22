@@ -98,7 +98,7 @@ Ext.onReady(function() {
 		var form = new Ext.form.FormPanel({  
 	         
 	        labelWidth: 80,   
-	        url:'upload_execute.do',  
+	        url:'/MyStock/upload_execute.do',  
 	        fileUpload:true,  
 	        defaultType: 'textfield',  
 	  
@@ -173,7 +173,7 @@ Ext.onReady(function() {
 				iconCls : 'table_print',
 				id : 'download',
 				handler : function() {
-					window.location.href="download.do?filename=aaaa.txt";
+					window.location.href="/MyStock/download.do?filename=aaaa.txt";
 				}
 			}],
 			 store : store,  

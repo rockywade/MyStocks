@@ -7,7 +7,7 @@ Ext.onReady(function(){
 	
 	//学院下拉菜单
     var xyStore = new Ext.data.JsonStore({
-		url: 'expert_findXyComb.do',
+		url: '/MyStock/expert_findXyComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text'],
@@ -23,7 +23,7 @@ Ext.onReady(function(){
 	
 	//专业下拉菜单
     var majorStore = new Ext.data.JsonStore({
-		url: 'expert_findMajorComb.do',
+		url: '/MyStock/expert_findMajorComb.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields: ['value','text'],
@@ -90,7 +90,7 @@ Ext.onReady(function(){
 	
 	//获取response数据
 	var store = new Ext.data.JsonStore({
-	    url: 'Whereabouts_launchByPageList.do',
+	    url: '/MyStock/Whereabouts_launchByPageList.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -178,7 +178,7 @@ Ext.onReady(function(){
 		layout : 'form',
 		fileUpload:true,
 		frame:true,
-		url :'expert_saveOrUpdateExpert.do',
+		url :'/MyStock/expert_saveOrUpdateExpert.do',
 		labelWidth:80,
 		border : false,
 		padding : '15 10 0 8',
@@ -336,7 +336,7 @@ Ext.onReady(function(){
     	
 		layout : 'form',//纵向布局
 		baseCls:'x-plain',//基本色调
-		url : 'cancel_cancelAttend.do',
+		url : '/MyStock/cancel_cancelAttend.do',
         fileUpload:true,  
         autoScroll:true,//滚动条
 		labelWidth:80,
@@ -380,7 +380,7 @@ var fungrid;
 function cancel(rowIndex){
 	var record = fungrid.getStore().getAt(rowIndex);
 	Ext.Ajax.request({
-		url : "Whereabouts_cancelWhereLaunch.do",
+		url : "/MyStock/Whereabouts_cancelWhereLaunch.do",
 		params:{ launchid : record.data.launchid,launchstyle:record.data.launchstyle},
 		success : function() {
 			alert("已成功撤销");
@@ -393,7 +393,7 @@ function cancel(rowIndex){
 function count(rowIndex){
 	var record = fungrid.getStore().getAt(rowIndex);
 	Ext.Ajax.request({
-		url:'Whereabouts_wheresLaunchProperty.do',
+		url:'/MyStock/Whereabouts_wheresLaunchProperty.do',
 	    params:{launchid:record.data.launchid,launchname:record.data.launchname},
 	    success:function(msg){
 	    	window.location.href = 'wherescount.jsp';

@@ -97,6 +97,8 @@ public class ApplyactivityAction extends BaseAction {
 	private String state;						//报名状态
 	private int gotscore;						//所得分数
 	private int gross;							//总分数
+	private String refuse;//不同意理由或者活动考评分修改理由
+	private String updateScore;
 	
 	//新闻
 	private String newsid;
@@ -513,11 +515,11 @@ public class ApplyactivityAction extends BaseAction {
 			Student student = studentBiz.studentExist(studentExcel);
 			if(student.getSsyq() != null && !student.getSsyq().equals("")) {
 				if(student.getSsyq().contains("蓝田")) {
-					this.outString("{success:true,message:'申报成功！请将纸质版报名表递交至蓝田六舍209室，蒋老师,88206718'}");
+					this.outString("{success:true,message:'申报成功！请将纸质版申报表递交至蓝田六舍209室，蒋老师,88206718'}");
 				} else if(student.getSsyq().contains("丹青")) {
-					this.outString("{success:true,message:'申报成功！请将纸质版报名表递交至青溪一舍131室，王老师，22806841'}");
+					this.outString("{success:true,message:'申报成功！请将纸质版申报表递交至青溪一舍131室，王老师，88208653'}");
 				} else if(student.getSsyq().contains("云峰")){
-					this.outString("{success:true,message:'申报成功！请将纸质版报名表递交至碧峰连廊131室，田老师，88206505'}");
+					this.outString("{success:true,message:'申报成功！请将纸质版申报表递交至碧峰连廊131室，田老师，88206505'}");
 				} else {
 					this.outString("{success:true,message:'申报成功!  请将纸质版申报表交至......'}");
 				}
@@ -601,8 +603,12 @@ public class ApplyactivityAction extends BaseAction {
 				user.setUserClasses(student.getClasses().getBjdm());
 				user.setUserDorm(student.getQsmc());
 				user.setUserYq(student.getSsyq());
-				user.setUserInstructor(student.getInstructor().getXm());
-				user.setUserHeadmaster(student.getHeadmaster().getXm());
+				if(student.getInstructor() != null) {
+					user.setUserInstructor(student.getInstructor().getXm());
+				}
+				if(student.getHeadmaster() != null) {
+					user.setUserHeadmaster(student.getHeadmaster().getXm());
+				}
 			}else if(instructor!=null){
 				user.setUserNum(instructor.getZgh());
 				user.setUserName(instructor.getXm());
@@ -835,9 +841,12 @@ public class ApplyactivityAction extends BaseAction {
 			}else{
 				applystyle="不通过";
 			}
+			if(refuse.equals(",") || refuse.contains("不同意理由或者活动考评分修改理由")) {
+				refuse = "";
+			}
 			String clazz = "Activity";
-			String[] setproperty = {"applystyle","checktime"};
-			String[] updatevalues = {applystyle,checktime};
+			String[] setproperty = {"applystyle","checktime","score", "refuse"};
+			String[] updatevalues = {applystyle,checktime, updateScore, refuse};
 			String byid = "activityid";
 			applyActivityBiz.updateClassPropertiesById(clazz, setproperty, updatevalues, byid, activityid);
 			//审核通过，把该活动加入到短信监听池中
@@ -993,13 +1002,16 @@ public class ApplyactivityAction extends BaseAction {
 	 **/
 	public String publicitylist(){
 		try {
+			UserDTO userInfo = (UserDTO) getSession().getAttribute(Constants.USERINFO);
+			String ssyq = userInfo.getSsyq();
 			Page page = new Page();
 			page.setStart(this.getStart());
 			page.setLimit(this.getLimit());
 			String[] property = {"activityname","activitygenre","publicitycheckstyle"};
 			String[] values = {this.activityname,this.activitygenre,this.publicitycheckstyle};
-			String findstyle = "publicitycheckstyle";
-			applyActivityBiz.findPageActivity(page,property,values,findstyle);
+//			String findstyle = "publicitycheckstyle";
+			String findstyle = "";
+			applyActivityBiz.findPageActivity(page,property,values,findstyle,ssyq);
 			this.outPageString(page);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1045,7 +1057,7 @@ public class ApplyactivityAction extends BaseAction {
 				
 				List<Attend> attendList = null;
 				attendList = applyActivityBiz.findAttendById(activityid);
-		        String[] titles = new String[]{"姓名", "学号", "签到"};
+		        String[] titles = new String[]{"姓名", "学号", "签到(1=已参加;0=未参加)"};
 		        String[] fieldNames = new String[]{"username", "usernum", "state"};
 		        String path = ServletActionContext.getServletContext().getRealPath("file")+ File.separator;
 		        File exportFile = new File(path+fileName+".xls");
@@ -1079,9 +1091,35 @@ public class ApplyactivityAction extends BaseAction {
 			String[] fieldNames = new String[]{"username", "usernum", "state"};
 			List<Attend> importAttendList = exh.readExcel(Attend.class, fieldNames, true);
 			for(Attend a :importAttendList){
+				StudentExcel studentExcel = new StudentExcel();
+				studentExcel.setXh(a.getUsernum());
+				Student student = studentBiz.studentExist(studentExcel);
+				if(student != null) {
+					student.setIntegral(student.getIntegral() == null ? 0 : 0 + student.getIntegral());
+				}
 				if(a.getState().equals("1")){
 					state = "已参加";
-					String clazz = "Attend";
+					gotscore = Integer.parseInt(sscore);
+					Attend att = applyActivityBiz.findAttendByIds(a.getUsernum(),this.activityid);
+					if(att != null) {
+						att.setState(state);
+						att.setGotscore(gotscore);
+						Integer gross = att.getGross() == null ? 0 : att.getGross();
+						att.setGross(gross + gotscore + student.getIntegral());
+						applyActivityBiz.saveOrUpdateAttend(att);
+						student.setIntegral(att.getGross());
+						String mobile = att.getAttendstudentphonenum();
+						SmsBiz smsBiz = ServiceHelper.getSmsBiz();
+						Sms sms = smsBiz.findById(1);
+						String content = sms.getContent().replace("$(HDMC)",att.getActivityname());
+						content = sms.getContent().replace("$(HDSJ)",att.getActivitytime());
+						content = sms.getContent().replace("$(HDDD)",att.getActivityplace());
+						SmsUtil.sendSms(mobile, content);
+					} else {
+						student.setIntegral(student.getIntegral() + 1);
+					}
+					
+					/*String clazz = "Attend";
 					String setproperty = "state";
 					String[] byid = {"usernum","activityid"};
 					String[] valuesId = {a.getUsernum(),this.activityid};
@@ -1098,7 +1136,7 @@ public class ApplyactivityAction extends BaseAction {
 						String content = sms.getContent().replace("$(HDMC)",attend.getActivityname());
 						content = sms.getContent().replace("$(HDSJ)",attend.getActivitytime());
 						content = sms.getContent().replace("$(HDDD)",attend.getActivityplace());
-						SmsUtil.sendSms(mobile, content);
+						SmsUtil.sendSms(mobile, content);*/
 						/*if (UpGotscoreFlag > 0) {
 							setproperty = "gross";
 							String value = "SUM(gotscore)";
@@ -1107,10 +1145,20 @@ public class ApplyactivityAction extends BaseAction {
 							int sum = applyActivityBiz.countGross(clazz,value,setbyid,updatevaluesId);
 							applyActivityBiz.updateGrossById(clazz,	setproperty, sum, setbyid, updatevaluesId);
 						}*/
-					}
+					/*}*/
 				}else{
 					state = "未参加";
-					String clazz = "Attend";
+					Attend att = applyActivityBiz.findAttendByIds(a.getUsernum(),this.activityid);
+					if(att != null) {
+						gotscore = -1;
+						att.setState(state);
+						att.setGotscore(gotscore);
+						Integer gross = att.getGross() == null ? 0 : att.getGross();
+						att.setGross(gross + gotscore + student.getIntegral());
+						applyActivityBiz.saveOrUpdateAttend(att);
+					}
+					student.setIntegral(att.getGross());
+					/*String clazz = "Attend";
 					String setproperty = "state";
 					String[] byid = {"usernum","activityid"};
 					String[] valuesId = {a.getUsernum(),this.activityid};
@@ -1119,16 +1167,17 @@ public class ApplyactivityAction extends BaseAction {
 						setproperty = "gotscore";
 						gotscore = -1;
 						int UpGotscoreFlag = applyActivityBiz.updateScoreById(clazz, setproperty, gotscore, byid, valuesId);
-						/*if (UpGotscoreFlag > 0) {
-							setproperty = "gross";
-							String value = "SUM(gotscore)";
-							String setbyid="usernum";
-							String updatevaluesId = a.getUsernum();
-							int sum = applyActivityBiz.countGross(clazz,value,setbyid,updatevaluesId);
-							applyActivityBiz.updateGrossById(clazz,	setproperty, sum, setbyid, updatevaluesId);
-						}*/
-					}
+//						if (UpGotscoreFlag > 0) {
+//							setproperty = "gross";
+//							String value = "SUM(gotscore)";
+//							String setbyid="usernum";
+//							String updatevaluesId = a.getUsernum();
+//							int sum = applyActivityBiz.countGross(clazz,value,setbyid,updatevaluesId);
+//							applyActivityBiz.updateGrossById(clazz,	setproperty, sum, setbyid, updatevaluesId);
+//						}
+					}*/
 				}
+				studentBiz.saveOrUpdateStudent(student);
 			}
 			this.outString("{success:true,message:'导入成功!'}");
 			//文件导入成功后从短信监听池中移除监听
@@ -1314,11 +1363,11 @@ public class ApplyactivityAction extends BaseAction {
 			}
 			if(ssyq != null && !ssyq.equals("")) {
 				if(ssyq.contains("蓝田")) {
-					this.outString("{success:true,message:'申报成功！请将纸质版报名表递交至蓝田六舍209室，蒋老师,88206718'}");
+					this.outString("{success:true,message:'申报成功！请将纸质版申报表递交至蓝田六舍209室，蒋老师,88206718'}");
 				} else if(ssyq.contains("丹青")) {
-					this.outString("{success:true,message:'申报成功！请将纸质版报名表递交至青溪一舍131室，王老师，22806841'}");
+					this.outString("{success:true,message:'申报成功！请将纸质版申报表递交至青溪一舍131室，王老师，88208653'}");
 				} else if(ssyq.contains("云峰")){
-					this.outString("{success:true,message:'申报成功！请将纸质版报名表递交至碧峰连廊131室，田老师，88206505'}");
+					this.outString("{success:true,message:'申报成功！请将纸质版申报表递交至碧峰连廊131室，田老师，88206505'}");
 				} else {
 					this.outString("{success:true,message:'申报成功!  请将纸质版申报表交至......'}");
 				}
@@ -1357,5 +1406,53 @@ public class ApplyactivityAction extends BaseAction {
 			this.outString("{success:true,message:'删除失败!'}");
 		}
 		return null;
+	}
+	
+	/**
+	 * 更新所得分数
+	 * @return
+	 */
+	public String updateGotscore() {
+		try {
+			Attend att = applyActivityBiz.findAttend8Id(activityid);
+			StudentExcel studentExcel = new StudentExcel();
+			studentExcel.setXh(att.getUsernum());
+			Student student = studentBiz.studentExist(studentExcel);
+			if(student != null) {
+				student.setIntegral(student.getIntegral() == null ? 0 : 0 + student.getIntegral());
+			}
+			state = "已参加";
+			gotscore = Integer.parseInt(sscore);
+			att.setState(state);
+			att.setGotscore(gotscore);
+			Integer gross = att.getGross() == null ? 0 : att.getGross();
+			att.setGross(gross + gotscore + student.getIntegral());
+			applyActivityBiz.saveOrUpdateAttend(att);
+			if(student != null) {
+				student.setIntegral(att.getGross());
+				studentBiz.saveOrUpdateStudent(student);
+			}
+			this.outString("{success:true,message:'追加成功!'}");
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.outString("{success:true,message:'追加失败!'}");
+		}
+		return null;
+	}
+
+	public String getRefuse() {
+		return refuse;
+	}
+
+	public void setRefuse(String refuse) {
+		this.refuse = refuse;
+	}
+
+	public String getUpdateScore() {
+		return updateScore;
+	}
+
+	public void setUpdateScore(String updateScore) {
+		this.updateScore = updateScore;
 	}
 }

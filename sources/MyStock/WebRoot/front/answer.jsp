@@ -17,7 +17,7 @@
 				$.ajax({
 					type : "post", 
 					async : false,  
-					url:"front_findPageOnlineQA.do",
+					url:"/MyStock/front_findPageOnlineQA.do",
 					data:{start:start, limit:limit,key:onlineoakey},
 					success:function(data,status){
 						data = eval("("+data+")");
@@ -79,7 +79,7 @@
 			}
 			
 			function publish(){
-				window.location.href="front_goToLogin.do?url=../onlineqa/onlineqa.jsp";
+				window.location.href="/MyStock/front_goToLogin.do?url=../onlineqa/onlineqa.jsp";
 			}
 	    </script>
 </head>

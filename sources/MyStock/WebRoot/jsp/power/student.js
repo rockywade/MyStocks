@@ -101,7 +101,7 @@ Ext.onReady(function(){
 	];
 	
 	var store = new Ext.data.JsonStore({
-	    url: 'student_findPageStudent.do',
+	    url: '/MyStock/student_findPageStudent.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    autoLoad: {params:{start:0, limit:15}},
@@ -134,7 +134,7 @@ Ext.onReady(function(){
 	                		Ext.MessageBox.confirm('重置密码提示', '是否为该用户重置密码？', function(c) {
 	     					   if(c=='yes'){
 	     					   		Ext.Ajax.request({
-	     					   			url : "user_resetPwd.do",
+	     					   			url : "/MyStock/user_resetPwd.do",
 	     					   			params:{ logincode : record.data.xh },
 	     					   			success : function() {
 	     					   				Ext.Msg.alert('信息提示','重置成功');
@@ -201,7 +201,7 @@ Ext.onReady(function(){
                                }   
                            } 
 					   		Ext.Ajax.request({
-					   			url : "student_deleteStudents.do",
+					   			url : "/MyStock/student_deleteStudents.do",
 					   			params:{ ids : ids },
 					   			success : function() {
 					   				store.reload();
@@ -217,7 +217,7 @@ Ext.onReady(function(){
         	handler: function(){
             	Ext.MessageBox.confirm('信息提示',"确定下载《学生导入模板》?",function(btn){
             		if(btn=="yes"){
-            			window.location.href="fileDownload.do?fileDownKey=StudentTemplate";
+            			window.location.href="/MyStock/fileDownload.do?fileDownKey=StudentTemplate";
             		}
             	});
         	}
@@ -234,7 +234,7 @@ Ext.onReady(function(){
 		layout : 'form',
 		fileUpload:true,
 		frame:true,
-		url :'student_importExcel.do',
+		url :'/MyStock/student_importExcel.do',
 		labelWidth:60,
 		border : false,
 		padding : '5 10 10 8',
@@ -288,7 +288,7 @@ Ext.onReady(function(){
     
     
     var classesStore = new Ext.data.JsonStore({
-	    url: 'classes_findClassesBySsyq.do',
+	    url: '/MyStock/classes_findClassesBySsyq.do',
 	    root: 'root',
 	    totalProperty: 'total',
 	    fields : ["value", "text"]
@@ -435,7 +435,7 @@ Ext.onReady(function(){
 			handler : function() {
 				if (uForm.getForm().isValid()) {
 					uForm.getForm().submit({
-						url : 'student_saveOrUpdateStudent.do',
+						url : '/MyStock/student_saveOrUpdateStudent.do',
 						success : function(form, action) {
 							Ext.Msg.alert('信息提示',action.result.message);
 							uWindow.hide();

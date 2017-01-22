@@ -42,7 +42,7 @@ Ext
 			} // 参加活动状态，报名后状态：待参加、签到后：已参加、未签到：未参加
 			];
 			var store = new Ext.data.JsonStore({
-				url : 'news_findNews.do',
+				url : '/MyStock/news_findNews.do',
 				root : 'root',
 				totalProperty : 'total',
 				autoLoad : {
@@ -77,7 +77,7 @@ Ext
 					Ext.MessageBox.confirm('参与公示提示', '确定参与公示吗？', function(ok) {
 						if (ok == 'yes') {
 							Ext.Ajax.request({
-								url : "Applyactivity_joinPublish.do",
+								url : "/MyStock/Applyactivity_joinPublish.do",
 								params : {
 									activityid : activityid,
 									pulishkey : '1'
@@ -272,7 +272,7 @@ Ext
 		    	Ext.MessageBox.confirm('删除提示', '确定删除？', function(c) {
 					   if(c=='yes'){
 						   Ext.Ajax.request({
-					   			url : "news_deleteNews.do",
+					   			url : "/MyStock/news_deleteNews.do",
 					   			params:{newsid:record.data.newsid},
 					   			success : function() {
 						   		  store.reload();
@@ -287,7 +287,7 @@ Ext
 				layout : 'form',
 				fileUpload : true,
 				frame : true,
-				url : 'Applyactivity_importExcel.do',
+				url : '/MyStock/Applyactivity_importExcel.do',
 				labelWidth : 60,
 				border : false,
 				padding : '5 10 10 8',
@@ -364,7 +364,7 @@ Ext
 						layout : 'form',
 						// baseCls:'x-plain',
 						frame : true,
-						url : 'news_saveOrUpdateNews.do',
+						url : '/MyStock/news_saveOrUpdateNews.do',
 						labelWidth : 48,
 						border : false,
 						padding : '15 10 0 8',
@@ -511,7 +511,7 @@ Ext
 		    //获取当前用户信息
 		    var getCurrentUserInfo = function(){
 		    	Ext.Ajax.request({
-		    		url:"Applyactivity_getCurrentUserInfo.do",
+		    		url:"/MyStock/Applyactivity_getCurrentUserInfo.do",
 		    		success:function(response){
 		    			var responsedata = Ext.util.JSON.decode(response.responseText);
 		    			if(responsedata){
